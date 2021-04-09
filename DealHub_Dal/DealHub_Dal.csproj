@@ -63,6 +63,8 @@
   <ItemGroup>
     <Compile Include="Authentication\Authentication.cs" />
     <Compile Include="BaseDAL.cs" />
+    <Compile Include="ErrorLog\DALErrorlogs.cs" />
+    <Compile Include="ErrorLog\DALlogApiRequestResponse.cs" />
     <Compile Include="Extensions\DataReaderExt.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
