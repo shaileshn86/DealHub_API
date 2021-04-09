@@ -12,8 +12,8 @@ namespace DealHub_Dal
 {
     public class BaseDAL
     {
-        public static string ApiConnectionString = ConfigurationManager.ConnectionStrings["DWMSQAConnectionString"].ConnectionString;
-        public static string connectionString = ConfigurationManager.ConnectionStrings["DWMSQAConnectionString"].ConnectionString;
+        public static string ApiConnectionString = ConfigurationManager.ConnectionStrings["OBFConnectionString"].ConnectionString;
+        public static string connectionString = ConfigurationManager.ConnectionStrings["OBFConnectionString"].ConnectionString;
         public static MySqlParameter CreateParameters(DbType dbType, object value, string name, ParameterDirection pDirection)
         {
             MySqlParameter mySqlParam = new MySqlParameter();

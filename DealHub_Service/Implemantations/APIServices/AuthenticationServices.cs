@@ -10,7 +10,7 @@ namespace DealHub_Service.Implemantations.APIServices
 {
     public class AuthenticationServices
     {
-        public static List<AuthenticationDetailParameters> GetpulsenetpendingparametersList(AuthenticationParameters filter)
+        public static List<AuthenticationDetailParameters> GetAuthenticateUser(AuthenticationParameters filter)
         {
             return Authentication.AutheticateUser(filter);
         }

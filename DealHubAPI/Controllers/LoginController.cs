@@ -26,6 +26,20 @@ namespace DealHubAPI.Controllers
                 result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
                 return Request.CreateResponse(HttpStatusCode.BadRequest, result);
             }
+            if (ModelState.IsValid)
+            {
+
+                List<AuthenticationDetailParameters> _AuthenticationDetailParameters = AuthenticationServices.GetAuthenticateUser(model);
+
+                return Request.CreateResponse(HttpStatusCode.OK, _AuthenticationDetailParameters);
+
+            }
+            else
+            {
+
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "", Validation: ModelState.AllErrors());
+                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+            }
             return null;
         }
     }
