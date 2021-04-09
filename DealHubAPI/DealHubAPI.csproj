@@ -231,6 +231,8 @@
     <Compile Include="Results\ChallengeResult.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Utility\ModelStateExtension.cs" />
+    <Compile Include="Utility\SecretkeyGenerator.cs" />
+    <Compile Include="Utility\StaticGlobalKey.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />

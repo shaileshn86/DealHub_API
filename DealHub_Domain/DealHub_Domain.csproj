@@ -43,6 +43,8 @@
   <ItemGroup>
     <Compile Include="Authentication\AuthenticationDetailParameters.cs" />
     <Compile Include="Authentication\AuthenticationParameters.cs" />
+    <Compile Include="Authentication\LoginResponse.cs" />
+    <Compile Include="Authentication\User.cs" />
     <Compile Include="Enum\MsgTypeEnum.cs" />
     <Compile Include="Helpers\Extensions\ClassStringTrim.cs" />
     <Compile Include="Helpers\JWToken.cs" />

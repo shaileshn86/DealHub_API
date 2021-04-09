@@ -10,6 +10,7 @@ using DealHub_Service.Implemantations.APIServices;
 using DealHub_Domain.Helpers;
 using DealHubAPI.Utility;
 using DealHub_Domain.Enum;
+using DealHub_Domain.Authentication;
 
 namespace DealHubAPI.Controllers
 {
@@ -30,7 +31,26 @@ namespace DealHubAPI.Controllers
             {
 
                 List<AuthenticationDetailParameters> _AuthenticationDetailParameters = AuthenticationServices.GetAuthenticateUser(model);
+                foreach (AuthenticationDetailParameters auth in _AuthenticationDetailParameters)
+                {
+                    if(auth.status!= "success")
+                    {
+                        result = new ReponseMessage(MsgNo: HttpStatusCode.Unauthorized.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "", Validation: ModelState.AllErrors());
+                        return Request.CreateResponse(HttpStatusCode.Unauthorized, result);
+                    }
+                    else
+                    {
+                       LoginResponse login = new LoginResponse();
+                        string key = Utility.SecretkeyGenerator.CreateToken(auth.user_code,auth.password);
+                        login.user.Api_Key = key;
+                        login.user.UserName = model._user_code;
 
+                        //  result = new ReponseMessage(KeyName: "api_key", Code: key, MsgNo: HttpStatusCode.OK.ToCode(), MsgType: MsgTypeEnum.S.ToString(), Message: "Success");
+                        //Provided username and password is incorrect
+
+                        return Request.CreateResponse(HttpStatusCode.OK, login);
+                    }
+                }
                 return Request.CreateResponse(HttpStatusCode.OK, _AuthenticationDetailParameters);
 
             }
