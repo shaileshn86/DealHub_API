@@ -21,7 +21,7 @@ namespace DealHubAPI.Controllers
             string baseUrl = Request.RequestUri.AbsoluteUri;//.GetLeftPart(UriPartial.Authority)+ Request.AbsolutePath;
             return baseUrl;
         }
-
+        //Test for Git
 
         [ApiExplorerSettings(IgnoreApi = true)]
         public string GetUserIp()
