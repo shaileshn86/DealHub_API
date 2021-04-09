@@ -11,10 +11,12 @@ using DealHub_Domain.Helpers;
 using DealHubAPI.Utility;
 using DealHub_Domain.Enum;
 using DealHub_Domain.Authentication;
+using System.Web.Http.Cors;
 
 namespace DealHubAPI.Controllers
 {
     [RoutePrefix("Api/Auth")]
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class LoginController : BaseApiController
     {
         [HttpPost]
