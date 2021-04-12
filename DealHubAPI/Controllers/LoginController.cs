@@ -35,8 +35,8 @@ namespace DealHubAPI.Controllers
                 {
                     if(auth.status!= "success")
                     {
-                        result = new ReponseMessage(MsgNo: HttpStatusCode.Unauthorized.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "", Validation: ModelState.AllErrors());
-                        return Request.CreateResponse(HttpStatusCode.Unauthorized, result);
+                        result = new ReponseMessage(MsgNo: HttpStatusCode.Unauthorized.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Login Failed", Validation: ModelState.AllErrors());
+                        return Request.CreateResponse(HttpStatusCode.OK, result);
                     }
                     else
                     {
