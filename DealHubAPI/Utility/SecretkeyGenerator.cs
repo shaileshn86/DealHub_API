@@ -62,10 +62,13 @@ namespace DealHubAPI.Utility
             string secret = ConfigurationManager.AppSettings["OBFNet_Api_Secret"];
             string message = user + "&" + password;
             string message2 = password + "&" + user;
+            var ran = new Random();
+            int randno = ran.Next();
             var encoding = new System.Text.ASCIIEncoding();
             byte[] keyByte = encoding.GetBytes(secret);
             byte[] messageBytes = encoding.GetBytes(message);
             byte[] messageBytes2 = encoding.GetBytes(message2);
+            byte[] messageBytes3 = encoding.GetBytes(randno.ToString());
 
             using (var hmacsha256 = new HMACSHA256(keyByte))
             {
@@ -76,6 +79,12 @@ namespace DealHubAPI.Utility
             using (var hmacsha256 = new HMACSHA256(keyByte))
             {
                 byte[] hashmessage = hmacsha256.ComputeHash(messageBytes2);
+                token = token + Convert.ToBase64String(hashmessage);
+            }
+
+            using (var hmacsha256 = new HMACSHA256(keyByte))
+            {
+                byte[] hashmessage = hmacsha256.ComputeHash(messageBytes3);
                 token = token + Convert.ToBase64String(hashmessage);
             }
 

@@ -11,6 +11,8 @@ using DealHub_Domain.Helpers;
 using DealHubAPI.Utility;
 using DealHub_Domain.Enum;
 using DealHub_Domain.Authentication;
+using DealHub_Domain.MenuBinding;
+using Newtonsoft.Json;
 
 namespace DealHubAPI.Controllers
 {
@@ -62,5 +64,46 @@ namespace DealHubAPI.Controllers
             }
             return null;
         }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("GetMenuDetails")]
+        public HttpResponseMessage GetMenus(MenuBindingParameter model)
+        {
+            if (model == null)// Incase Post Object Is Null or Not Match and Object value is null
+            {
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+            }
+            if (ModelState.IsValid)
+            {
+                List<MenuBindingDetailsParameter> _MenuBindingDetailsParameter = MenuBindingServices.GetMenus(model);
+
+                if (_MenuBindingDetailsParameter !=null)
+                {
+                    if (_MenuBindingDetailsParameter.Count !=0)
+                    {
+                        return Request.CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(_MenuBindingDetailsParameter));
+                    }
+                    else
+                    {
+                        result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                        return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+                    }
+
+
+                    
+                }
+                else
+                {
+                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+                }
+
+            }
+
+                return null;
+        }
+
     }
 }

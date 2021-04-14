@@ -45,11 +45,14 @@
     <Compile Include="Authentication\AuthenticationParameters.cs" />
     <Compile Include="Authentication\LoginResponse.cs" />
     <Compile Include="Authentication\User.cs" />
+    <Compile Include="CommonParameters.cs" />
     <Compile Include="Enum\MsgTypeEnum.cs" />
     <Compile Include="Helpers\Extensions\ClassStringTrim.cs" />
     <Compile Include="Helpers\JWToken.cs" />
     <Compile Include="Helpers\MaxLengthTrim.cs" />
     <Compile Include="Helpers\ReponseMessage.cs" />
+    <Compile Include="MenuBinding\MenuBindingDetailsParameter.cs" />
+    <Compile Include="MenuBinding\MenuBindingParameter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />
