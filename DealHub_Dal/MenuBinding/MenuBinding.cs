@@ -32,14 +32,14 @@ namespace DealHub_Dal.MenuBinding
                             
                             _MenuBindingDetailsParameter.name = dr.IsNull<string>("name");
                             //_MenuBindingDetailsParameter.iconClass = dr.IsNull<string>("iconClass");
-                            if (dr.IsNull<int>("active")==0)
-                            {
-                                _MenuBindingDetailsParameter.active = false;
-                            }
-                            else
-                            {
-                                _MenuBindingDetailsParameter.active = true;
-                            }
+                            //if (dr.IsNull<int>("active")==0)
+                            //{
+                            //    _MenuBindingDetailsParameter.active = false;
+                            //}
+                            //else
+                            //{
+                            //    _MenuBindingDetailsParameter.active = true;
+                            //}
                          
                             _MenuBindingDetailsParameter.url= dr.IsNull<string>("url");
 
