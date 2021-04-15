@@ -18,40 +18,33 @@ using System.Net.Http;
 
 namespace DealHubAPI.Utility
 {
-    public class AuthenticationFilterDealhUb: AuthorizationFilterAttribute 
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = false)]
+    public class AuthenticationFilterDealhUb: AuthorizeAttribute
     {
         public HttpResponseMessage result = new HttpResponseMessage();
-        public override void OnAuthorization(HttpActionContext filterContext)
+        protected override bool IsAuthorized(HttpActionContext filterContext)
         {
-           var _token = filterContext.Request.Headers.SingleOrDefault(x => x.Key == "Authorization").Value;
-            string _passtoken = _token.First();
-            _passtoken = _passtoken.Replace("Bearer ", "").Trim();
-            string rawRequest;
-            using (var stream = new StreamReader(filterContext.Request.Content.ReadAsStreamAsync().Result))
+           try
             {
-                stream.BaseStream.Position = 0;
-                rawRequest = stream.ReadToEnd();
-            }
-            JObject json = JObject.Parse(rawRequest);
-            string user_code = json["_user_code"].ToString();
+                var _token = filterContext.Request.Headers.SingleOrDefault(x => x.Key == "Authorization").Value;
+                string _passtoken = _token.First();
+                _passtoken = _passtoken.Replace("Bearer ", "").Trim();
 
-            if (!IsAuthorized(_passtoken,user_code))
+                var userloginid = filterContext.Request.Headers.SingleOrDefault(x => x.Key == "_user_login").Value;
+                string user_code = userloginid.First();
+
+                return CheckIsAuthorized(_passtoken, user_code);
+            }
+            catch(Exception e)
             {
-               // result = new ReponseMessage(MsgNo: HttpStatusCode.Unauthorized.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Login Failed", Validation: null);
-               filterContext.Response = new HttpResponseMessage(HttpStatusCode.Unauthorized);
-                return;
+                return false;
             }
-            //else
-            //{
-            //    filterContext.Response = new HttpResponseMessage(HttpStatusCode.OK);
-            //    return;
-            //}
-
-
-            //base.OnAuthorization(filterContext);
+           
+          
+         
         }
 
-        public bool IsAuthorized(string _token,string user_code)
+        public bool CheckIsAuthorized(string _token,string user_code)
         {
             AuthenticationParameters _auth = new AuthenticationParameters();
             _auth._user_code = user_code;
