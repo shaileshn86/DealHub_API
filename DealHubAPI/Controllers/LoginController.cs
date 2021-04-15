@@ -67,8 +67,8 @@ namespace DealHubAPI.Controllers
             return null;
         }
 
-        [HttpPost]
-        [AuthenticationFilterDealhUb]
+        [AuthenticationFilterDealhUb,HttpPost]
+        
         [Route("GetMenuDetails")]
         public HttpResponseMessage GetMenus(MenuBindingParameter model)
         {
@@ -105,6 +105,33 @@ namespace DealHubAPI.Controllers
             }
 
                 return null;
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("RemindMe")]
+        public HttpResponseMessage RemindMe(AuthenticationParameters model)
+        {
+            if (model == null)// Incase Post Object Is Null or Not Match and Object value is null
+            {
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+            }
+            if (ModelState.IsValid)
+            {
+
+               string Authenticated = AuthenticationServices.GetToken(model);
+                
+               return Request.CreateResponse(HttpStatusCode.OK, Authenticated);
+
+            }
+            else
+            {
+
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "", Validation: ModelState.AllErrors());
+                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+            }
+            return null;
         }
 
     }
