@@ -14,5 +14,18 @@ namespace DealHub_Service.Implemantations.APIServices
         {
             return Authentication.AutheticateUser(filter);
         }
+
+        public static int UpdateToken(AuthenticationParameters filter)
+        {
+            return Authentication.UpdateToken(filter);
+        }
+
+        public static string GetToken(AuthenticationParameters filter)
+        {
+            return Authentication.GetToken(filter);
+        }
+
+
+
     }
 }

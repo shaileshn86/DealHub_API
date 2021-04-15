@@ -240,6 +240,7 @@
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="Utility\AuthenticationFilter.cs" />
     <Compile Include="Utility\ModelStateExtension.cs" />
     <Compile Include="Utility\SecretkeyGenerator.cs" />
     <Compile Include="Utility\StaticGlobalKey.cs" />

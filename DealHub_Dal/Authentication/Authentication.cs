@@ -53,7 +53,7 @@ namespace DealHub_Dal.Authentication
                 }
                     return authuser;
             }
-            catch
+            catch (Exception e)
             {
                 AuthenticationDetailParameters _AuthenticationDetailParameters = new AuthenticationDetailParameters();
                 string status ="failed with exception in code";
@@ -64,8 +64,60 @@ namespace DealHub_Dal.Authentication
             }
         }
 
+        public static int UpdateToken(AuthenticationParameters filter)
+        {
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                {
+                    MySqlCommand cmd = new MySqlCommand("UpdateToken", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add("@_user_code", MySqlDbType.String).Value = filter._user_code;
+                    cmd.Parameters.Add("@_token", MySqlDbType.String).Value = filter._token;
+                    conn.Open();
+                   int result=  cmd.ExecuteNonQuery();
+                    return result;
+                }
 
-        
+                
+            }
+            catch(Exception e)
+            {
+                return -1;
+            }
+        }
+
+        public static string GetToken(AuthenticationParameters filter)
+        {
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                {
+                    MySqlCommand cmd = new MySqlCommand("GetToken", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add("@_user_code", MySqlDbType.String).Value = filter._user_code;
+                    cmd.Parameters.Add("@_token", MySqlDbType.String).Value = filter._token;
+                    conn.Open();
+                    using (IDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            string status = dr.IsNull<string>("status");
+                            return status;
+                        }
+                    }
+                }
+
+                    return "No Result UnAuthorized";
+            }
+            catch (Exception e)
+            {
+                return "System Error";
+            }
+        }
+
+
+
 
     }
 }
