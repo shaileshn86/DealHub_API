@@ -63,6 +63,7 @@
   <ItemGroup>
     <Compile Include="Authentication\Authentication.cs" />
     <Compile Include="BaseDAL.cs" />
+    <Compile Include="DashBoard\DashBoard.cs" />
     <Compile Include="Extensions\DataReaderExt.cs" />
     <Compile Include="MenuBinding\MenuBinding.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
