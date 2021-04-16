@@ -8,19 +8,20 @@ namespace DealHub_Domain.DashBoard
 {
    public class DashBoardDetailsParameters
     {
-        public uint ? obf_id { get; set; }
-        public string project_name { get; set; }
-        public string code { get; set; }
-        public string opp_id { get; set; }
-        public string created_by { get; set; }
-        public string date_created { get; set; }
+        //public uint ? obf_id { get; set; }
+        public string Project_Name { get; set; }
+        public string Code { get; set; }
+        public string Opp_Id { get; set; }
+        public string Created_On { get; set; }
+        public string Created_By { get; set; }
+       
 
-        public uint? vertical_id { get; set; }
+        //public uint? vertical_id { get; set; }
 
         public string vertical { get; set; }
-        public string project_type { get; set; }
+        public string Project_Type { get; set; }
 
-        public string project_terms { get; set; }
+        public string Project_Terms { get; set; }
 
 
 

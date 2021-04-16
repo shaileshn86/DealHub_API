@@ -30,16 +30,17 @@ namespace DealHub_Dal.DashBoard
                         {
                             DashBoardDetailsParameters _DashBoardDetailsParameters = new DashBoardDetailsParameters();
 
-                            _DashBoardDetailsParameters.obf_id = dr.IsNull<uint>("obf_id");
-                            _DashBoardDetailsParameters.project_name = dr.IsNull<string>("projectname");
-                            _DashBoardDetailsParameters.code = dr.IsNull<string>("code");
-                            _DashBoardDetailsParameters.opp_id = dr.IsNull<string>("oppid");
-                            _DashBoardDetailsParameters.created_by = dr.IsNull<string>("createdby");
-                            _DashBoardDetailsParameters.date_created = dr.IsNull<string>("datecreated");
-                            _DashBoardDetailsParameters.vertical_id = dr.IsNull<uint>("vertical_id");
+                            //_DashBoardDetailsParameters.obf_id = dr.IsNull<uint>("obf_id");
+                            _DashBoardDetailsParameters.Project_Name = dr.IsNull<string>("projectname");
+                            _DashBoardDetailsParameters.Code = dr.IsNull<string>("code");
+                            _DashBoardDetailsParameters.Opp_Id = dr.IsNull<string>("oppid");
+                            _DashBoardDetailsParameters.Created_On = dr.IsNull<string>("datecreated");
+                            _DashBoardDetailsParameters.Created_By = dr.IsNull<string>("createdby");
+                            
+                           // _DashBoardDetailsParameters.vertical_id = dr.IsNull<uint>("vertical_id");
                             _DashBoardDetailsParameters.vertical = dr.IsNull<string>("vertical");
-                            _DashBoardDetailsParameters.project_type = dr.IsNull<string>("projecttype");
-                            _DashBoardDetailsParameters.project_terms = dr.IsNull<string>("projectterms");
+                            _DashBoardDetailsParameters.Project_Type = dr.IsNull<string>("projecttype");
+                            _DashBoardDetailsParameters.Project_Terms = dr.IsNull<string>("projectterms");
 
 
                             DashBoardData.Add(_DashBoardDetailsParameters);
