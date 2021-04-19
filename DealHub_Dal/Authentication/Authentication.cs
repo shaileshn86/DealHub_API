@@ -115,8 +115,35 @@ namespace DealHub_Dal.Authentication
                 return "System Error";
             }
         }
+        public static string ResetPassword(AuthenticationParameters filter)
+        {
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                {
+                    MySqlCommand cmd = new MySqlCommand("sp_resetpassword", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add("@_user_code", MySqlDbType.String).Value = filter._user_code;
+                    cmd.Parameters.Add("@_password", MySqlDbType.String).Value = filter._password;
+                    conn.Open();
+                    using (IDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            string status = dr.IsNull<string>("status");
+                            return status;
+                        }
+                    }
+                }
 
-
+                return "No Result UnAuthorized";
+            }
+            catch (Exception e)
+            {
+                return "System Error";
+            }
+        }
+        
 
 
     }

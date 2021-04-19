@@ -24,7 +24,11 @@ namespace DealHub_Service.Implemantations.APIServices
         {
             return Authentication.GetToken(filter);
         }
-
+        public static string ResetPassword(AuthenticationParameters filter)
+        {
+            return Authentication.ResetPassword(filter);
+        }
+        
 
 
     }

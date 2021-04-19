@@ -133,6 +133,32 @@ namespace DealHubAPI.Controllers
             }
             return null;
         }
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("ResetPassword")]
+        public HttpResponseMessage ResetPassword(AuthenticationParameters model)
+        {
+            if (model == null)// Incase Post Object Is Null or Not Match and Object value is null
+            {
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+            }
+            if (ModelState.IsValid)
+            {
+
+                string Authenticated = AuthenticationServices.ResetPassword(model);
+
+                return Request.CreateResponse(HttpStatusCode.OK, Authenticated);
+
+            }
+            else
+            {
+
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "", Validation: ModelState.AllErrors());
+                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+            }
+            return null;
+        }
 
     }
 }
