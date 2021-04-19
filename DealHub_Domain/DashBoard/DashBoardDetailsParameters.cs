@@ -21,7 +21,15 @@ namespace DealHub_Domain.DashBoard
         public string vertical { get; set; }
         public string Project_Type { get; set; }
 
-        public string Project_Terms { get; set; }
+        public string Payament_Terms { get; set; }
+
+        public Decimal? Capex { get; set; }
+
+        public Decimal? Total_Cost { get; set; }
+
+        public string  Total_Revenue { get; set; }
+
+        public string  Gross_Margin { get; set; }
 
 
 

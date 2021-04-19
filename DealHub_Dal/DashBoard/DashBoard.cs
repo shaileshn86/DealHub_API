@@ -40,7 +40,11 @@ namespace DealHub_Dal.DashBoard
                            // _DashBoardDetailsParameters.vertical_id = dr.IsNull<uint>("vertical_id");
                             _DashBoardDetailsParameters.vertical = dr.IsNull<string>("vertical");
                             _DashBoardDetailsParameters.Project_Type = dr.IsNull<string>("projecttype");
-                            _DashBoardDetailsParameters.Project_Terms = dr.IsNull<string>("projectterms");
+                            _DashBoardDetailsParameters.Payament_Terms = dr.IsNull<string>("paymentterms");
+                            _DashBoardDetailsParameters.Capex = dr.IsNull<decimal>("capex");
+                            _DashBoardDetailsParameters.Total_Cost = dr.IsNull<decimal>("TotalCost");
+                            _DashBoardDetailsParameters.Total_Revenue = dr.IsNull<string>("TotalRevenue");
+                            _DashBoardDetailsParameters.Gross_Margin = dr.IsNull<string>("GrossMargin");
 
 
                             DashBoardData.Add(_DashBoardDetailsParameters);
