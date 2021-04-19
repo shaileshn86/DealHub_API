@@ -11,12 +11,13 @@ using DealHub_Domain.Helpers;
 using DealHubAPI.Utility;
 using DealHub_Domain.Enum;
 using DealHub_Domain.Authentication;
-using DealHub_Domain.MenuBinding;
+using System.Web.Http.Cors;
 using Newtonsoft.Json;
 
 namespace DealHubAPI.Controllers
 {
     [RoutePrefix("Api/Auth")]
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class LoginController : BaseApiController
     {
         [HttpPost]
@@ -37,8 +38,8 @@ namespace DealHubAPI.Controllers
                 {
                     if(auth.status!= "success")
                     {
-                        result = new ReponseMessage(MsgNo: HttpStatusCode.Unauthorized.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Login Failed", Validation: ModelState.AllErrors());
-                        return Request.CreateResponse(HttpStatusCode.OK, result);
+                        result = new ReponseMessage(MsgNo: HttpStatusCode.Unauthorized.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "", Validation: ModelState.AllErrors());
+                        return Request.CreateResponse(HttpStatusCode.Unauthorized, result);
                     }
                     else
                     {

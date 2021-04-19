@@ -31,7 +31,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="MySql.Data">
-      <HintPath>..\..\..\DealHUBOLDCODES\PulseNetApi\PulseNet.Dal\bin\Debug\MySql.Data.dll</HintPath>
+      <HintPath>..\..\..\Refernce\PulseNetApi\PulseNetApi\bin\MySql.Data.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
@@ -63,7 +63,8 @@
   <ItemGroup>
     <Compile Include="Authentication\Authentication.cs" />
     <Compile Include="BaseDAL.cs" />
-    <Compile Include="DashBoard\DashBoard.cs" />
+    <Compile Include="ErrorLog\DALErrorlogs.cs" />
+    <Compile Include="ErrorLog\DALlogApiRequestResponse.cs" />
     <Compile Include="Extensions\DataReaderExt.cs" />
     <Compile Include="MenuBinding\MenuBinding.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
