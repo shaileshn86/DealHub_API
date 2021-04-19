@@ -14,5 +14,10 @@ namespace DealHub_Service.Implemantations.APIServices
         {
             return DashBoard.GetDashBoardData(filter);
         }
+
+        public static List<DashBoardDetailsCountParameters> GetDashBoardDataCount(DashBoardParameters filter)
+        {
+            return DashBoard.GetDashBoardDataCount(filter);
+        }
     }
 }

@@ -32,11 +32,26 @@ namespace DealHub_Domain.DashBoard
         public string  Gross_Margin { get; set; }
 
 
+      
 
 
 
 
 
 
+
+
+
+    }
+
+
+    public class DashBoardDetailsCountParameters
+    {
+        public long count { get; set; }
+
+
+        public int process_id { get; set; }
+
+        public string process_code { get; set; }
     }
 }

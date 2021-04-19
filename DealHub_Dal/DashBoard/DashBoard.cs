@@ -60,5 +60,45 @@ namespace DealHub_Dal.DashBoard
 
             }
         }
+
+
+        public static List<DashBoardDetailsCountParameters> GetDashBoardDataCount(DashBoardParameters filter)
+        {
+            List<DashBoardDetailsCountParameters> DashBoardData = new List<DashBoardDetailsCountParameters>();
+            try
+            {
+                //sp_auth_user
+                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                {
+                    MySqlCommand cmd = new MySqlCommand("GetDashBoardCount", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add("@_user_code", MySqlDbType.String).Value = filter._user_code;
+                    conn.Open();
+                    using (IDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            DashBoardDetailsCountParameters _DashBoardDetailsCountParameters = new DashBoardDetailsCountParameters();
+
+                            //_DashBoardDetailsParameters.obf_id = dr.IsNull<uint>("obf_id");
+                            _DashBoardDetailsCountParameters.count = dr.IsNull<long>("count");
+                            _DashBoardDetailsCountParameters.process_id = dr.IsNull<int>("process_id");
+                            _DashBoardDetailsCountParameters.process_code = dr.IsNull<string>("process_code");
+                          
+
+
+                            DashBoardData.Add(_DashBoardDetailsCountParameters);
+
+                        }
+                    }
+                }
+                return DashBoardData;
+            }
+            catch (Exception e)
+            {
+                return null;
+
+            }
+        }
     }
 }
