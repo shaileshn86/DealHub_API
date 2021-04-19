@@ -58,5 +58,6 @@ namespace DealHubAPI.Utility
 
             return true;
         }
+        
     }
 }

@@ -8,10 +8,11 @@ using DealHub_Domain.Authentication;
 using MySql.Data.MySqlClient;
 using System.Data;
 using DealHub_Dal.Extensions;
+using System.Net.Mail;
 
 namespace DealHub_Dal.Authentication
 {
-    public  class Authentication:BaseDAL
+    public class Authentication : BaseDAL
     {
         public static List<AuthenticationDetailParameters> AutheticateUser(AuthenticationParameters filter)
         {
@@ -31,14 +32,14 @@ namespace DealHub_Dal.Authentication
                         while (dr.Read())
                         {
                             AuthenticationDetailParameters _AuthenticationDetailParameters = new AuthenticationDetailParameters();
-                            string status= dr.IsNull<string>("status");
+                            string status = dr.IsNull<string>("status");
                             _AuthenticationDetailParameters.status = status;
-                            if (status!= "success")
+                            if (status != "success")
                             {
 
                                 _AuthenticationDetailParameters.user_code = "";
-                               
-                                
+
+
                             }
                             else
                             {
@@ -51,12 +52,12 @@ namespace DealHub_Dal.Authentication
                         }
                     }
                 }
-                    return authuser;
+                return authuser;
             }
             catch (Exception e)
             {
                 AuthenticationDetailParameters _AuthenticationDetailParameters = new AuthenticationDetailParameters();
-                string status ="failed with exception in code";
+                string status = "failed with exception in code";
                 _AuthenticationDetailParameters.status = status;
                 authuser.Add(_AuthenticationDetailParameters);
                 return authuser;
@@ -75,13 +76,13 @@ namespace DealHub_Dal.Authentication
                     cmd.Parameters.Add("@_user_code", MySqlDbType.String).Value = filter._user_code;
                     cmd.Parameters.Add("@_token", MySqlDbType.String).Value = filter._token;
                     conn.Open();
-                   int result=  cmd.ExecuteNonQuery();
+                    int result = cmd.ExecuteNonQuery();
                     return result;
                 }
 
-                
+
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return -1;
             }
@@ -108,7 +109,7 @@ namespace DealHub_Dal.Authentication
                     }
                 }
 
-                    return "No Result UnAuthorized";
+                return "No Result UnAuthorized";
             }
             catch (Exception e)
             {
@@ -143,7 +144,37 @@ namespace DealHub_Dal.Authentication
                 return "System Error";
             }
         }
-        
+
+        public static string sendmail(string usercode)
+        {
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                {
+                    MySqlCommand cmd = new MySqlCommand("sp_get_userEmailID", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add("@_user_code", MySqlDbType.String).Value = usercode;
+                    conn.Open();
+                    using (IDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            string status = dr.IsNull<string>("status");
+                            string EmailId = dr.IsNull<string>("email_id");
+                            return EmailId;
+                        }
+                    }
+                }
+                return "No Result UnAuthorized";
+
+            }
+            catch (Exception)
+            {
+                return "System Error";
+            }
+        }
+
+       
 
 
     }

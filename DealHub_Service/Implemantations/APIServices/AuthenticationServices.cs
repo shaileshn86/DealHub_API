@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using DealHub_Dal.Authentication;
 using DealHub_Domain.Authentication;
 
+
 namespace DealHub_Service.Implemantations.APIServices
 {
     public class AuthenticationServices
@@ -28,8 +29,11 @@ namespace DealHub_Service.Implemantations.APIServices
         {
             return Authentication.ResetPassword(filter);
         }
-        
+        public static string sendmail(string UserCode)
+        {
+            return Authentication.sendmail(UserCode);
 
+        }
 
     }
 }

@@ -13,6 +13,8 @@ using DealHub_Domain.Enum;
 using DealHub_Domain.Authentication;
 using DealHub_Domain.MenuBinding;
 using Newtonsoft.Json;
+using System.Net.Mail;
+using System.Threading.Tasks;
 
 namespace DealHubAPI.Controllers
 {
@@ -160,5 +162,30 @@ namespace DealHubAPI.Controllers
             return null;
         }
 
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("sendemail")]
+
+        public async Task<string> sendemail(string Usercode)
+        {
+            var message = new MailMessage();
+            var ToEmailId = AuthenticationServices.sendmail(Usercode);
+            message.To.Add(new MailAddress(ToEmailId));
+            message.From = new MailAddress("ankita.aherkar96@gmail.com");
+            message.Subject = "Reset Password";
+            message.Body = "Reset Password Link http://localhost:4200/ResetPassword";
+            message.IsBodyHtml = true;
+            using (var smtp = new SmtpClient("smtp.gmail.com", 587))
+            {
+
+                //smtp.Credentials = new NetworkCredential("ankita.aherkar96@gmail.com", "Mumbai@12345");
+                smtp.EnableSsl = true;
+                //smtp.Send(message);
+                await smtp.SendMailAsync(message);
+                await Task.FromResult(0);
+
+            }
+          
+        }
     }
 }
