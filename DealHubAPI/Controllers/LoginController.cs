@@ -168,19 +168,19 @@ namespace DealHubAPI.Controllers
         [AllowAnonymous]
         [Route("sendemail")]
 
-        public async Task sendemail(string Usercode)
+        public async Task sendemail(AuthenticationParameters model)
         {
             var message = new MailMessage();
-            var ToEmailId = AuthenticationServices.sendmail(Usercode);
+            var ToEmailId = AuthenticationServices.sendmail(model._user_code);
             message.To.Add(new MailAddress(ToEmailId));
             message.From = new MailAddress("ankita.aherkar96@gmail.com");
             message.Subject = "Reset Password";
-            message.Body = "Reset Password Link http://localhost:4200/ResetPassword";
+            message.Body = "Reset Password Link http://localhost:4200/ResetPassword?Usercode="+model._user_code;
             message.IsBodyHtml = true;
             using (var smtp = new SmtpClient("smtp.gmail.com", 587))
             {
 
-                //smtp.Credentials = new NetworkCredential("ankita.aherkar96@gmail.com", "Mumbai@12345");
+                smtp.Credentials = new NetworkCredential("ankita.aherkar96@gmail.com", "Mumbai@12345");
                 smtp.EnableSsl = true;
                 //smtp.Send(message);
                 await smtp.SendMailAsync(message);
