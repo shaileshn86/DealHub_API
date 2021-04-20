@@ -49,7 +49,7 @@ namespace DealHubAPI.Controllers
                        LoginResponse login = new LoginResponse();
                         string key = Utility.SecretkeyGenerator.CreateToken(auth.user_code,auth.password);
                         login.user.Api_Key = key;
-                        login.user.UserName = model._user_code;
+                        login.user.UserName = auth.user_code;
 
                         model._token = key;
                         int tokeupdated = AuthenticationServices.UpdateToken(model);
