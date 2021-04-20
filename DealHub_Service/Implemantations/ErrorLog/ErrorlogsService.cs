@@ -17,10 +17,6 @@ namespace DealHub_Service.Implemantations.ErrorLog
 
         }
 
-        public static PaginationDto<Errorlogs> GeterrorlogsList(int PageNo, int PageSize, string Searchkey = "", string orderby = "")
-
-        {
-            return DALErrorLogs.GeterrorlogsList(PageNo, PageSize, Searchkey, orderby);
-        }
+     
     }
 }

@@ -10,6 +10,7 @@ using DealHub_Domain.Helpers;
 using DealHub_Service.Implemantations.APIServices;
 using DealHub_Domain.Enum;
 using Newtonsoft.Json;
+using DealHub_Service.Implemantations;
 
 namespace DealHubAPI.Controllers
 {

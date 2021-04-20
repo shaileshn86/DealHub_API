@@ -15,6 +15,7 @@ using System.Web.Http.Cors;
 using Newtonsoft.Json;
 using System.Net.Mail;
 using System.Threading.Tasks;
+using DealHub_Domain.MenuBinding;
 
 namespace DealHubAPI.Controllers
 {

@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Implemantations\APIServices\AuthenticationServices.cs" />
+    <Compile Include="Implemantations\APIServices\DashBoardServices.cs" />
     <Compile Include="Implemantations\ErrorLog\ErrorlogsService.cs" />
     <Compile Include="Implemantations\APIServices\MenuBindingServices.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
