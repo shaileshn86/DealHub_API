@@ -166,7 +166,7 @@ namespace DealHubAPI.Controllers
         [AllowAnonymous]
         [Route("sendemail")]
 
-        public async Task<string> sendemail(string Usercode)
+        public async Task sendemail(string Usercode)
         {
             var message = new MailMessage();
             var ToEmailId = AuthenticationServices.sendmail(Usercode);
