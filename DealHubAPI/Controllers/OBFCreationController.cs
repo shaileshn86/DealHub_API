@@ -1,4 +1,10 @@
-﻿using System;
+﻿using DealHub_Domain.DashBoard;
+using DealHub_Domain.Enum;
+using DealHub_Domain.Helpers;
+using DealHub_Service.Implemantations.APIServices;
+using DealHubAPI.Utility;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -8,33 +14,48 @@ using System.Web.Http;
 
 namespace DealHubAPI.Controllers
 {
-    [RoutePrefix("Api/FileUpload")]
-    public class OBFCreationController : ApiController
+    [RoutePrefix("Api/Manage_OBF")]
+    public class OBFCreationController : BaseApiController
     {
-        [AllowAnonymous, HttpPost]
-
-        [Route("UploadData")]
-        public HttpResponseMessage Post(string screen_name)
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("CreateOBF")]
+        public HttpResponseMessage CreateOBF(ObfCreationParameters model)
         {
-            HttpResponseMessage result = null;
-            var httpRequest = HttpContext.Current.Request;
-            if (httpRequest.Files.Count > 0)
+            if (model == null)// Incase Post Object Is Null or Not Match and Object value is null
             {
-                var docfiles = new List<string>();
-                foreach (string file in httpRequest.Files)
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+            }
+            if (ModelState.IsValid)
+            {
+                List<ObfCreationDetailsParameters> _ObfCreationDetailsParameters = ObfServices.ObfCreation(model);
+
+                if (_ObfCreationDetailsParameters != null)
                 {
-                    var postedFile = httpRequest.Files[file];
-                    var filePath = HttpContext.Current.Server.MapPath("~/" + postedFile.FileName);
-                    postedFile.SaveAs(filePath);
-                    docfiles.Add(filePath);
+                    if (_ObfCreationDetailsParameters.Count != 0)
+                    {
+
+                        return Request.CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(_ObfCreationDetailsParameters));
+                    }
+                    else
+                    {
+                        result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                        return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+                    }
+
+
+
                 }
-                result = Request.CreateResponse(HttpStatusCode.Created, docfiles);
+                else
+                {
+                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+                }
+
             }
-            else
-            {
-                result = Request.CreateResponse(HttpStatusCode.BadRequest);
-            }
-            return result;
+
+            return null;
         }
     }
 }
