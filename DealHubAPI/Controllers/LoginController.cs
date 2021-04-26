@@ -16,6 +16,7 @@ using Newtonsoft.Json;
 using System.Net.Mail;
 using System.Threading.Tasks;
 using DealHub_Domain.MenuBinding;
+using System.Configuration;
 
 namespace DealHubAPI.Controllers
 {
@@ -170,24 +171,73 @@ namespace DealHubAPI.Controllers
 
         public async Task sendemail(AuthenticationParameters model)
         {
-            var message = new MailMessage();
+            //var message = new MailMessage();
             var ToEmailId = AuthenticationServices.sendmail(model._user_code);
-            message.To.Add(new MailAddress(ToEmailId));
-            message.From = new MailAddress("ankita.aherkar96@gmail.com");
-            message.Subject = "Reset Password";
-            message.Body = "Reset Password Link http://localhost:4200/ResetPassword?Usercode="+model._user_code;
-            message.IsBodyHtml = true;
-            using (var smtp = new SmtpClient("smtp.gmail.com", 587))
+            //message.To.Add(new MailAddress(ToEmailId));
+            //message.From = new MailAddress("ankita.aherkar96@gmail.com");
+            //message.Subject = "Reset Password";
+            //message.Body = "Reset Password Link http://localhost:4200/ResetPassword?Usercode=" + model._user_code;
+            //message.IsBodyHtml = true;
+            //using (var smtp = new SmtpClient("smtp.gmail.com", 587))
+            //{
+            //    smtp.Host = "10.2.202.42";
+            //    smtp.Credentials = new NetworkCredential("ankita.aherkar96@gmail.com", "Mumbai@12345");
+            //    smtp.EnableSsl = true;
+            //    //smtp.Send(message);
+            //    await smtp.SendMailAsync(message);
+            //    await Task.FromResult(0);
+
+            //}
+
+
+            using (SmtpClient smtpClient = new SmtpClient())
             {
+                using (MailMessage message = new MailMessage())
+                {
+                    message.Subject = "Reset Password";
+                    message.Body = "Reset Password Link http://localhost:4200/ResetPassword?Usercode=" + model._user_code;
+                    
+                    message.IsBodyHtml = true;
 
-                smtp.Credentials = new NetworkCredential("ankita.aherkar96@gmail.com", "Mumbai@12345");
-                smtp.EnableSsl = true;
-                //smtp.Send(message);
-                await smtp.SendMailAsync(message);
-                await Task.FromResult(0);
+                    string[] toAddressList = ToEmailId.Split(';');
+                    foreach (string address in toAddressList)
+                    {
+                        if (address.Length > 0)
+                        {
+                            if (address.Trim() != "")
+                            {
+                                message.To.Add(address);
+                            }
+                        }
+                    }
+                    //message.To.Add(new MailAddress(toAddressList));
 
+                    //message.Subject = "RFP email" == null ? "" : "RFP email";
+                    //message.Body = "This is sample message from BA Repository system." == null ? "" : "This is sample message from BA Repository system.";
+                    //message.IsBodyHtml = true;
+                    //message.To.Add(new MailAddress("23142920@mahindra.com"));
+
+                    smtpClient.Host = "10.2.202.42";
+                    smtpClient.Port = 25;
+                    smtpClient.UseDefaultCredentials = false;
+
+                    smtpClient.Credentials = new NetworkCredential("23142920@mahindra.com", "mtwtfss@108");
+                    smtpClient.EnableSsl = false;
+                  
+                    smtpClient.Send(message);
+                       
+                }
             }
-          
+            //using (var smtp = new SmtpClient("smtp.gmail.com", 587))
+            //{
+            //    smtp.Credentials = new NetworkCredential("cassh@mahindra.com","");
+            //    smtp.EnableSsl = true;
+            //    //smtp.Send(message);
+            //    await smtp.SendMailAsync(message);
+            //    await Task.FromResult(0);
+
+            //}
+
         }
     }
 }
