@@ -71,7 +71,7 @@ namespace DealHub_Dal.Authentication
             {
                 using (MySqlConnection conn = new MySqlConnection(connectionString))
                 {
-                    MySqlCommand cmd = new MySqlCommand("UpdateToken", conn);
+                    MySqlCommand cmd = new MySqlCommand("sp_save_token", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.Add("@_user_code", MySqlDbType.String).Value = filter._user_code;
                     cmd.Parameters.Add("@_token", MySqlDbType.String).Value = filter._token;
@@ -94,7 +94,7 @@ namespace DealHub_Dal.Authentication
             {
                 using (MySqlConnection conn = new MySqlConnection(connectionString))
                 {
-                    MySqlCommand cmd = new MySqlCommand("GetToken", conn);
+                    MySqlCommand cmd = new MySqlCommand("sp_GetToken", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.Add("@_user_code", MySqlDbType.String).Value = filter._user_code;
                     cmd.Parameters.Add("@_token", MySqlDbType.String).Value = filter._token;

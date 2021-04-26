@@ -20,7 +20,7 @@ namespace DealHub_Dal.OBF
                 //sp_auth_user
                 using (MySqlConnection conn = new MySqlConnection(connectionString))
                 {
-                    MySqlCommand cmd = new MySqlCommand("sp_manage_obfheaders", conn);
+                    MySqlCommand cmd = new MySqlCommand("sp_manage_dh_header", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
                     
 
