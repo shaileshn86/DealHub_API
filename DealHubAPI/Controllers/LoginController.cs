@@ -192,34 +192,66 @@ namespace DealHubAPI.Controllers
           
         }
 
+
         [HttpPost]
         [AllowAnonymous]
         [Route("UploadImage")]
         public HttpResponseMessage UploadImage()
         {
             string imageName = null;
+            HttpResponseMessage msg = new HttpResponseMessage();
             var httpRequest = HttpContext.Current.Request;
             //Upload Image
-            var postedFile = httpRequest.Files["Image"];
-            //Create custom filename
-            if (postedFile != null)
+            string DocsPathMain = "http://localhost:52229/Images/";
+            string docpath = "";
+            var postedFilenew = httpRequest.Files;
+            string filepathdetails = "";
+            try
             {
-                imageName = new String(Path.GetFileNameWithoutExtension(postedFile.FileName).Take(10).ToArray()).Replace(" ", "-");
-                imageName = imageName + DateTime.Now.ToString("yymmssfff") + Path.GetExtension(postedFile.FileName);
-                var filePath = HttpContext.Current.Server.MapPath("~/Images/" + imageName);
-                if (File.Exists(filePath))
+                foreach (string fileName in httpRequest.Files)
                 {
-                    File.Delete(filePath);
+                    var postedFile = httpRequest.Files[fileName];
+                    // var postedFile = httpRequest.Files["Image"];
+                    //Create custom filename
+                    if (postedFile != null)
+                    {
+                        //imageName = new String(Path.GetFileNameWithoutExtension(postedFile.FileName).Take(10).ToArray()).Replace(" ", "-");
+                        imageName = new String(Path.GetFileNameWithoutExtension(postedFile.FileName).ToArray()).Replace(" ", "-");
+                        imageName = imageName + DateTime.Now.ToString("yymmssfff") + Path.GetExtension(postedFile.FileName);
+                        docpath = DocsPathMain + imageName;
+                        var filePath = HttpContext.Current.Server.MapPath("~/Images/" + imageName);
+                        if (File.Exists(filePath))
+                        {
+                            File.Delete(filePath);
+
+
+
+                        }
+                        else
+                        {
+                            postedFile.SaveAs(filePath);
+                        }
+                        filepathdetails += docpath.ToString() + ",";
+                        msg = Request.CreateResponse(HttpStatusCode.OK, filepathdetails);
+                    }
+                    else
+                    {
+                        msg = Request.CreateResponse(HttpStatusCode.BadRequest, "File not uploaded : " + imageName);
+                    }
+
+
 
                 }
-                else { 
-                postedFile.SaveAs(filePath);
-                }
-                return Request.CreateResponse(HttpStatusCode.OK, "File uploaded");
             }
-            else {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, "File not uploaded");
+            catch (Exception ex)
+            {
+                msg = Request.CreateResponse(HttpStatusCode.BadRequest, ex.Message.ToString());
             }
+            return msg;
+
+
+
+
         }
     }
 }
