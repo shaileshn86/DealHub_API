@@ -15,4 +15,7 @@ namespace DealHub_Domain.Authentication
 
         public string token { get; set; }
     }
+
+
+ 
 }
