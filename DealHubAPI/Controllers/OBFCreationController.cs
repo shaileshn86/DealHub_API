@@ -57,5 +57,24 @@ namespace DealHubAPI.Controllers
 
             return null;
         }
+
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("GetMasterOBF")]
+        public HttpResponseMessage GetMasterOBF(string userid)
+        {
+            string json = ObfServices.GetMastersOBFCreation(userid);
+            if (json == "" || json == "error")
+            {
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+            }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, json);
+            }
+
+
+        }
     }
 }

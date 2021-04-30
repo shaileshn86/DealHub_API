@@ -46,6 +46,7 @@
     <Compile Include="Authentication\LoginResponse.cs" />
     <Compile Include="Authentication\User.cs" />
     <Compile Include="CommonParameters.cs" />
+    <Compile Include="DashBoard\CommonDetailsParameter.cs" />
     <Compile Include="DashBoard\DashBoardDetailsParameters.cs" />
     <Compile Include="DashBoard\ObfCreationDetailsParameters.cs" />
     <Compile Include="DashBoard\ObfCreationParameters.cs" />

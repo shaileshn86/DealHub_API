@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DealHub_Dal.DashBoard;
 using DealHub_Domain.DashBoard;
+using System.Data;
 
 namespace DealHub_Service.Implemantations.APIServices
 {
@@ -19,5 +20,7 @@ namespace DealHub_Service.Implemantations.APIServices
         {
             return DashBoard.GetDashBoardDataCount(filter);
         }
+
+       
     }
 }

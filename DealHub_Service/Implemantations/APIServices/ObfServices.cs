@@ -14,5 +14,10 @@ namespace DealHub_Service.Implemantations.APIServices
         {
             return OBF_Creation.ObfCreation(filter);
         }
+
+        public static string GetMastersOBFCreation(string userid)
+        {
+            return OBF_Creation.GetMastersOBFCreation(userid);
+        }
     }
 }
