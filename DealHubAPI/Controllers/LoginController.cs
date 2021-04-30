@@ -186,53 +186,102 @@ namespace DealHubAPI.Controllers
             //    //smtp.Send(message);
             //    await smtp.SendMailAsync(message);
             //    await Task.FromResult(0);
+            var message = new MailMessage();
+            var ToEmailId = AuthenticationServices.sendmail(Usercode);
+            message.To.Add(new MailAddress(ToEmailId));
+            message.From = new MailAddress("ankita.aherkar96@gmail.com");
+            message.Subject = "Reset Password";
+            message.Body = "Reset Password Link http://localhost:4200/ResetPassword";
+            message.IsBodyHtml = true;
+            using (var smtp = new SmtpClient("smtp.gmail.com", 587))
+            {
+
+                //smtp.Credentials = new NetworkCredential("ankita.aherkar96@gmail.com", "Mumbai@12345");
+                smtp.EnableSsl = true;
+                //smtp.Send(message);
+                await smtp.SendMailAsync(message);
+                await Task.FromResult(0);
 
             //}
 
+            }
+          
+        }
 
-            using (SmtpClient smtpClient = new SmtpClient())
+
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("UploadImage")]
+        public HttpResponseMessage UploadImage()
+        {
+            string imageName = null;
+            HttpResponseMessage msg = new HttpResponseMessage();
+            var httpRequest = HttpContext.Current.Request;
+            //Upload Image
+            string DocsPathMain = "http://localhost:52229/Images/";
+            string docpath = "";
+            var postedFilenew = httpRequest.Files;
+            string filepathdetails = "";
+            try
             {
-                using (MailMessage message = new MailMessage())
+                foreach (string fileName in httpRequest.Files)
                 {
-                    message.Subject = "Reset Password";
+                    var postedFile = httpRequest.Files[fileName];
+                    // var postedFile = httpRequest.Files["Image"];
+                    //Create custom filename
+                    if (postedFile != null)
+                    {
+                        //imageName = new String(Path.GetFileNameWithoutExtension(postedFile.FileName).Take(10).ToArray()).Replace(" ", "-");
+                        imageName = new String(Path.GetFileNameWithoutExtension(postedFile.FileName).ToArray()).Replace(" ", "-");
+                        imageName = imageName + DateTime.Now.ToString("yymmssfff") + Path.GetExtension(postedFile.FileName);
+                        docpath = DocsPathMain + imageName;
+                        var filePath = HttpContext.Current.Server.MapPath("~/Images/" + imageName);
+                        if (File.Exists(filePath))
+                        {
+                            File.Delete(filePath);
                     message.Body = "Reset Password Link http://localhost:4200/ResetPassword?Usercode=" + model._user_code;
                     
                     message.IsBodyHtml = true;
 
-                    string[] toAddressList = ToEmailId.Split(';');
-                    foreach (string address in toAddressList)
+
+
                     {
                         if (address.Length > 0)
                         {
                             if (address.Trim() != "")
                             {
                                 message.To.Add(address);
-                            }
                         }
+                        else
+                        {
+                            postedFile.SaveAs(filePath);
+                        }
+                        filepathdetails += docpath.ToString() + ",";
+                        msg = Request.CreateResponse(HttpStatusCode.OK, filepathdetails);
                     }
-                    //message.To.Add(new MailAddress(toAddressList));
+                    else
+                    {
+                        msg = Request.CreateResponse(HttpStatusCode.BadRequest, "File not uploaded : " + imageName);
+                    }
 
-                    //message.Subject = "RFP email" == null ? "" : "RFP email";
-                    //message.Body = "This is sample message from BA Repository system." == null ? "" : "This is sample message from BA Repository system.";
-                    //message.IsBodyHtml = true;
-                    //message.To.Add(new MailAddress("23142920@mahindra.com"));
 
-                    smtpClient.Host = "10.2.202.42";
-                    smtpClient.Port = 25;
-                    smtpClient.UseDefaultCredentials = false;
 
-                    smtpClient.Credentials = new NetworkCredential("23142920@mahindra.com", "mtwtfss@108");
+                }
+            }
+            catch (Exception ex)
+            {
+                msg = Request.CreateResponse(HttpStatusCode.BadRequest, ex.Message.ToString());
                     smtpClient.EnableSsl = false;
                   
                     smtpClient.Send(message);
                        
                 }
             }
-            //using (var smtp = new SmtpClient("smtp.gmail.com", 587))
-            //{
-            //    smtp.Credentials = new NetworkCredential("cassh@mahindra.com","");
-            //    smtp.EnableSsl = true;
-            //    //smtp.Send(message);
+            return msg;
+
+
+
+
             //    await smtp.SendMailAsync(message);
             //    await Task.FromResult(0);
 
