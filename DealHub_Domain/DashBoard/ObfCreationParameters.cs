@@ -1,0 +1,87 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+
+namespace DealHub_Domain.DashBoard
+{
+   public class ObfCreationParameters
+    {
+
+        public int _dh_id { get; set; }
+
+        public string _dh_project_name { get; set; }
+
+        public string _opportunity_id { get; set; }
+
+        public string _dh_location { get; set; }
+
+        public int _vertical_id { get; set; }
+
+        public int _verticalhead_id { get; set; }
+
+
+        public string _dh_desc { get; set; }
+
+        public int _dh_phase_id { get; set; }
+        public int _parent_dh_main_id { get; set; }
+        public int _dh_header_id { get; set; }
+
+        public decimal _total_revenue { get; set; }
+        public decimal _total_cost { get; set; }
+
+        public decimal _total_margin { get; set; }
+
+        public string _total_project_life { get; set; }
+
+        public decimal _irr_surplus_cash { get; set; }
+
+
+        public decimal _ebt { get; set; }
+
+        public decimal _capex { get; set; }
+
+        public decimal _irr_borrowed_fund { get; set; }
+
+        public string _is_loi_po_uploaded { get; set; }
+
+        public string _assumptions_and_risks { get; set; }
+
+        public string _fname { get; set; }
+
+        public string _fpath { get; set; }
+
+        public string _active { get; set; }
+
+        public string _status { get; set; }
+
+        public int _is_saved { get; set; }
+
+        public int _is_submitted { get; set; }
+
+        public string _created_by { get; set; }
+
+        public string _service_category { get; set; }
+
+        public int _payment_terms { get; set; }
+
+        public string _mode { get; set; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    }
+}
