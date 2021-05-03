@@ -155,7 +155,7 @@ namespace DealHub_Dal.OBF
                 using (MySqlConnection conn = new MySqlConnection(connectionString))
                 {
                     MySqlDataAdapter DA = new MySqlDataAdapter();
-                    MySqlCommand cmd = new MySqlCommand("SP_DH_GetMasters", conn);
+                    MySqlCommand cmd = new MySqlCommand("sp_get_master_list", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.Add("_user_id", MySqlDbType.String).Value = userid;
                     DA.SelectCommand = cmd;
@@ -176,6 +176,93 @@ namespace DealHub_Dal.OBF
             }
 
         }
+
+        public static List<SolutionCategory> get_master_solutions()
+        {
+            List<SolutionCategory> _SolutionCategory = new List<SolutionCategory>();
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                {
+                    MySqlDataAdapter DA = new MySqlDataAdapter();
+                    MySqlCommand cmd = new MySqlCommand("sp_get_master_solutions", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                   
+                    DA.SelectCommand = cmd;
+                    cmd.Connection = new MySqlConnection(connectionString);
+                    DataSet ds = new DataSet();
+                    DA.Fill(ds);
+
+                    DataSet rds = ds.GetTableName();
+
+                    DataTable Dt_SolutionCategory = rds.Tables["solutioncategory"].Copy();
+
+                    DataTable Dt_solutions = rds.Tables["solutions"].Copy();
+
+                    
+                    foreach( DataRow Row in Dt_SolutionCategory.Rows)
+                    {
+                        SolutionCategory sc = new SolutionCategory();
+                        UInt64 Solutioncategory_Id = Convert.ToUInt64(Row["value"]);
+                        sc.value = Row["value"].ToString();
+                        string SolutionCategory= Row["viewValue"].ToString();
+                        sc.viewValue = SolutionCategory;
+                        sc.Solutioncategory = SolutionCategory;
+                        sc.Solutionservices = new List<SolutionServices>();
+
+                        //DataRow[] Row_Solutionservices = Dt_solutions.Select("Solutioncategory_Id<=" + Solutioncategory_Id);
+
+
+                        for (UInt64 Add_noof_Solutionservices=1;Add_noof_Solutionservices <=Solutioncategory_Id;Add_noof_Solutionservices++)
+                        {
+                            SolutionServices ServiceObj = new SolutionServices();
+                          
+                            ServiceObj.Serviceslist = new List<Serviceslist>();
+
+                            DataRow[] Row_Solutions_In_Category = Dt_solutions.Select("Solutioncategory_Id=" + Add_noof_Solutionservices.ToString());
+
+                            ServiceObj.Solutioncategory = Row_Solutions_In_Category[0]["solutioncategory_name"].ToString();
+
+                            foreach (DataRow Rw in Row_Solutions_In_Category)
+                            {
+                                Serviceslist SL = new Serviceslist();
+
+                                SL.value = Rw["value"].ToString();
+                                SL.viewValue = Rw["viewValue"].ToString();
+
+                                ServiceObj.Serviceslist.Add(SL);
+                            }
+
+
+                            sc.Solutionservices.Add(ServiceObj);
+                        }
+
+                        
+
+
+
+
+
+
+
+                        _SolutionCategory.Add(sc);
+                    }
+
+                   
+
+
+                    return _SolutionCategory;
+
+                }
+            }
+            catch(Exception ex)
+            {
+                return null;
+            }
+        }
+
+
+
 
 
 

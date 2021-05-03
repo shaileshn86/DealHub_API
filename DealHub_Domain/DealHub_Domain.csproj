@@ -50,6 +50,7 @@
     <Compile Include="DashBoard\DashBoardDetailsParameters.cs" />
     <Compile Include="DashBoard\ObfCreationDetailsParameters.cs" />
     <Compile Include="DashBoard\ObfCreationParameters.cs" />
+    <Compile Include="DashBoard\OBF_Master_Detail_Parameter.cs" />
     <Compile Include="Entity\Logs\Errorlogs.cs" />
     <Compile Include="Entity\Logs\LogApiRequestResponse.cs" />
     <Compile Include="DashBoard\DashBoardParameters.cs" />
