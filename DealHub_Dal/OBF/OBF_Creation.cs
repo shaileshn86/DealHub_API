@@ -64,12 +64,24 @@ namespace DealHub_Dal.OBF
                             //_DashBoardDetailsParameters.obf_id = dr.IsNull<uint>("obf_id");
                             _ObfCreationDetailsParameters.Result = dr.IsNull<string>("result");
                             _ObfCreationDetailsParameters.dh_id = dr.IsNull<uint>("dh_id");
-                            _ObfCreationDetailsParameters.dh_id = dr.IsNull<uint>("dh_header_id");
+                            _ObfCreationDetailsParameters.dh_header_id = dr.IsNull<uint>("dh_header_id");
+
+                            filter._dh_header_id = Convert.ToInt32( _ObfCreationDetailsParameters.dh_header_id);
+                            
 
                             foreach (SaveAttachmentParameter attachement in filter.Attachments)
                             {
                                 attachement._dh_id= Convert.ToInt32( dr.IsNull<uint>("dh_id"));
-                                attachement._dh_header_id = Convert.ToInt32(dr.IsNull<uint>("dh_id"));
+                                attachement._dh_header_id = Convert.ToInt32(dr.IsNull<uint>("dh_header_id"));
+                                attachement._created_by = filter._created_by;
+                            }
+
+
+                            foreach (SaveServiceParameter service in filter.Services)
+                            {
+                              
+                                service._dh_header_id = Convert.ToInt32(dr.IsNull<uint>("dh_header_id"));
+                                service._created_by = filter._created_by;
                             }
 
 
@@ -80,6 +92,8 @@ namespace DealHub_Dal.OBF
 
                     // call of save attachments
                     SaveAttachments(filter.Attachments);
+                    SaveServices(filter.Services);
+                    SaveSectorSubSector(filter);
 
                 }
                 return _ObfCreationData;
@@ -98,6 +112,97 @@ namespace DealHub_Dal.OBF
             }
         }
 
+
+        public static List<SaveAttachementDetailsParameters> SaveSectorSubSector(ObfCreationParameters filter)
+        {
+            List<SaveAttachementDetailsParameters> _SaveAttachementDetailsParameters = new List<SaveAttachementDetailsParameters>();
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                {
+                    MySqlCommand cmd = new MySqlCommand("sp_save_dh_services", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add("@_dh_header_id", MySqlDbType.UInt32).Value = filter._dh_header_id;
+                    cmd.Parameters.Add("@_Sector_Id", MySqlDbType.UInt32).Value = filter._Sector_Id;
+                    cmd.Parameters.Add("@_SubSector_Id", MySqlDbType.UInt32).Value = filter._SubSector_Id;
+                    cmd.Parameters.Add("@_user_id", MySqlDbType.String).Value = filter._created_by;
+                    conn.Open();
+                    using (IDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            SaveAttachementDetailsParameters _Details = new SaveAttachementDetailsParameters();
+                            _Details.status = dr.IsNull<string>("status");
+                            _Details.message = dr.IsNull<string>("message");
+                            _SaveAttachementDetailsParameters.Add(_Details);
+                        }
+                    }
+                }
+
+                return _SaveAttachementDetailsParameters;
+            }
+            catch(Exception ex)
+            {
+                _SaveAttachementDetailsParameters = new List<SaveAttachementDetailsParameters>();
+
+                SaveAttachementDetailsParameters _Details = new SaveAttachementDetailsParameters();
+                _Details.status = "Failed";
+                _Details.message = "Error in saving parameters";
+                _SaveAttachementDetailsParameters.Add(_Details);
+
+                return _SaveAttachementDetailsParameters;
+            }
+        }
+
+
+        public static List<SaveAttachementDetailsParameters> SaveServices(List<SaveServiceParameter> filters)
+        {
+            List<SaveAttachementDetailsParameters> _SaveAttachementDetailsParameters = new List<SaveAttachementDetailsParameters>();
+            try
+            {
+                foreach (SaveServiceParameter filter in filters)
+                {
+
+                    foreach (Serviceslist SL in filter.Serviceslist)
+                    {
+                        using (MySqlConnection conn = new MySqlConnection(connectionString))
+                        {
+                            MySqlCommand cmd = new MySqlCommand("sp_save_dh_services", conn);
+                            cmd.CommandType = CommandType.StoredProcedure;
+                            cmd.Parameters.Add("@_dh_header_id", MySqlDbType.UInt32).Value = filter._dh_header_id;
+                            cmd.Parameters.Add("@solution_id", MySqlDbType.UInt32).Value = SL.value;
+                            cmd.Parameters.Add("@solutioncategory_id", MySqlDbType.UInt32).Value = filter.value;
+                            cmd.Parameters.Add("@_user_id", MySqlDbType.String).Value = filter._created_by;
+                            conn.Open();
+                            using (IDataReader dr = cmd.ExecuteReader())
+                            {
+                                while (dr.Read())
+                                {
+                                    SaveAttachementDetailsParameters _Details = new SaveAttachementDetailsParameters();
+                                    _Details.status = dr.IsNull<string>("status");
+                                    _Details.message = dr.IsNull<string>("message");
+                                    _SaveAttachementDetailsParameters.Add(_Details);
+                                }
+                            }
+                        }
+                    }
+                 
+                }
+
+                    return _SaveAttachementDetailsParameters;
+            }
+            catch(Exception ex)
+            {
+                _SaveAttachementDetailsParameters = new List<SaveAttachementDetailsParameters>();
+
+                SaveAttachementDetailsParameters _Details = new SaveAttachementDetailsParameters();
+                _Details.status = "Failed";
+                _Details.message = "Error in saving parameters";
+                _SaveAttachementDetailsParameters.Add(_Details);
+
+                return _SaveAttachementDetailsParameters;
+            }
+        }
 
         public static List<SaveAttachementDetailsParameters> SaveAttachments(List<SaveAttachmentParameter> filters )
         {
