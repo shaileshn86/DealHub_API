@@ -19,5 +19,10 @@ namespace DealHub_Service.Implemantations.APIServices
         {
             return OBF_Creation.GetMastersOBFCreation(userid);
         }
+
+        public static List<SolutionCategory> get_master_solutions()
+        {
+            return OBF_Creation.get_master_solutions();
+        }
     }
 }

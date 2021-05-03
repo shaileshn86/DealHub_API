@@ -76,5 +76,37 @@ namespace DealHubAPI.Controllers
 
 
         }
+
+
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("getmastersolutions")]
+        public HttpResponseMessage get_master_solutions()
+        {
+            List<SolutionCategory> _SolutionCategory = ObfServices.get_master_solutions();
+            if (_SolutionCategory != null)
+            {
+                if (_SolutionCategory.Count != 0)
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(_SolutionCategory));
+                }
+                else
+                {
+                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+                }
+
+
+
+            }
+            else
+            {
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+            }
+
+
+
+        }
     }
 }
