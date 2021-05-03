@@ -70,7 +70,13 @@ namespace DealHub_Domain.DashBoard
 
         public List<SaveAttachmentParameter> Attachments;
 
+        public List<SaveServiceParameter> Services;
 
+
+        public int _Sector_Id { get; set; }
+
+
+        public int _SubSector_Id { get; set; }
 
 
 
@@ -89,6 +95,15 @@ namespace DealHub_Domain.DashBoard
     public class SaveAttachmentParameter: CommonParamter
     {
         public string _description { get; set; }
+    }
+
+
+    public class SaveServiceParameter:CommonParamter
+    {
+        public string Solutioncategory { get; set; }
+
+        public string value { get; set; }
+        public List<Serviceslist> Serviceslist { get; set; }
     }
 
 
