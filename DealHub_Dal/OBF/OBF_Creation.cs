@@ -219,9 +219,11 @@ namespace DealHub_Dal.OBF
                           
                             ServiceObj.Serviceslist = new List<Serviceslist>();
 
+
                             DataRow[] Row_Solutions_In_Category = Dt_solutions.Select("Solutioncategory_Id=" + Add_noof_Solutionservices.ToString());
 
                             ServiceObj.Solutioncategory = Row_Solutions_In_Category[0]["solutioncategory_name"].ToString();
+                            ServiceObj.value = Row_Solutions_In_Category[0]["Solutioncategory_Id"].ToString();
 
                             foreach (DataRow Rw in Row_Solutions_In_Category)
                             {

@@ -19,6 +19,8 @@ namespace DealHub_Domain.DashBoard
         public class SolutionServices 
         {
             public string Solutioncategory { get; set; }
+
+            public string value { get; set; }
             public List<Serviceslist> Serviceslist { get; set; }
         }
 
