@@ -10,6 +10,8 @@ namespace DealHub_Domain.DashBoard
     {
         public string Result { get; set; }
 
+        
+
      
     }
 

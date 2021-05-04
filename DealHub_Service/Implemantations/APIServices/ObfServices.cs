@@ -24,5 +24,10 @@ namespace DealHub_Service.Implemantations.APIServices
         {
             return OBF_Creation.get_master_solutions();
         }
+
+        public static List<SaveAttachementDetailsParameters> SaveServiceSolutionSector(SaveServiceSolutionParameters filter)
+        {
+            return OBF_Creation.SaveServiceSolutionSector(filter);
+        }
     }
 }
