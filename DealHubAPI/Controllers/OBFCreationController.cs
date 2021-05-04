@@ -57,5 +57,98 @@ namespace DealHubAPI.Controllers
 
             return null;
         }
+
+
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("SaveServiceSolutionSector")]
+        public HttpResponseMessage SaveServiceSolution(SaveServiceSolutionParameters model)
+        {
+            if (model == null)// Incase Post Object Is Null or Not Match and Object value is null
+            {
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+            }
+            if (ModelState.IsValid)
+            {
+                List<SaveAttachementDetailsParameters> _SaveAttachementDetailsParameters = ObfServices.SaveServiceSolutionSector(model);
+
+                if (_SaveAttachementDetailsParameters != null)
+                {
+                    if (_SaveAttachementDetailsParameters.Count != 0)
+                    {
+
+                        return Request.CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(_SaveAttachementDetailsParameters));
+                    }
+                    else
+                    {
+                        result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                        return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+                    }
+
+
+
+                }
+                else
+                {
+                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+                }
+
+            }
+
+            return null;
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("GetMasterOBF")]
+        public HttpResponseMessage GetMasterOBF(string userid)
+        {
+            string json = ObfServices.GetMastersOBFCreation(userid);
+            if (json == "" || json == "error")
+            {
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+            }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, json);
+            }
+
+
+        }
+
+
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("getmastersolutions")]
+        public HttpResponseMessage get_master_solutions()
+        {
+            List<SolutionCategory> _SolutionCategory = ObfServices.get_master_solutions();
+            if (_SolutionCategory != null)
+            {
+                if (_SolutionCategory.Count != 0)
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(_SolutionCategory));
+                }
+                else
+                {
+                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+                }
+
+
+
+            }
+            else
+            {
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+            }
+
+
+
+        }
     }
 }

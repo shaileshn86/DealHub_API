@@ -18,4 +18,7 @@ namespace DealHub_Domain.Authentication
         public string privilege_name { get; set; }
 
     }
+
+
+ 
 }

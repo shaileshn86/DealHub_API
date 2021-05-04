@@ -24,5 +24,33 @@ namespace DealHub_Dal.Extensions
             else
                 return default(T);
         }
+
+        public static DataSet GetTableName (this DataSet ds)
+        {
+           try
+            {
+                for (int i=0; i< ds.Tables.Count;i++)
+                {
+                    if (ds.Tables[i].Columns.Contains("tablename") )
+                    {
+                        try
+                        {
+                            ds.Tables[i].TableName = ds.Tables[i].Rows[0]["tablename"].ToString();
+                        }
+                        catch(Exception ex)
+                        {
+
+                        }
+                        
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+
+            }
+
+            return ds;
+        }
     }
 }

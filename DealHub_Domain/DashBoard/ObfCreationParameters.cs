@@ -7,10 +7,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace DealHub_Domain.DashBoard
 {
-   public class ObfCreationParameters
+   public class ObfCreationParameters: CommonParamter
     {
 
-        public int _dh_id { get; set; }
+        
 
         public string _dh_project_name { get; set; }
 
@@ -27,7 +27,7 @@ namespace DealHub_Domain.DashBoard
 
         public int _dh_phase_id { get; set; }
         public int _parent_dh_main_id { get; set; }
-        public int _dh_header_id { get; set; }
+      
 
         public decimal _total_revenue { get; set; }
         public decimal _total_cost { get; set; }
@@ -49,9 +49,7 @@ namespace DealHub_Domain.DashBoard
 
         public string _assumptions_and_risks { get; set; }
 
-        public string _fname { get; set; }
-
-        public string _fpath { get; set; }
+     
 
         public string _active { get; set; }
 
@@ -61,7 +59,7 @@ namespace DealHub_Domain.DashBoard
 
         public int _is_submitted { get; set; }
 
-        public string _created_by { get; set; }
+     
 
         public string _service_category { get; set; }
 
@@ -70,6 +68,17 @@ namespace DealHub_Domain.DashBoard
         public string _mode { get; set; }
 
 
+        public List<SaveAttachmentParameter> Attachments;
+
+        public List<SaveServiceParameter> Services;
+
+
+        public int _Sector_Id { get; set; }
+
+
+        public int _SubSector_Id { get; set; }
+
+        public string save_with_solution_sector { get; set; }
 
 
 
@@ -82,6 +91,46 @@ namespace DealHub_Domain.DashBoard
 
 
 
+    }
+
+
+    public class SaveAttachmentParameter: CommonParamter
+    {
+        public string _description { get; set; }
+    }
+
+
+    public class SaveServiceParameter:CommonParamter
+    {
+        public string Solutioncategory { get; set; }
+
+        public string value { get; set; }
+        public List<Serviceslist> Serviceslist { get; set; }
+    }
+
+    public class SaveServiceSolutionParameters: CommonParamter
+    {
+        public List<SaveServiceParameter> Services;
+
+
+        public int _Sector_Id { get; set; }
+
+
+        public int _SubSector_Id { get; set; }
+    }
+
+
+    public class CommonParamter
+    {
+        public int _dh_id { get; set; }
+
+        public int _dh_header_id { get; set; }
+
+        public string _fname { get; set; }
+
+        public string _fpath { get; set; }
+
+        public string _created_by { get; set; }
 
     }
 }
