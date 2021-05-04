@@ -92,8 +92,13 @@ namespace DealHub_Dal.OBF
 
                     // call of save attachments
                     SaveAttachments(filter.Attachments);
-                    SaveServices(filter.Services);
-                    SaveSectorSubSector(filter);
+
+                    if (filter.save_with_solution_sector=="Y")
+                    {
+                        SaveServices(filter.Services);
+                        SaveSectorSubSector(filter);
+                    }
+
 
                 }
                 return _ObfCreationData;
