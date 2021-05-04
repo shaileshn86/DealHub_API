@@ -172,6 +172,7 @@ namespace DealHub_Dal.OBF
                             cmd.Parameters.Add("@_dh_header_id", MySqlDbType.UInt32).Value = filter._dh_header_id;
                             cmd.Parameters.Add("@solution_id", MySqlDbType.UInt32).Value = SL.value;
                             cmd.Parameters.Add("@solutioncategory_id", MySqlDbType.UInt32).Value = filter.value;
+                            cmd.Parameters.Add("@solution_Name", MySqlDbType.String).Value = SL.viewValue;
                             cmd.Parameters.Add("@_user_id", MySqlDbType.String).Value = filter._created_by;
                             conn.Open();
                             using (IDataReader dr = cmd.ExecuteReader())
