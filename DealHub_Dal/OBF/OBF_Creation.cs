@@ -95,8 +95,13 @@ namespace DealHub_Dal.OBF
 
                     if (filter.save_with_solution_sector=="Y")
                     {
+                        SaveServiceSolutionParameters SSP = new SaveServiceSolutionParameters();
+                        SSP._dh_header_id = filter._dh_header_id;
+                        SSP._Sector_Id = filter._Sector_Id;
+                        SSP._SubSector_Id = filter._SubSector_Id;
+                        SSP._created_by = filter._created_by;
                         SaveServices(filter.Services);
-                        SaveSectorSubSector(filter);
+                        SaveSectorSubSector(SSP);
                     }
 
 
@@ -118,7 +123,31 @@ namespace DealHub_Dal.OBF
         }
 
 
-        public static List<SaveAttachementDetailsParameters> SaveSectorSubSector(ObfCreationParameters filter)
+        public static List<SaveAttachementDetailsParameters> SaveServiceSolutionSector(SaveServiceSolutionParameters filter)
+        {
+            List<SaveAttachementDetailsParameters> _SaveAttachementDetailsParameters = new List<SaveAttachementDetailsParameters>();
+            try
+            {
+               _SaveAttachementDetailsParameters= SaveServices(filter.Services);
+                _SaveAttachementDetailsParameters = SaveSectorSubSector(filter);
+                return _SaveAttachementDetailsParameters;
+            }
+            catch(Exception ex)
+            {
+                _SaveAttachementDetailsParameters = new List<SaveAttachementDetailsParameters>();
+
+                SaveAttachementDetailsParameters _Details = new SaveAttachementDetailsParameters();
+                _Details.status = "Failed";
+                _Details.message = "Error in saving parameters";
+                _SaveAttachementDetailsParameters.Add(_Details);
+
+                return _SaveAttachementDetailsParameters;
+            }
+
+        }
+
+
+        public static List<SaveAttachementDetailsParameters> SaveSectorSubSector(SaveServiceSolutionParameters filter)
         {
             List<SaveAttachementDetailsParameters> _SaveAttachementDetailsParameters = new List<SaveAttachementDetailsParameters>();
             try

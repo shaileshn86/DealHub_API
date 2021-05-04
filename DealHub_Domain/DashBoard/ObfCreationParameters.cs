@@ -108,6 +108,17 @@ namespace DealHub_Domain.DashBoard
         public List<Serviceslist> Serviceslist { get; set; }
     }
 
+    public class SaveServiceSolutionParameters: CommonParamter
+    {
+        public List<SaveServiceParameter> Services;
+
+
+        public int _Sector_Id { get; set; }
+
+
+        public int _SubSector_Id { get; set; }
+    }
+
 
     public class CommonParamter
     {
