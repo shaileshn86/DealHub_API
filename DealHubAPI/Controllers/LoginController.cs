@@ -17,6 +17,8 @@ using System.Net.Mail;
 using System.Threading.Tasks;
 using DealHub_Domain.MenuBinding;
 using System.Configuration;
+using System.Web;
+using System.IO;
 
 namespace DealHubAPI.Controllers
 {
@@ -51,7 +53,7 @@ namespace DealHubAPI.Controllers
                         string key = Utility.SecretkeyGenerator.CreateToken(auth.user_code,auth.password);
                         login.user.Api_Key = key;
                         login.user.UserName = model._user_code;
-
+                        login.user.privilege_name = auth.privilege_name;
                         model._token = key;
                         int tokeupdated = AuthenticationServices.UpdateToken(model);
                         //  result = new ReponseMessage(KeyName: "api_key", Code: key, MsgNo: HttpStatusCode.OK.ToCode(), MsgType: MsgTypeEnum.S.ToString(), Message: "Success");
@@ -187,7 +189,7 @@ namespace DealHubAPI.Controllers
             //    await smtp.SendMailAsync(message);
             //    await Task.FromResult(0);
             var message = new MailMessage();
-            var ToEmailId = AuthenticationServices.sendmail(Usercode);
+            
             message.To.Add(new MailAddress(ToEmailId));
             message.From = new MailAddress("ankita.aherkar96@gmail.com");
             message.Subject = "Reset Password";
@@ -239,18 +241,11 @@ namespace DealHubAPI.Controllers
                         if (File.Exists(filePath))
                         {
                             File.Delete(filePath);
-                    message.Body = "Reset Password Link http://localhost:4200/ResetPassword?Usercode=" + model._user_code;
-                    
-                    message.IsBodyHtml = true;
 
 
 
-                    {
-                        if (address.Length > 0)
-                        {
-                            if (address.Trim() != "")
-                            {
-                                message.To.Add(address);
+
+
                         }
                         else
                         {
@@ -266,26 +261,20 @@ namespace DealHubAPI.Controllers
 
 
 
+
+
                 }
             }
             catch (Exception ex)
             {
                 msg = Request.CreateResponse(HttpStatusCode.BadRequest, ex.Message.ToString());
-                    smtpClient.EnableSsl = false;
-                  
-                    smtpClient.Send(message);
-                       
-                }
             }
             return msg;
 
 
 
 
-            //    await smtp.SendMailAsync(message);
-            //    await Task.FromResult(0);
 
-            //}
 
         }
     }

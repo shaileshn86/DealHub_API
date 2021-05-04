@@ -45,6 +45,7 @@ namespace DealHub_Dal.Authentication
                             {
                                 _AuthenticationDetailParameters.user_code = dr.IsNull<string>("user_code");
                                 _AuthenticationDetailParameters.password = dr.IsNull<string>("password");
+                                _AuthenticationDetailParameters.privilege_name = dr.IsNull<string>("privilege_name");
 
                             }
                             authuser.Add(_AuthenticationDetailParameters);
