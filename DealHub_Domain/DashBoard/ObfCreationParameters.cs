@@ -78,6 +78,8 @@ namespace DealHub_Domain.DashBoard
 
         public int _SubSector_Id { get; set; }
 
+        public string save_with_solution_sector { get; set; }
+
 
 
 
