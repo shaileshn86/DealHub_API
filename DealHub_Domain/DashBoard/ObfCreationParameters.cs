@@ -132,6 +132,16 @@ namespace DealHub_Domain.DashBoard
     }
 
 
+    public class ApproveRejectOBFParameter:CommonParamter
+    {
+        public int isapproveds { get; set; }
+
+        public string rejectcomment { get; set; }
+
+        public int rejectionto { get; set; }
+    }
+
+
     public class CommonParamter
     {
         public int _dh_id { get; set; }

@@ -148,6 +148,11 @@ namespace DealHub_Dal.OBF
             List<SaveAttachementDetailsParameters> _SaveAttachementDetailsParameters = new List<SaveAttachementDetailsParameters>();
             try
             {
+                foreach (SaveServiceParameter Service  in filter.Services)
+                {
+                    Service._dh_header_id = filter._dh_header_id;
+                    Service._dh_id = filter._dh_id;
+                }
                _SaveAttachementDetailsParameters= SaveServices(filter.Services);
                 _SaveAttachementDetailsParameters = SaveSectorSubSector(filter);
                 return _SaveAttachementDetailsParameters;
@@ -166,6 +171,8 @@ namespace DealHub_Dal.OBF
 
         }
 
+
+       
 
         public static List<SaveAttachementDetailsParameters> submit_dh_headers(SubmitOBFParameters filter)
         {
