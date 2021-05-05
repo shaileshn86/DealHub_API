@@ -128,6 +128,14 @@ namespace DealHub_Dal.OBF
             List<SaveAttachementDetailsParameters> _SaveAttachementDetailsParameters = new List<SaveAttachementDetailsParameters>();
             try
             {
+                foreach (SaveServiceParameter f in filter.Services)
+                {
+                    f._dh_id = filter._dh_id;
+                    f._dh_header_id = filter._dh_header_id;
+                    f._created_by = filter._created_by;
+                    f._fname = filter._fname;
+                    f._fpath = filter._fpath;
+                }
                _SaveAttachementDetailsParameters= SaveServices(filter.Services);
                 _SaveAttachementDetailsParameters = SaveSectorSubSector(filter);
                 return _SaveAttachementDetailsParameters;
@@ -154,7 +162,7 @@ namespace DealHub_Dal.OBF
             {
                 using (MySqlConnection conn = new MySqlConnection(connectionString))
                 {
-                    MySqlCommand cmd = new MySqlCommand("sp_save_dh_services", conn);
+                    MySqlCommand cmd = new MySqlCommand("sp_save_dh_sector_subsector", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.Add("@_dh_header_id", MySqlDbType.UInt32).Value = filter._dh_header_id;
                     cmd.Parameters.Add("@_Sector_Id", MySqlDbType.UInt32).Value = filter._Sector_Id;
