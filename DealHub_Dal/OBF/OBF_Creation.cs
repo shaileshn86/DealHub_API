@@ -177,7 +177,7 @@ namespace DealHub_Dal.OBF
                 {
                     using (MySqlConnection conn = new MySqlConnection(connectionString))
                     {
-                        MySqlCommand cmd = new MySqlCommand("sp_save_dh_services", conn);
+                        MySqlCommand cmd = new MySqlCommand("sp_submit_dh_header", conn);
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.Add("@_dh_header_id", MySqlDbType.UInt32).Value = filter._dh_header_id;
                         cmd.Parameters.Add("@_dh_id", MySqlDbType.UInt32).Value = filter._dh_id;
