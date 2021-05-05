@@ -81,7 +81,7 @@ namespace DealHub_Domain.DashBoard
         public string save_with_solution_sector { get; set; }
 
 
-
+        public List<SubmitOBFParameters> _SubmitOBFParameters { get; set; }
 
 
 
@@ -106,6 +106,8 @@ namespace DealHub_Domain.DashBoard
 
         public string value { get; set; }
         public List<Serviceslist> Serviceslist { get; set; }
+
+       
     }
 
     public class SaveServiceSolutionParameters: CommonParamter
@@ -117,6 +119,26 @@ namespace DealHub_Domain.DashBoard
 
 
         public int _SubSector_Id { get; set; }
+
+        public SubmitOBFParameters SubmitOBF { get; set; }
+    }
+
+
+    public class SubmitOBFParameters:CommonParamter
+    {
+        public string _active { get; set; }
+
+        public int _is_submitted { get; set; }
+    }
+
+
+    public class ApproveRejectOBFParameter:CommonParamter
+    {
+        public int isapproveds { get; set; }
+
+        public string rejectcomment { get; set; }
+
+        public int rejectionto { get; set; }
     }
 
 

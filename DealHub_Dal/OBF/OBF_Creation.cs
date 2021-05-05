@@ -84,6 +84,21 @@ namespace DealHub_Dal.OBF
                                 service._created_by = filter._created_by;
                             }
 
+                            foreach (SaveServiceParameter service in filter.Services)
+                            {
+
+                                service._dh_header_id = Convert.ToInt32(dr.IsNull<uint>("dh_header_id"));
+                                service._created_by = filter._created_by;
+                            }
+
+                            foreach(SubmitOBFParameters Submitobf in filter._SubmitOBFParameters)
+                            {
+                                Submitobf._dh_id = Convert.ToInt32(dr.IsNull<uint>("dh_id"));
+                                Submitobf._dh_header_id = Convert.ToInt32(dr.IsNull<uint>("dh_header_id"));
+                                Submitobf._created_by = filter._created_by;
+                                Submitobf._is_submitted = filter._is_submitted;
+                            }
+
 
                             _ObfCreationData.Add(_ObfCreationDetailsParameters);
 
@@ -102,6 +117,11 @@ namespace DealHub_Dal.OBF
                         SSP._created_by = filter._created_by;
                         SaveServices(filter.Services);
                         SaveSectorSubSector(SSP);
+                    }
+
+                    if (filter._is_submitted==1)
+                    {
+                        submit_dh_headers(filter._SubmitOBFParameters[0]);
                     }
 
 
@@ -128,11 +148,84 @@ namespace DealHub_Dal.OBF
             List<SaveAttachementDetailsParameters> _SaveAttachementDetailsParameters = new List<SaveAttachementDetailsParameters>();
             try
             {
+                foreach (SaveServiceParameter f in filter.Services)
+                {
+                    f._dh_id = filter._dh_id;
+                    f._dh_header_id = filter._dh_header_id;
+                    f._created_by = filter._created_by;
+                    f._fname = filter._fname;
+                    f._fpath = filter._fpath;
+                }
                _SaveAttachementDetailsParameters= SaveServices(filter.Services);
                 _SaveAttachementDetailsParameters = SaveSectorSubSector(filter);
                 return _SaveAttachementDetailsParameters;
             }
             catch(Exception ex)
+            {
+                _SaveAttachementDetailsParameters = new List<SaveAttachementDetailsParameters>();
+
+                SaveAttachementDetailsParameters _Details = new SaveAttachementDetailsParameters();
+                _Details.status = "Failed";
+                _Details.message = "Error in saving parameters";
+                _SaveAttachementDetailsParameters.Add(_Details);
+
+                return _SaveAttachementDetailsParameters;
+            }
+
+        }
+
+
+       
+
+        public static List<SaveAttachementDetailsParameters> submit_dh_headers(SubmitOBFParameters filter)
+        {
+            List<SaveAttachementDetailsParameters> _SaveAttachementDetailsParameters = new List<SaveAttachementDetailsParameters>();
+            try
+            {
+
+                try
+                {
+                    using (MySqlConnection conn = new MySqlConnection(connectionString))
+                    {
+                        MySqlCommand cmd = new MySqlCommand("sp_submit_dh_header", conn);
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@_dh_header_id", MySqlDbType.UInt32).Value = filter._dh_header_id;
+                        cmd.Parameters.Add("@_dh_id", MySqlDbType.UInt32).Value = filter._dh_id;
+                       
+                        cmd.Parameters.Add("@_user_id", MySqlDbType.String).Value = filter._created_by;
+                        cmd.Parameters.Add("@_active", MySqlDbType.String).Value = filter._active;
+                        cmd.Parameters.Add("@_is_submitted", MySqlDbType.String).Value = filter._is_submitted;
+
+                        conn.Open();
+                        using (IDataReader dr = cmd.ExecuteReader())
+                        {
+                            while (dr.Read())
+                            {
+                                SaveAttachementDetailsParameters _Details = new SaveAttachementDetailsParameters();
+                                _Details.status = dr.IsNull<string>("status");
+                                _Details.message = dr.IsNull<string>("message");
+                                _SaveAttachementDetailsParameters.Add(_Details);
+                            }
+                        }
+                    }
+
+                    return _SaveAttachementDetailsParameters;
+                }
+                catch (Exception ex)
+                {
+                    _SaveAttachementDetailsParameters = new List<SaveAttachementDetailsParameters>();
+
+                    SaveAttachementDetailsParameters _Details = new SaveAttachementDetailsParameters();
+                    _Details.status = "Failed";
+                    _Details.message = "Error in saving parameters";
+                    _SaveAttachementDetailsParameters.Add(_Details);
+
+                    return _SaveAttachementDetailsParameters;
+                }
+
+                return _SaveAttachementDetailsParameters;
+            }
+            catch (Exception ex)
             {
                 _SaveAttachementDetailsParameters = new List<SaveAttachementDetailsParameters>();
 
@@ -154,7 +247,7 @@ namespace DealHub_Dal.OBF
             {
                 using (MySqlConnection conn = new MySqlConnection(connectionString))
                 {
-                    MySqlCommand cmd = new MySqlCommand("sp_save_dh_services", conn);
+                    MySqlCommand cmd = new MySqlCommand("sp_save_dh_sector_subsector", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.Add("@_dh_header_id", MySqlDbType.UInt32).Value = filter._dh_header_id;
                     cmd.Parameters.Add("@_Sector_Id", MySqlDbType.UInt32).Value = filter._Sector_Id;
