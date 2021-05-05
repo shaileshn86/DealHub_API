@@ -34,5 +34,10 @@ namespace DealHub_Service.Implemantations.APIServices
         {
             return OBF_Creation.submit_dh_headers(filter);
         }
+
+        public static List<commanmessges> ApproveRejectObf(ApproveRejectOBFParameter filter)
+        {
+            return OBF_Creation.ApproveRejectObf(filter);
+        }
     }
 }

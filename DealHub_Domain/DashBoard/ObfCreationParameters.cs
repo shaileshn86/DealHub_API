@@ -84,7 +84,7 @@ namespace DealHub_Domain.DashBoard
         public List<SubmitOBFParameters> _SubmitOBFParameters { get; set; }
 
 
-
+        public string _customer_name { get; set; }
 
 
 
@@ -129,6 +129,16 @@ namespace DealHub_Domain.DashBoard
         public string _active { get; set; }
 
         public int _is_submitted { get; set; }
+    }
+
+
+    public class ApproveRejectOBFParameter:CommonParamter
+    {
+        public int isapproved { get; set; }
+
+        public string rejectcomment { get; set; }
+
+        public int rejectionto { get; set; }
     }
 
 

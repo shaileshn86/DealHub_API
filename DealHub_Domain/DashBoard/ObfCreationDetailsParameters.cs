@@ -22,6 +22,13 @@ namespace DealHub_Domain.DashBoard
     }
 
 
+    public class commanmessges
+    {
+        public string status { get; set; }
+        public string message { get; set; }
+    }
+
+
 
     
 
