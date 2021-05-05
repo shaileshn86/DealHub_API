@@ -53,6 +53,7 @@ namespace DealHub_Dal.OBF
                     cmd.Parameters.Add("@_service_category", MySqlDbType.String).Value = filter._service_category;
                     cmd.Parameters.Add("@_payment_terms", MySqlDbType.UInt32).Value = filter._payment_terms;
                     cmd.Parameters.Add("@_mode", MySqlDbType.String).Value = filter._mode;
+                    cmd.Parameters.Add("@_customer_name", MySqlDbType.String).Value = filter._customer_name;
 
                     conn.Open();
                     using (IDataReader dr = cmd.ExecuteReader())
@@ -204,6 +205,9 @@ namespace DealHub_Dal.OBF
                                 SaveAttachementDetailsParameters _Details = new SaveAttachementDetailsParameters();
                                 _Details.status = dr.IsNull<string>("status");
                                 _Details.message = dr.IsNull<string>("message");
+                                _Details.dh_header_id = Convert.ToUInt32( filter._dh_header_id);
+                                _Details.dh_id = Convert.ToUInt32(filter._dh_id);
+
                                 _SaveAttachementDetailsParameters.Add(_Details);
                             }
                         }
@@ -261,6 +265,8 @@ namespace DealHub_Dal.OBF
                             SaveAttachementDetailsParameters _Details = new SaveAttachementDetailsParameters();
                             _Details.status = dr.IsNull<string>("status");
                             _Details.message = dr.IsNull<string>("message");
+                            _Details.dh_header_id = Convert.ToUInt32(filter._dh_header_id);
+                            _Details.dh_id = Convert.ToUInt32(filter._dh_id);
                             _SaveAttachementDetailsParameters.Add(_Details);
                         }
                     }
@@ -309,6 +315,8 @@ namespace DealHub_Dal.OBF
                                     SaveAttachementDetailsParameters _Details = new SaveAttachementDetailsParameters();
                                     _Details.status = dr.IsNull<string>("status");
                                     _Details.message = dr.IsNull<string>("message");
+                                    _Details.dh_header_id = Convert.ToUInt32(filter._dh_header_id);
+                                    _Details.dh_id = Convert.ToUInt32(filter._dh_id);
                                     _SaveAttachementDetailsParameters.Add(_Details);
                                 }
                             }
@@ -496,6 +504,49 @@ namespace DealHub_Dal.OBF
             }
         }
 
+        public static List<commanmessges> ApproveRejectObf(ApproveRejectOBFParameter filters)
+        {
+            List<commanmessges> _commanmessges = new List<commanmessges>();
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                {
+                    MySqlCommand cmd = new MySqlCommand("sp_dh_approve_reject", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add("@dhheaderid", MySqlDbType.UInt32).Value = filters._dh_header_id;
+                    cmd.Parameters.Add("@_user_id", MySqlDbType.String).Value = filters._created_by;
+                    cmd.Parameters.Add("@isapproved", MySqlDbType.UInt32).Value = filters.isapproved;
+                    cmd.Parameters.Add("@rejectcomment", MySqlDbType.String).Value = filters.rejectcomment;
+                    cmd.Parameters.Add("@rejectionto", MySqlDbType.UInt32).Value = filters.rejectionto;
+
+                    conn.Open();
+                    using (IDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            commanmessges _Details = new commanmessges();
+                            _Details.status = dr.IsNull<string>("status");
+                            _Details.message = dr.IsNull<string>("message");
+                           
+                            _commanmessges.Add(_Details);
+                        }
+                    }
+                }
+
+                return _commanmessges;
+            }
+            catch (Exception ex)
+            {
+                _commanmessges = new List<commanmessges>();
+
+                commanmessges _Details = new commanmessges();
+                _Details.status = "Failed";
+                _Details.message = "Error in saving parameters";
+                _commanmessges.Add(_Details);
+
+                return _commanmessges;
+            }
+        }
 
 
 
