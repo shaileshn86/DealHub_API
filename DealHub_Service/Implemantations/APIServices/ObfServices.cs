@@ -29,5 +29,10 @@ namespace DealHub_Service.Implemantations.APIServices
         {
             return OBF_Creation.SaveServiceSolutionSector(filter);
         }
+
+        public static List<SaveAttachementDetailsParameters> submit_dh_headers(SubmitOBFParameters filter)
+        {
+            return OBF_Creation.submit_dh_headers(filter);
+        }
     }
 }
