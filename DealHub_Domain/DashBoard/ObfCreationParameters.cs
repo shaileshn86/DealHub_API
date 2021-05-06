@@ -72,6 +72,10 @@ namespace DealHub_Domain.DashBoard
 
         public List<SaveServiceParameter> Services;
 
+        public List<Customer_SAP_IO_Parameter> sapio { get; set; }
+
+        public string _sap_customer_code { get; set; }
+
 
         public int _Sector_Id { get; set; }
 
@@ -105,9 +109,22 @@ namespace DealHub_Domain.DashBoard
         public string Solutioncategory { get; set; }
 
         public string value { get; set; }
-        public List<Serviceslist> Serviceslist { get; set; }
 
        
+        public List<Serviceslist> Serviceslist { get; set; }
+
+
+      
+
+
+
+    }
+
+
+    public class Customer_SAP_IO_Parameter:CommonParamter
+    {
+        public string _Cust_SAP_IO_Number { get; set; }
+        
     }
 
     public class SaveServiceSolutionParameters: CommonParamter
@@ -120,7 +137,13 @@ namespace DealHub_Domain.DashBoard
 
         public int _SubSector_Id { get; set; }
 
-        public SubmitOBFParameters SubmitOBF { get; set; }
+        public string _sap_customer_code { get; set; }
+
+
+
+
+        public List<Customer_SAP_IO_Parameter> sapio { get; set; }
+
     }
 
 
