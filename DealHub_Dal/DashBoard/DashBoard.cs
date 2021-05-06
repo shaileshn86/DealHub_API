@@ -31,7 +31,11 @@ namespace DealHub_Dal.DashBoard
                             DashBoardDetailsParameters _DashBoardDetailsParameters = new DashBoardDetailsParameters();
 
                             //_DashBoardDetailsParameters.obf_id = dr.IsNull<uint>("obf_id");
-                            _DashBoardDetailsParameters.Project_Name = dr.IsNull<string>("projectname");
+                            _DashBoardDetailsParameters.ApprovalStatus = dr.IsNull<string>("ApprovalStatus");
+                            _DashBoardDetailsParameters.CurrentStatus = dr.IsNull<string>("CurrentStatus");
+                            _DashBoardDetailsParameters.DetailedOBF = dr.IsNull<string>("DetailedOBF");
+                            _DashBoardDetailsParameters.FinalAgg = dr.IsNull<string>("FinalAgg");
+                            _DashBoardDetailsParameters.ProjectName = dr.IsNull<string>("ProjectName");
                             _DashBoardDetailsParameters.Code = dr.IsNull<string>("code");
                             _DashBoardDetailsParameters.Opp_Id = dr.IsNull<string>("oppid");
                             _DashBoardDetailsParameters.Created_On = dr.IsNull<string>("datecreated");
@@ -40,11 +44,11 @@ namespace DealHub_Dal.DashBoard
                            // _DashBoardDetailsParameters.vertical_id = dr.IsNull<uint>("vertical_id");
                             _DashBoardDetailsParameters.vertical = dr.IsNull<string>("vertical");
                             _DashBoardDetailsParameters.Project_Type = dr.IsNull<string>("projecttype");
-                            _DashBoardDetailsParameters.Payament_Terms = dr.IsNull<string>("paymentterms");
+                            _DashBoardDetailsParameters.Payament_Terms = dr.IsNull<int>("paymentterms");
                             _DashBoardDetailsParameters.Capex = dr.IsNull<decimal>("capex");
                             _DashBoardDetailsParameters.Total_Cost = dr.IsNull<decimal>("TotalCost");
-                            _DashBoardDetailsParameters.Total_Revenue = dr.IsNull<string>("TotalRevenue");
-                            _DashBoardDetailsParameters.Gross_Margin = dr.IsNull<string>("GrossMargin");
+                            _DashBoardDetailsParameters.Total_Revenue = dr.IsNull<decimal>("TotalRevenue");
+                            _DashBoardDetailsParameters.Gross_Margin = dr.IsNull<decimal>("GrossMargin");
 
 
                             DashBoardData.Add(_DashBoardDetailsParameters);
