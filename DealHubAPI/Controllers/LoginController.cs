@@ -16,6 +16,7 @@ using Newtonsoft.Json;
 using System.Net.Mail;
 using System.Threading.Tasks;
 using DealHub_Domain.MenuBinding;
+using System.Configuration;
 using System.Web;
 using System.IO;
 
@@ -51,8 +52,8 @@ namespace DealHubAPI.Controllers
                        LoginResponse login = new LoginResponse();
                         string key = Utility.SecretkeyGenerator.CreateToken(auth.user_code,auth.password);
                         login.user.Api_Key = key;
-                        login.user.UserName = auth.user_code;
-
+                        login.user.UserName = model._user_code;
+                        login.user.privilege_name = auth.privilege_name;
                         model._token = key;
                         int tokeupdated = AuthenticationServices.UpdateToken(model);
                         //  result = new ReponseMessage(KeyName: "api_key", Code: key, MsgNo: HttpStatusCode.OK.ToCode(), MsgType: MsgTypeEnum.S.ToString(), Message: "Success");
@@ -170,10 +171,25 @@ namespace DealHubAPI.Controllers
         [AllowAnonymous]
         [Route("sendemail")]
 
-        public async Task sendemail(string Usercode)
+        public async Task sendemail(AuthenticationParameters model)
         {
+            //var message = new MailMessage();
+            var ToEmailId = AuthenticationServices.sendmail(model._user_code);
+            //message.To.Add(new MailAddress(ToEmailId));
+            //message.From = new MailAddress("ankita.aherkar96@gmail.com");
+            //message.Subject = "Reset Password";
+            //message.Body = "Reset Password Link http://localhost:4200/ResetPassword?Usercode=" + model._user_code;
+            //message.IsBodyHtml = true;
+            //using (var smtp = new SmtpClient("smtp.gmail.com", 587))
+            //{
+            //    smtp.Host = "10.2.202.42";
+            //    smtp.Credentials = new NetworkCredential("ankita.aherkar96@gmail.com", "Mumbai@12345");
+            //    smtp.EnableSsl = true;
+            //    //smtp.Send(message);
+            //    await smtp.SendMailAsync(message);
+            //    await Task.FromResult(0);
             var message = new MailMessage();
-            var ToEmailId = AuthenticationServices.sendmail(Usercode);
+            
             message.To.Add(new MailAddress(ToEmailId));
             message.From = new MailAddress("ankita.aherkar96@gmail.com");
             message.Subject = "Reset Password";
@@ -187,6 +203,8 @@ namespace DealHubAPI.Controllers
                 //smtp.Send(message);
                 await smtp.SendMailAsync(message);
                 await Task.FromResult(0);
+
+            //}
 
             }
           
@@ -226,6 +244,8 @@ namespace DealHubAPI.Controllers
 
 
 
+
+
                         }
                         else
                         {
@@ -241,6 +261,8 @@ namespace DealHubAPI.Controllers
 
 
 
+
+
                 }
             }
             catch (Exception ex)
@@ -248,6 +270,8 @@ namespace DealHubAPI.Controllers
                 msg = Request.CreateResponse(HttpStatusCode.BadRequest, ex.Message.ToString());
             }
             return msg;
+
+
 
 
 

@@ -11,6 +11,8 @@ namespace DealHub_Domain.Authentication
         public string UserName { get; set; }
         public string Api_Key { get; set; }
 
+        public string privilege_name { get; set; }
+
         public string CompanyName { get; set; }
         public string CompanyCode { get; set; }
 
