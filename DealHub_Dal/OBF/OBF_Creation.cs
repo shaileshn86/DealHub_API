@@ -188,7 +188,11 @@ namespace DealHub_Dal.OBF
 
                _SaveAttachementDetailsParameters= SaveServices(filter.Services);
                 _SaveAttachementDetailsParameters = SaveSectorSubSector(filter);
-                _SaveAttachementDetailsParameters = SaveCustomer_SAP_IO_Number(filter.sapio,filter._sap_customer_code);
+                if (filter.sapio.Count !=0)
+                {
+                    _SaveAttachementDetailsParameters = SaveCustomer_SAP_IO_Number(filter.sapio, filter._sap_customer_code);
+                }
+                
                 return _SaveAttachementDetailsParameters;
             }
             catch(Exception ex)
