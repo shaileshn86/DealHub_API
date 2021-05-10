@@ -91,6 +91,9 @@ namespace DealHub_Domain.DashBoard
         public string _customer_name { get; set; }
 
 
+        public string _dh_comment { get; set; }
+
+
 
 
 
@@ -144,6 +147,9 @@ namespace DealHub_Domain.DashBoard
 
         public List<Customer_SAP_IO_Parameter> sapio { get; set; }
 
+
+        public string _dh_comment { get; set; }
+
     }
 
 
@@ -165,6 +171,12 @@ namespace DealHub_Domain.DashBoard
     }
 
 
+    public class SaveCommentsParameter: CommonParamter
+    {
+        public string _dh_comment { get; set; }
+    }
+
+
     public class CommonParamter
     {
         public int _dh_id { get; set; }
@@ -178,4 +190,7 @@ namespace DealHub_Domain.DashBoard
         public string _created_by { get; set; }
 
     }
+
+
+   
 }

@@ -220,7 +220,7 @@ namespace DealHubAPI.Controllers
             HttpResponseMessage msg = new HttpResponseMessage();
             var httpRequest = HttpContext.Current.Request;
             //Upload Image
-            string DocsPathMain = "http://localhost:52229/Images/";
+            string DocsPathMain = Request.RequestUri.GetLeftPart(UriPartial.Authority);//"http://localhost:52229";
             string docpath = "";
             var postedFilenew = httpRequest.Files;
             string filepathdetails = "";
@@ -236,8 +236,18 @@ namespace DealHubAPI.Controllers
                         //imageName = new String(Path.GetFileNameWithoutExtension(postedFile.FileName).Take(10).ToArray()).Replace(" ", "-");
                         imageName = new String(Path.GetFileNameWithoutExtension(postedFile.FileName).ToArray()).Replace(" ", "-");
                         imageName = imageName + DateTime.Now.ToString("yymmssfff") + Path.GetExtension(postedFile.FileName);
-                        docpath = DocsPathMain + imageName;
-                        var filePath = HttpContext.Current.Server.MapPath("~/Images/" + imageName);
+                        string urlpath = string.Format("/DealHubFiles/{0}/{1}", DateTime.Now.ToString("yyMMdd"), DateTime.Now.Hour.ToString().PadLeft(2, '0')); // "~/Images/" + DateTime.Now.ToString("yymmssfff") + "/" + cDateTime.Now.Hour.ToString().PadLeft(2, '0');
+                        docpath = DocsPathMain + urlpath + "/" +imageName; ;
+                        string folderpath = string.Format("~/DealHubFiles/{0}/{1}", DateTime.Now.ToString("yyMMdd"), DateTime.Now.Hour.ToString().PadLeft(2, '0')); // "~/Images/" + DateTime.Now.ToString("yymmssfff") + "/" + cDateTime.Now.Hour.ToString().PadLeft(2, '0');
+                        
+
+
+                        if (!Directory.Exists(HttpContext.Current.Server.MapPath(folderpath)) )
+                        {
+                            Directory.CreateDirectory(HttpContext.Current.Server.MapPath(folderpath));
+                        }
+
+                        var filePath = HttpContext.Current.Server.MapPath(folderpath + "/" + imageName);
                         if (File.Exists(filePath))
                         {
                             File.Delete(filePath);

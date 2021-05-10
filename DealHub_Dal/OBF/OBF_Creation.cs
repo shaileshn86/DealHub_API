@@ -116,6 +116,8 @@ namespace DealHub_Dal.OBF
                                 
                             }
 
+                           
+
                             _ObfCreationData.Add(_ObfCreationDetailsParameters);
 
                         }
@@ -134,7 +136,14 @@ namespace DealHub_Dal.OBF
                         SaveServices(filter.Services);
                         SaveSectorSubSector(SSP);
                         SaveCustomer_SAP_IO_Number(filter.sapio, filter._sap_customer_code);
-
+                        if (filter._dh_comment !="")
+                        {
+                            SaveCommentsParameter _SaveCommentsParameter = new SaveCommentsParameter();
+                            _SaveCommentsParameter._dh_header_id = filter._dh_header_id;
+                            _SaveCommentsParameter._dh_comment = filter._dh_comment;
+                            _SaveCommentsParameter._created_by = filter._created_by;
+                            SaveComments(_SaveCommentsParameter);
+                        }
                         
 
                     }
@@ -188,7 +197,21 @@ namespace DealHub_Dal.OBF
 
                _SaveAttachementDetailsParameters= SaveServices(filter.Services);
                 _SaveAttachementDetailsParameters = SaveSectorSubSector(filter);
-                _SaveAttachementDetailsParameters = SaveCustomer_SAP_IO_Number(filter.sapio,filter._sap_customer_code);
+                if (filter.sapio.Count !=0)
+                {
+                    _SaveAttachementDetailsParameters = SaveCustomer_SAP_IO_Number(filter.sapio, filter._sap_customer_code);
+                }
+
+
+                if (filter._dh_comment != "")
+                {
+                    SaveCommentsParameter _SaveCommentsParameter = new SaveCommentsParameter();
+                    _SaveCommentsParameter._dh_header_id = filter._dh_header_id;
+                    _SaveCommentsParameter._dh_comment = filter._dh_comment;
+                    _SaveCommentsParameter._created_by = filter._created_by;
+                    _SaveAttachementDetailsParameters = SaveComments(_SaveCommentsParameter);
+                }
+
                 return _SaveAttachementDetailsParameters;
             }
             catch(Exception ex)
@@ -205,8 +228,8 @@ namespace DealHub_Dal.OBF
 
         }
 
-
        
+
 
         public static List<SaveAttachementDetailsParameters> submit_dh_headers(SubmitOBFParameters filter)
         {
@@ -628,7 +651,49 @@ namespace DealHub_Dal.OBF
             }
         }
 
+        public static List<SaveAttachementDetailsParameters> SaveComments(SaveCommentsParameter filter)
+        {
+            List<SaveAttachementDetailsParameters> _SaveAttachementDetailsParameters = new List<SaveAttachementDetailsParameters>();
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                {
+                    MySqlCommand cmd = new MySqlCommand("sp_add_dh_comments", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add("@_dh_header_id", MySqlDbType.UInt32).Value = filter._dh_header_id;
+                    cmd.Parameters.Add("@_dh_comment", MySqlDbType.String).Value = filter._dh_comment;
+                   
+                    cmd.Parameters.Add("@_user_id", MySqlDbType.String).Value = filter._created_by;
+                    conn.Open();
+                    using (IDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            SaveAttachementDetailsParameters _Details = new SaveAttachementDetailsParameters();
+                            _Details.status = dr.IsNull<string>("status");
+                            _Details.message = dr.IsNull<string>("message");
+                            _Details.dh_header_id = Convert.ToUInt32(filter._dh_header_id);
+                            _Details.dh_id = Convert.ToUInt32(filter._dh_id);
+                            _SaveAttachementDetailsParameters.Add(_Details);
+                        }
+                    }
+                }
+                return _SaveAttachementDetailsParameters;
+            }
+            catch(Exception ex)
+            {
+                _SaveAttachementDetailsParameters = new List<SaveAttachementDetailsParameters>();
 
+                SaveAttachementDetailsParameters _Details = new SaveAttachementDetailsParameters();
+                _Details.status = "Failed";
+                _Details.message = "Error in saving comments";
+                _SaveAttachementDetailsParameters.Add(_Details);
+
+                return _SaveAttachementDetailsParameters;
+            }
+
+         
+        }
 
 
     }
