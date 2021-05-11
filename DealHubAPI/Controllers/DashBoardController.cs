@@ -58,7 +58,7 @@ namespace DealHubAPI.Controllers
             return null;
         }
 
-        [AuthenticationFilterDealhUb, HttpPost]
+        [AllowAnonymous, HttpPost]
         [Route("GetDashBoardDataCount")]
         public HttpResponseMessage GetDashBoardDataCount(DashBoardParameters model)
         {

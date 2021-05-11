@@ -74,7 +74,7 @@ namespace DealHub_Dal.DashBoard
                 //sp_auth_user
                 using (MySqlConnection conn = new MySqlConnection(connectionString))
                 {
-                    MySqlCommand cmd = new MySqlCommand("GetDashBoardCount", conn);
+                    MySqlCommand cmd = new MySqlCommand("sp_getdashboardcount", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.Add("@_user_code", MySqlDbType.String).Value = filter._user_code;
                     conn.Open();
@@ -84,11 +84,22 @@ namespace DealHub_Dal.DashBoard
                         {
                             DashBoardDetailsCountParameters _DashBoardDetailsCountParameters = new DashBoardDetailsCountParameters();
 
-                            //_DashBoardDetailsParameters.obf_id = dr.IsNull<uint>("obf_id");
-                            _DashBoardDetailsCountParameters.count = dr.IsNull<long>("count");
-                            _DashBoardDetailsCountParameters.process_id = dr.IsNull<int>("process_id");
-                            _DashBoardDetailsCountParameters.process_code = dr.IsNull<string>("process_code");
-                          
+                            _DashBoardDetailsCountParameters._draft_obf = dr.IsNull<long>("_draft_obf");
+                            _DashBoardDetailsCountParameters._draft_ppl = dr.IsNull<long>("_draft_ppl");
+                            _DashBoardDetailsCountParameters._draft = _DashBoardDetailsCountParameters._draft_obf + _DashBoardDetailsCountParameters._draft_ppl;
+
+                            _DashBoardDetailsCountParameters._submitted_obf = dr.IsNull<long>("_submitted_obf");
+                            _DashBoardDetailsCountParameters._submitted_ppl = dr.IsNull<long>("_submitted_ppl");
+                            _DashBoardDetailsCountParameters._submitted = _DashBoardDetailsCountParameters._submitted_obf + _DashBoardDetailsCountParameters._submitted_ppl;
+
+
+                            _DashBoardDetailsCountParameters._rejected_obf = dr.IsNull<long>("_rejected_obf");
+                            _DashBoardDetailsCountParameters._rejected_ppl = dr.IsNull<long>("_rejected_ppl");
+                            _DashBoardDetailsCountParameters._rejected = _DashBoardDetailsCountParameters._rejected_obf + _DashBoardDetailsCountParameters._rejected_ppl;
+
+                            _DashBoardDetailsCountParameters._approved_obf = dr.IsNull<long>("_approved_obf");
+                            _DashBoardDetailsCountParameters._approved_ppl = dr.IsNull<long>("_approved_ppl");
+
 
 
                             DashBoardData.Add(_DashBoardDetailsCountParameters);
