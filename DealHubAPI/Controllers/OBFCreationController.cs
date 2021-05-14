@@ -165,9 +165,9 @@ namespace DealHubAPI.Controllers
         [HttpGet]
         [AllowAnonymous]
         [Route("getmastersolutions")]
-        public HttpResponseMessage get_master_solutions()
+        public HttpResponseMessage get_master_solutions(string userid)
         {
-            List<SolutionCategory> _SolutionCategory = ObfServices.get_master_solutions();
+            List<SolutionCategory> _SolutionCategory = ObfServices.get_master_solutions(userid);
             if (_SolutionCategory != null)
             {
                 if (_SolutionCategory.Count != 0)

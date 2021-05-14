@@ -53,11 +53,31 @@ namespace DealHub_Domain.DashBoard
 
     public class DashBoardDetailsCountParameters
     {
-        public long count { get; set; }
+       public long _draft_obf { get; set; }
+
+       public long _draft_ppl { get; set; }
+
+        public decimal _draft { get; set; }
+
+       public long _submitted_obf { get; set; }
 
 
-        public int process_id { get; set; }
+       
 
-        public string process_code { get; set; }
+        public long _submitted_ppl { get; set; }
+
+        public decimal _submitted { get; set; }
+
+
+        public long _approved_obf { get; set; }
+        public long _approved_ppl { get; set; }
+
+        public long _rejected_obf { get; set; }
+
+        public long _rejected_ppl { get; set; }
+
+        public decimal _rejected { get; set; }
+
+
     }
 }

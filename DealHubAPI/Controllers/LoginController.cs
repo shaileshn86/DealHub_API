@@ -220,7 +220,7 @@ namespace DealHubAPI.Controllers
             HttpResponseMessage msg = new HttpResponseMessage();
             var httpRequest = HttpContext.Current.Request;
             //Upload Image
-            string DocsPathMain = Request.RequestUri.GetLeftPart(UriPartial.Authority);//"http://localhost:52229";
+            string DocsPathMain =  ConfigurationManager.AppSettings["APIURL"];//"http://localhost:52229";
             string docpath = "";
             var postedFilenew = httpRequest.Files;
             string filepathdetails = "";
