@@ -471,7 +471,7 @@ namespace DealHub_Dal.OBF
 
         }
 
-        public static List<SolutionCategory> get_master_solutions()
+        public static List<SolutionCategory> get_master_solutions(string userid)
         {
             List<SolutionCategory> _SolutionCategory = new List<SolutionCategory>();
             try
@@ -480,6 +480,7 @@ namespace DealHub_Dal.OBF
                 {
                     MySqlDataAdapter DA = new MySqlDataAdapter();
                     MySqlCommand cmd = new MySqlCommand("sp_get_master_solutions", conn);
+                    cmd.Parameters.Add("_user_id", MySqlDbType.String).Value = userid;
                     cmd.CommandType = CommandType.StoredProcedure;
                    
                     DA.SelectCommand = cmd;

@@ -20,9 +20,9 @@ namespace DealHub_Service.Implemantations.APIServices
             return OBF_Creation.GetMastersOBFCreation(userid);
         }
 
-        public static List<SolutionCategory> get_master_solutions()
+        public static List<SolutionCategory> get_master_solutions(string userid)
         {
-            return OBF_Creation.get_master_solutions();
+            return OBF_Creation.get_master_solutions(userid);
         }
 
         public static List<SaveAttachementDetailsParameters> SaveServiceSolutionSector(SaveServiceSolutionParameters filter)
