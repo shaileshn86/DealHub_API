@@ -8,12 +8,12 @@ namespace DealHub_Domain.DashBoard
 {
    public class DashBoardDetailsParameters
     {
-        public string ApprovalStatus { get; set; }
+        //public string ApprovalStatus { get; set; }
 
         public string CurrentStatus { get; set; }
-        public string DetailedOBF { get; set; }
+        //public string DetailedOBF { get; set; }
 
-        public string FinalAgg { get; set; }
+        //public string FinalAgg { get; set; }
         //public uint ? obf_id { get; set; }
         public string ProjectName { get; set; }
         public string Code { get; set; }
