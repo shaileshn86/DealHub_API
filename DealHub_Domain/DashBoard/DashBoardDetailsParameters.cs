@@ -79,5 +79,10 @@ namespace DealHub_Domain.DashBoard
         public decimal _rejected { get; set; }
 
 
+
+        public decimal _pendingobf { get; set; }
+        public decimal _pendingppl { get; set; }
+
+        public Decimal _TotalPending { get; set; }
     }
 }
