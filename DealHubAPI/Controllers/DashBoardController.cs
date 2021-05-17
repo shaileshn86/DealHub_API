@@ -18,7 +18,7 @@ namespace DealHubAPI.Controllers
     public class DashBoardController : ApiController
     {
         public ReponseMessage result = new ReponseMessage();
-        [AuthenticationFilterDealhUb, HttpPost]
+        [AllowAnonymous, HttpPost]
 
         [Route("GetDashBoardData")]
         public HttpResponseMessage GetDashBoardData(DashBoardParameters model)
