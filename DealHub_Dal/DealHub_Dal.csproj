@@ -66,6 +66,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Authentication\ASEEncryptDecrypt.cs" />
     <Compile Include="Authentication\Authentication.cs" />
     <Compile Include="BaseDAL.cs" />
     <Compile Include="ErrorLog\DALErrorlogs.cs" />

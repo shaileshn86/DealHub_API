@@ -16,6 +16,11 @@ namespace DealHub_Service.Implemantations.APIServices
             return Authentication.AutheticateUser(filter);
         }
 
+        public static string DecryptStringAES(string Secretkey, string pwd)
+        {
+            return ASEEncryptDecrypt.DecryptStringAES(Secretkey, pwd);
+        }
+
         public static int UpdateToken(AuthenticationParameters filter)
         {
             return Authentication.UpdateToken(filter);

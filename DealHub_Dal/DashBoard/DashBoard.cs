@@ -31,10 +31,10 @@ namespace DealHub_Dal.DashBoard
                             DashBoardDetailsParameters _DashBoardDetailsParameters = new DashBoardDetailsParameters();
 
                             //_DashBoardDetailsParameters.obf_id = dr.IsNull<uint>("obf_id");
-                            _DashBoardDetailsParameters.ApprovalStatus = dr.IsNull<string>("ApprovalStatus");
+                            //_DashBoardDetailsParameters.ApprovalStatus = dr.IsNull<string>("ApprovalStatus");
                             _DashBoardDetailsParameters.CurrentStatus = dr.IsNull<string>("CurrentStatus");
-                            _DashBoardDetailsParameters.DetailedOBF = dr.IsNull<string>("DetailedOBF");
-                            _DashBoardDetailsParameters.FinalAgg = dr.IsNull<string>("FinalAgg");
+                            //_DashBoardDetailsParameters.DetailedOBF = dr.IsNull<string>("DetailedOBF");
+                            //_DashBoardDetailsParameters.FinalAgg = dr.IsNull<string>("FinalAgg");
                             _DashBoardDetailsParameters.ProjectName = dr.IsNull<string>("ProjectName");
                             _DashBoardDetailsParameters.Code = dr.IsNull<string>("code");
                             _DashBoardDetailsParameters.Opp_Id = dr.IsNull<string>("oppid");
