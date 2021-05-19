@@ -75,6 +75,7 @@ namespace DealHub_Dal.OBF
                                 attachement._dh_id= Convert.ToInt32( dr.IsNull<uint>("dh_id"));
                                 attachement._dh_header_id = Convert.ToInt32(dr.IsNull<uint>("dh_header_id"));
                                 attachement._created_by = filter._created_by;
+                               
                             }
 
 
@@ -83,6 +84,7 @@ namespace DealHub_Dal.OBF
                               
                                 service._dh_header_id = Convert.ToInt32(dr.IsNull<uint>("dh_header_id"));
                                 service._created_by = filter._created_by;
+                                
                             }
 
                             foreach (SaveServiceParameter service in filter.Services)
@@ -90,6 +92,7 @@ namespace DealHub_Dal.OBF
 
                                 service._dh_header_id = Convert.ToInt32(dr.IsNull<uint>("dh_header_id"));
                                 service._created_by = filter._created_by;
+                                
                             }
 
 
@@ -98,6 +101,7 @@ namespace DealHub_Dal.OBF
 
                                 service._dh_header_id = Convert.ToInt32(dr.IsNull<uint>("dh_header_id"));
                                 service._created_by = filter._created_by;
+                                
                             }
 
                             foreach (SubmitOBFParameters Submitobf in filter._SubmitOBFParameters)
@@ -106,6 +110,7 @@ namespace DealHub_Dal.OBF
                                 Submitobf._dh_header_id = Convert.ToInt32(dr.IsNull<uint>("dh_header_id"));
                                 Submitobf._created_by = filter._created_by;
                                 Submitobf._is_submitted = filter._is_submitted;
+                                Submitobf._active = filter._active;
                             }
 
                             foreach (Customer_SAP_IO_Parameter SAPIO in filter.sapio)
@@ -150,6 +155,7 @@ namespace DealHub_Dal.OBF
 
                     if (filter._is_submitted==1)
                     {
+                        
                         submit_dh_headers(filter._SubmitOBFParameters[0]);
                     }
 
