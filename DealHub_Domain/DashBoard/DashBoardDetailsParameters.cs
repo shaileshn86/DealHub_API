@@ -9,7 +9,7 @@ namespace DealHub_Domain.DashBoard
    public class DashBoardDetailsParameters
     {
         //public string ApprovalStatus { get; set; }
-
+        public uint dh_id { get; set; }
         public string CurrentStatus { get; set; }
         //public string DetailedOBF { get; set; }
 

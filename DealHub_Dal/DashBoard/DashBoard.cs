@@ -7,6 +7,7 @@ using DealHub_Domain.DashBoard;
 using MySql.Data.MySqlClient;
 using System.Data;
 using DealHub_Dal.Extensions;
+using Newtonsoft.Json;
 
 namespace DealHub_Dal.DashBoard
 {
@@ -32,6 +33,8 @@ namespace DealHub_Dal.DashBoard
 
                             //_DashBoardDetailsParameters.obf_id = dr.IsNull<uint>("obf_id");
                             //_DashBoardDetailsParameters.ApprovalStatus = dr.IsNull<string>("ApprovalStatus");
+                            _DashBoardDetailsParameters.dh_id = dr.IsNull<uint>("dh_id");
+                            
                             _DashBoardDetailsParameters.CurrentStatus = dr.IsNull<string>("CurrentStatus");
                             //_DashBoardDetailsParameters.DetailedOBF = dr.IsNull<string>("DetailedOBF");
                             //_DashBoardDetailsParameters.FinalAgg = dr.IsNull<string>("FinalAgg");
@@ -120,6 +123,36 @@ namespace DealHub_Dal.DashBoard
                 return null;
 
             }
+        }
+
+        public static string GetOBFSummaryDetails(int dh_id)
+        {
+            try
+            {
+
+                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                {
+                    MySqlDataAdapter DA = new MySqlDataAdapter();
+                    MySqlCommand cmd = new MySqlCommand("sp_getOBFSummaryData", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add("dh_id", MySqlDbType.String).Value = dh_id;
+                    DA.SelectCommand = cmd;
+                    cmd.Connection = new MySqlConnection(connectionString);
+                    DataSet ds = new DataSet();
+                    DA.Fill(ds);
+
+                    DataSet rds = ds.GetTableName();
+
+                    return JsonConvert.SerializeObject(rds, Formatting.Indented); ;
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return "error";
+            }
+
         }
     }
 }

@@ -20,7 +20,10 @@ namespace DealHub_Service.Implemantations.APIServices
         {
             return DashBoard.GetDashBoardDataCount(filter);
         }
+        public static string GetOBFSummaryDetails(int dh_id)
+        {
+            return DashBoard.GetOBFSummaryDetails(dh_id);
+        }
 
-       
     }
 }
