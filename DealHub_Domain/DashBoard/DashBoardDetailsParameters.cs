@@ -72,6 +72,8 @@ namespace DealHub_Domain.DashBoard
         public long _approved_obf { get; set; }
         public long _approved_ppl { get; set; }
 
+        public long _approved { get; set; }
+        
         public long _rejected_obf { get; set; }
 
         public long _rejected_ppl { get; set; }

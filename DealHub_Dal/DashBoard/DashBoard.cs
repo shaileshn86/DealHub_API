@@ -99,7 +99,7 @@ namespace DealHub_Dal.DashBoard
 
                             _DashBoardDetailsCountParameters._approved_obf = dr.IsNull<long>("_approved_obf");
                             _DashBoardDetailsCountParameters._approved_ppl = dr.IsNull<long>("_approved_ppl");
-
+                            _DashBoardDetailsCountParameters._approved = _DashBoardDetailsCountParameters._approved_obf + _DashBoardDetailsCountParameters._approved_ppl;
 
                             Decimal _pendingobf = _DashBoardDetailsCountParameters._submitted_obf - (_DashBoardDetailsCountParameters._approved_obf + _DashBoardDetailsCountParameters._rejected_obf);
 
