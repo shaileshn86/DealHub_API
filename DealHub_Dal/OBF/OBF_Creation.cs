@@ -55,6 +55,10 @@ namespace DealHub_Dal.OBF
                     cmd.Parameters.Add("@_mode", MySqlDbType.String).Value = filter._mode;
                     cmd.Parameters.Add("@_customer_name", MySqlDbType.String).Value = filter._customer_name;
 
+                    cmd.Parameters.Add("@_loi_po_details", MySqlDbType.String).Value = filter._loi_po_details;
+                    cmd.Parameters.Add("@_payment_term_desc", MySqlDbType.String).Value = filter._payment_term_desc;
+                    cmd.Parameters.Add("@_solution_category_id", MySqlDbType.UInt32).Value = filter._solution_category_id;
+
                     conn.Open();
                     using (IDataReader dr = cmd.ExecuteReader())
                     {
