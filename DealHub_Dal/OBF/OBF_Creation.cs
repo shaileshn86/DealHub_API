@@ -55,6 +55,10 @@ namespace DealHub_Dal.OBF
                     cmd.Parameters.Add("@_mode", MySqlDbType.String).Value = filter._mode;
                     cmd.Parameters.Add("@_customer_name", MySqlDbType.String).Value = filter._customer_name;
 
+                    cmd.Parameters.Add("@_loi_po_details", MySqlDbType.String).Value = filter._loi_po_details;
+                    cmd.Parameters.Add("@_payment_term_desc", MySqlDbType.String).Value = filter._payment_term_desc;
+                    cmd.Parameters.Add("@_solution_category_id", MySqlDbType.UInt32).Value = filter._solution_category_id;
+
                     conn.Open();
                     using (IDataReader dr = cmd.ExecuteReader())
                     {
@@ -75,6 +79,7 @@ namespace DealHub_Dal.OBF
                                 attachement._dh_id= Convert.ToInt32( dr.IsNull<uint>("dh_id"));
                                 attachement._dh_header_id = Convert.ToInt32(dr.IsNull<uint>("dh_header_id"));
                                 attachement._created_by = filter._created_by;
+                               
                             }
 
 
@@ -83,6 +88,7 @@ namespace DealHub_Dal.OBF
                               
                                 service._dh_header_id = Convert.ToInt32(dr.IsNull<uint>("dh_header_id"));
                                 service._created_by = filter._created_by;
+                                
                             }
 
                             foreach (SaveServiceParameter service in filter.Services)
@@ -90,6 +96,7 @@ namespace DealHub_Dal.OBF
 
                                 service._dh_header_id = Convert.ToInt32(dr.IsNull<uint>("dh_header_id"));
                                 service._created_by = filter._created_by;
+                                
                             }
 
 
@@ -98,6 +105,7 @@ namespace DealHub_Dal.OBF
 
                                 service._dh_header_id = Convert.ToInt32(dr.IsNull<uint>("dh_header_id"));
                                 service._created_by = filter._created_by;
+                                
                             }
 
                             foreach (SubmitOBFParameters Submitobf in filter._SubmitOBFParameters)
@@ -106,6 +114,7 @@ namespace DealHub_Dal.OBF
                                 Submitobf._dh_header_id = Convert.ToInt32(dr.IsNull<uint>("dh_header_id"));
                                 Submitobf._created_by = filter._created_by;
                                 Submitobf._is_submitted = filter._is_submitted;
+                                Submitobf._active = filter._active;
                             }
 
                             foreach (Customer_SAP_IO_Parameter SAPIO in filter.sapio)
@@ -150,6 +159,7 @@ namespace DealHub_Dal.OBF
 
                     if (filter._is_submitted==1)
                     {
+                        
                         submit_dh_headers(filter._SubmitOBFParameters[0]);
                     }
 

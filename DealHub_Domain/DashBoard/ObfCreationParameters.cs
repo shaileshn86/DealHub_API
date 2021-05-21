@@ -95,6 +95,16 @@ namespace DealHub_Domain.DashBoard
 
 
 
+        public string _loi_po_details { get; set; }
+
+
+        public string _payment_term_desc { get; set; }
+
+
+        public int _solution_category_id { get; set; }
+
+
+
 
 
 
