@@ -108,6 +108,12 @@ namespace DealHub_Dal.DashBoard
                             _DashBoardDetailsCountParameters._pendingobf = _pendingobf;
                             _DashBoardDetailsCountParameters._pendingppl = _pendingppl;
                             _DashBoardDetailsCountParameters._TotalPending = _pendingobf + _pendingppl;
+
+
+                            _DashBoardDetailsCountParameters._totalapprovedppl = dr.IsNull<long>("_totalapprovedppl");
+                            _DashBoardDetailsCountParameters._totalapprovedobf = dr.IsNull<long>("_totalapprovedobf");
+
+
                             DashBoardData.Add(_DashBoardDetailsCountParameters);
 
                         }
