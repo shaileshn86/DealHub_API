@@ -71,5 +71,13 @@ namespace DealHub_Domain.DashBoard
         public decimal _pendingppl { get; set; }
 
         public Decimal _TotalPending { get; set; }
+
+        public long _totalapprovedppl { get; set; }
+
+
+
+
+        public long _totalapprovedobf { get; set; }
+
     }
 }
