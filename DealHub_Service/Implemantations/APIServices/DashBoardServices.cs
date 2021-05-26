@@ -24,6 +24,10 @@ namespace DealHub_Service.Implemantations.APIServices
         {
             return DashBoard.GetOBFSummaryDetails(dh_id);
         }
+        public static List<timelinehistroy> GetDetailTimelineHistory(int dh_id,int dh_header_id)
+        {
+            return DashBoard.GetDetailTimelineHistory(dh_id, dh_header_id);
+        }
 
     }
 }

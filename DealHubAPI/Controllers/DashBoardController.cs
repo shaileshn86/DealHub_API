@@ -115,5 +115,37 @@ namespace DealHubAPI.Controllers
 
 
         }
+
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("GetDetailTimelineHistory")]
+        public HttpResponseMessage GetDetailTimelineHistory(int dh_id,int dh_header_id)
+        {
+            
+                List<timelinehistroy> _DashBoardDetailsParameters = DashBoardServices.GetDetailTimelineHistory(Convert.ToInt32(dh_id), Convert.ToInt32(dh_header_id));
+
+                if (_DashBoardDetailsParameters != null)
+                {
+                    if (_DashBoardDetailsParameters.Count != 0)
+                    {
+                        return Request.CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(_DashBoardDetailsParameters));
+                    }
+                    else
+                    {
+                        result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                        return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+                    }
+
+
+
+                }
+                else
+                {
+                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+                }
+            return null;
+            
+        }
     }
 }

@@ -21,7 +21,7 @@ namespace DealHub_Dal.DashBoard
                 //sp_auth_user
                 using (MySqlConnection conn = new MySqlConnection(connectionString))
                 {
-                    MySqlCommand cmd = new MySqlCommand("sp_GetDashBoardData", conn);
+                    MySqlCommand cmd = new MySqlCommand("sp_getdashboardgriddata", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.Add("@_user_code", MySqlDbType.String).Value = filter._user_code;
                     conn.Open();
@@ -31,28 +31,24 @@ namespace DealHub_Dal.DashBoard
                         {
                             DashBoardDetailsParameters _DashBoardDetailsParameters = new DashBoardDetailsParameters();
 
-                            //_DashBoardDetailsParameters.obf_id = dr.IsNull<uint>("obf_id");
-                            //_DashBoardDetailsParameters.ApprovalStatus = dr.IsNull<string>("ApprovalStatus");
+                           
                             _DashBoardDetailsParameters.dh_id = dr.IsNull<uint>("dh_id");
-                            
+                            _DashBoardDetailsParameters.dh_header_id = dr.IsNull<uint>("dh_header_id");
                             _DashBoardDetailsParameters.CurrentStatus = dr.IsNull<string>("CurrentStatus");
-                            //_DashBoardDetailsParameters.DetailedOBF = dr.IsNull<string>("DetailedOBF");
-                            //_DashBoardDetailsParameters.FinalAgg = dr.IsNull<string>("FinalAgg");
-                            _DashBoardDetailsParameters.ProjectName = dr.IsNull<string>("ProjectName");
-                            _DashBoardDetailsParameters.Code = dr.IsNull<string>("code");
-                            _DashBoardDetailsParameters.Opp_Id = dr.IsNull<string>("oppid");
-                            _DashBoardDetailsParameters.Created_On = dr.IsNull<string>("datecreated");
-                            _DashBoardDetailsParameters.Created_By = dr.IsNull<string>("createdby");
-                            
-                           // _DashBoardDetailsParameters.vertical_id = dr.IsNull<uint>("vertical_id");
-                            _DashBoardDetailsParameters.vertical = dr.IsNull<string>("vertical");
-                            _DashBoardDetailsParameters.Project_Type = dr.IsNull<string>("projecttype");
-                            _DashBoardDetailsParameters.Payament_Terms = dr.IsNull<int>("paymentterms");
-                            _DashBoardDetailsParameters.Capex = dr.IsNull<decimal>("capex");
-                            _DashBoardDetailsParameters.Total_Cost = dr.IsNull<decimal>("TotalCost");
-                            _DashBoardDetailsParameters.Total_Revenue = dr.IsNull<decimal>("TotalRevenue");
-                            _DashBoardDetailsParameters.Gross_Margin = dr.IsNull<decimal>("GrossMargin");
-
+                            _DashBoardDetailsParameters.ProjectName = dr.IsNull<string>("dh_project_name");
+                            _DashBoardDetailsParameters.Code = dr.IsNull<string>("dh_code");
+                            _DashBoardDetailsParameters.Opp_Id = dr.IsNull<string>("opportunity_id");
+                            _DashBoardDetailsParameters.Created_On = dr.IsNull<DateTime>("createdon");
+                            _DashBoardDetailsParameters.Created_By = dr.IsNull<uint>("createdby");
+                           
+                            _DashBoardDetailsParameters.Total_Cost = dr.IsNull<decimal>("total_cost");
+                            _DashBoardDetailsParameters.Total_Revenue = dr.IsNull<decimal>("total_revenue");
+                            _DashBoardDetailsParameters.Gross_Margin = dr.IsNull<decimal>("total_margin");
+                            _DashBoardDetailsParameters.mainobf = dr.IsNull<string>("mainobf");
+                           
+                            _DashBoardDetailsParameters.version_name = dr.IsNull<string>("version_name");
+                            _DashBoardDetailsParameters.currentstatus = dr.IsNull<string>("currentstatus");
+                            _DashBoardDetailsParameters.shortcurrentstatus = dr.IsNull<string>("shortcurrentstatus");
 
                             DashBoardData.Add(_DashBoardDetailsParameters);
 
@@ -160,5 +156,47 @@ namespace DealHub_Dal.DashBoard
             }
 
         }
+
+        public static List<timelinehistroy> GetDetailTimelineHistory(int dh_id,int dh_header_id)
+        {
+            try
+            {
+                List<timelinehistroy> TimelineData = new List<timelinehistroy>();
+                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                {
+                    MySqlCommand cmd = new MySqlCommand("sp_dh_get_detailedtimeline", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add("@_dh_id", MySqlDbType.String).Value = dh_id;
+                    cmd.Parameters.Add("@_dh_header_id", MySqlDbType.String).Value = dh_header_id;
+                    conn.Open(); ;
+                    using (IDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            timelinehistroy _timelinehistroy = new timelinehistroy();
+
+
+                            _timelinehistroy.dh_id = dr.IsNull<uint>("dh_id");
+                            _timelinehistroy.dh_header_id = dr.IsNull<uint>("dh_header_id");
+                            _timelinehistroy.username = dr.IsNull<string>("username");
+                            _timelinehistroy.currentstatus = dr.IsNull<string>("currentstatus");
+                            _timelinehistroy.comments = dr.IsNull<string>("comments");
+
+
+                            TimelineData.Add(_timelinehistroy);
+
+                        }
+                    }
+                    return TimelineData;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+
+        }
+
     }
 }
