@@ -8,6 +8,7 @@ namespace DealHub_Domain.Authentication
 {
    public class AuthenticationDetailParameters
     {
+        public uint user_id { get; set; }
         public string user_code { get; set; }
         public string password { get; set; }
 

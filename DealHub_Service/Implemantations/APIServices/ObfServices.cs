@@ -39,5 +39,9 @@ namespace DealHub_Service.Implemantations.APIServices
         {
             return OBF_Creation.ApproveRejectObf(filter);
         }
+        public static List<SaveAttachementDetailsParameters> SaveAttachment(List<SaveAttachmentParameter> filter)
+        {
+            return OBF_Creation.SaveAttachments(filter);
+        }
     }
 }

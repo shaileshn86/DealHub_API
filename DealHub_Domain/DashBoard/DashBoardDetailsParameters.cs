@@ -9,44 +9,29 @@ namespace DealHub_Domain.DashBoard
    public class DashBoardDetailsParameters
     {
         //public string ApprovalStatus { get; set; }
-
+        public uint dh_id { get; set; }
+        public uint dh_header_id { get; set; }
+        public uint dh_phase_id { get; set; }
+        public string phase_code { get; set; }
         public string CurrentStatus { get; set; }
-        //public string DetailedOBF { get; set; }
-
-        //public string FinalAgg { get; set; }
-        //public uint ? obf_id { get; set; }
+        
         public string ProjectName { get; set; }
         public string Code { get; set; }
         public string Opp_Id { get; set; }
-        public string Created_On { get; set; }
-        public string Created_By { get; set; }
+        public DateTime Created_On { get; set; }
+        public uint Created_By { get; set; }
        
-
-        //public uint? vertical_id { get; set; }
-
-        public string vertical { get; set; }
-        public string Project_Type { get; set; }
-
-        public int Payament_Terms { get; set; }
-
-        public Decimal? Capex { get; set; }
 
         public Decimal? Total_Cost { get; set; }
 
         public Decimal? Total_Revenue { get; set; }
 
         public Decimal? Gross_Margin { get; set; }
+        public string mainobf { get; set; }
+        public string version_name { get; set; }
+        public string currentstatus { get; set; }
 
-
-      
-
-
-
-
-
-
-
-
+        public string shortcurrentstatus { get; set; }
 
     }
 
@@ -95,4 +80,15 @@ namespace DealHub_Domain.DashBoard
         public long _totalapprovedobf { get; set; }
 
     }
+
+    public class timelinehistroy
+    {
+        public uint dh_id { get; set; }
+        public uint dh_header_id { get; set; }
+        public string username { get; set; }
+        public string currentstatus { get; set; }
+        public string comments { get; set; }
+        public string TimeLine { get; set; }
+    }
+
 }

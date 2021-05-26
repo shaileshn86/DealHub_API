@@ -333,6 +333,10 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DealHub_Dal\DealHub_Dal.csproj">
+      <Project>{F08E726D-C5D4-42C5-8860-6515E44327F7}</Project>
+      <Name>DealHub_Dal</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DealHub_Domain\DealHub_Domain.csproj">
       <Project>{8c532160-11bb-4930-bf07-ab6e6b19f9ff}</Project>
       <Name>DealHub_Domain</Name>
