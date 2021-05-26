@@ -88,6 +88,7 @@ namespace DealHub_Domain.DashBoard
         public string username { get; set; }
         public string currentstatus { get; set; }
         public string comments { get; set; }
+        public string TimeLine { get; set; }
     }
 
 }
