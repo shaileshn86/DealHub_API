@@ -33,7 +33,7 @@ namespace DealHub_Dal.DashBoard
 
                            
                             _DashBoardDetailsParameters.dh_id = dr.IsNull<uint>("dh_id");
-                            _DashBoardDetailsParameters.dh_id = dr.IsNull<uint>("dh_id");
+                            _DashBoardDetailsParameters.dh_header_id = dr.IsNull<uint>("dh_header_id");
                             _DashBoardDetailsParameters.CurrentStatus = dr.IsNull<string>("CurrentStatus");
                             _DashBoardDetailsParameters.ProjectName = dr.IsNull<string>("dh_project_name");
                             _DashBoardDetailsParameters.Code = dr.IsNull<string>("dh_code");
@@ -156,5 +156,47 @@ namespace DealHub_Dal.DashBoard
             }
 
         }
+
+        public static List<timelinehistroy> GetDetailTimelineHistory(int dh_id,int dh_header_id)
+        {
+            try
+            {
+                List<timelinehistroy> TimelineData = new List<timelinehistroy>();
+                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                {
+                    MySqlCommand cmd = new MySqlCommand("sp_dh_get_detailedtimeline", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add("@_dh_id", MySqlDbType.String).Value = dh_id;
+                    cmd.Parameters.Add("@_dh_header_id", MySqlDbType.String).Value = dh_header_id;
+                    conn.Open(); ;
+                    using (IDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            timelinehistroy _timelinehistroy = new timelinehistroy();
+
+
+                            _timelinehistroy.dh_id = dr.IsNull<uint>("dh_id");
+                            _timelinehistroy.dh_header_id = dr.IsNull<uint>("dh_header_id");
+                            _timelinehistroy.username = dr.IsNull<string>("username");
+                            _timelinehistroy.currentstatus = dr.IsNull<string>("currentstatus");
+                            _timelinehistroy.comments = dr.IsNull<string>("comments");
+
+
+                            TimelineData.Add(_timelinehistroy);
+
+                        }
+                    }
+                    return TimelineData;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+
+        }
+
     }
 }

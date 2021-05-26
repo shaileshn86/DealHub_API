@@ -19,7 +19,8 @@ using DealHub_Domain.MenuBinding;
 using System.Configuration;
 using System.Web;
 using System.IO;
-
+using DealHub_Domain.DashBoard;
+using DealHub_Dal.OBF;
 
 namespace DealHubAPI.Controllers
 {
@@ -257,10 +258,6 @@ namespace DealHubAPI.Controllers
                         {
                             File.Delete(filePath);
 
-
-
-
-
                         }
                         else
                         {
@@ -273,23 +270,14 @@ namespace DealHubAPI.Controllers
                     {
                         msg = Request.CreateResponse(HttpStatusCode.BadRequest, "File not uploaded : " + imageName);
                     }
-
-
-
-
-
                 }
+                
             }
             catch (Exception ex)
             {
                 msg = Request.CreateResponse(HttpStatusCode.BadRequest, ex.Message.ToString());
             }
             return msg;
-
-
-
-
-
 
         }
     }

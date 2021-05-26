@@ -80,4 +80,14 @@ namespace DealHub_Domain.DashBoard
         public long _totalapprovedobf { get; set; }
 
     }
+
+    public class timelinehistroy
+    {
+        public uint dh_id { get; set; }
+        public uint dh_header_id { get; set; }
+        public string username { get; set; }
+        public string currentstatus { get; set; }
+        public string comments { get; set; }
+    }
+
 }
