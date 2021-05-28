@@ -25,6 +25,11 @@ namespace DealHub_Service.Implemantations.APIServices
             return OBF_Creation.get_master_solutions(userid);
         }
 
+        public static EditObfParameters get_edit_obf(editobfarguement model)
+        {
+            return OBF_Creation.getEditObf(model);
+        }
+
         public static List<SaveAttachementDetailsParameters> SaveServiceSolutionSector(SaveServiceSolutionParameters filter)
         {
             return OBF_Creation.SaveServiceSolutionSector(filter);

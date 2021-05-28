@@ -195,6 +195,28 @@ namespace DealHubAPI.Controllers
 
         [HttpPost]
         [AllowAnonymous]
+        [Route("geteditobfdata")]
+        public HttpResponseMessage get_editobf(editobfarguement model)
+        {
+            EditObfParameters _editobf = ObfServices.get_edit_obf(model);
+            if (_editobf != null)
+            {
+                
+                    return Request.CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(_editobf));
+                
+            }
+            else
+            {
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+            }
+
+
+
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
         [Route("ApproveRejectObf")]
         public HttpResponseMessage ApproveRejectObf(ApproveRejectOBFParameter model)
         {
