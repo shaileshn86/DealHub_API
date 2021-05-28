@@ -147,5 +147,25 @@ namespace DealHubAPI.Controllers
             return null;
             
         }
+
+
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("GetOBFSummaryDetails_version")]
+        public HttpResponseMessage GetOBFSummaryDetails_version(int dh_id, int dh_header_id)
+        {
+            string json = DashBoardServices.GetOBFSummaryDetails_version(dh_id,dh_header_id);
+            if (json == "" || json == "error")
+            {
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+            }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, json);
+            }
+
+
+        }
     }
 }
