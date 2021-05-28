@@ -178,6 +178,12 @@ namespace DealHub_Domain.DashBoard
         public string rejectcomment { get; set; }
 
         public int rejectionto { get; set; }
+
+        public int exceptionalcase_cfo { get; set; }
+
+        public int exceptioncase_ceo { get; set; }
+
+        public int is_on_hold { get; set; }
     }
 
 
