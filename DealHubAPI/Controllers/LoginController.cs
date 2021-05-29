@@ -58,8 +58,11 @@ namespace DealHubAPI.Controllers
                        LoginResponse login = new LoginResponse();
                         string key = Utility.SecretkeyGenerator.CreateToken(auth.user_code,auth.password);
                         login.user.Api_Key = key;
-                        login.user.UserName = model._user_code;
+                        login.user.UserCode = auth.user_code;
                         login.user.privilege_name = auth.privilege_name;
+                        login.user.role_name = auth.role_name;
+                        login.user.UserName = auth.UserName;
+                        login.user.UserId = auth.user_id;
                         model._token = key;
                         int tokeupdated = AuthenticationServices.UpdateToken(model);
                         //  result = new ReponseMessage(KeyName: "api_key", Code: key, MsgNo: HttpStatusCode.OK.ToCode(), MsgType: MsgTypeEnum.S.ToString(), Message: "Success");
