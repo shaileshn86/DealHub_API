@@ -110,6 +110,84 @@ namespace DealHub_Domain.DashBoard
 
     }
 
+    public class editobfarguement
+    {
+        public int dh_id { get; set; }
+        public int dh_header_id { get; set; }
+        public string user_code { get; set; }
+    }
+
+    public class EditObfParameters : CommonParamter
+    {
+        public string _dh_project_name { get; set; }
+
+        public string _opportunity_id { get; set; }
+
+        public string _dh_location { get; set; }
+
+        public int _vertical_id { get; set; }
+
+        public int _verticalhead_id { get; set; }
+
+
+        public string _dh_desc { get; set; }
+        
+        public decimal _total_revenue { get; set; }
+        public decimal _total_cost { get; set; }
+
+        public decimal _total_margin { get; set; }
+
+        public string _total_project_life { get; set; }
+
+        public decimal _irr_surplus_cash { get; set; }
+
+
+        public decimal _ebt { get; set; }
+
+        public decimal _capex { get; set; }
+
+        public decimal _irr_borrowed_fund { get; set; }
+
+        public string _is_loi_po_uploaded { get; set; }
+
+        public string _assumptions_and_risks { get; set; }
+        
+        public int _payment_terms { get; set; }
+
+
+        public List<SaveAttachmentParameter> Attachments;
+
+        public List<SaveServiceParameteredit> Services;
+
+        public List<Customer_SAP_IO_Parameteredit> sapio { get; set; }
+
+        public string _sap_customer_code { get; set; }
+
+
+        public int _Sector_Id { get; set; }
+
+
+        public int _SubSector_Id { get; set; }
+
+        
+        public string _customer_name { get; set; }
+
+
+        public string _dh_comment { get; set; }
+
+
+
+        public string _loi_po_details { get; set; }
+
+
+        public string _payment_term_desc { get; set; }
+
+
+        public int _solution_category_id { get; set; }
+
+
+    }
+
 
     public class SaveAttachmentParameter: CommonParamter
     {
@@ -133,11 +211,33 @@ namespace DealHub_Domain.DashBoard
 
     }
 
+    public class SaveServiceParameteredit
+    {
+        public string Solutioncategory { get; set; }
+
+        public string value { get; set; }
+
+
+        public List<Serviceslist> Serviceslist { get; set; }
+
+
+
+
+
+
+    }
+
 
     public class Customer_SAP_IO_Parameter:CommonParamter
     {
         public string _Cust_SAP_IO_Number { get; set; }
         
+    }
+
+    public class Customer_SAP_IO_Parameteredit 
+    {
+        public string _Cust_SAP_IO_Number { get; set; }
+
     }
 
     public class SaveServiceSolutionParameters: CommonParamter
@@ -192,7 +292,7 @@ namespace DealHub_Domain.DashBoard
         public string _dh_comment { get; set; }
     }
 
-
+    
     public class CommonParamter
     {
         public int _dh_id { get; set; }
