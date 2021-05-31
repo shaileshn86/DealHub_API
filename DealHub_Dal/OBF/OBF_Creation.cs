@@ -715,6 +715,7 @@ namespace DealHub_Dal.OBF
                     cmd.Parameters.Add("@exceptionalcase_cfo", MySqlDbType.UInt32).Value = filters.exceptionalcase_cfo;
                     cmd.Parameters.Add("@exceptioncase_ceo", MySqlDbType.UInt32).Value = filters.exceptioncase_ceo;
                     cmd.Parameters.Add("@is_on_hold", MySqlDbType.UInt32).Value = filters.is_on_hold;
+                    cmd.Parameters.Add("@_marginal_exception_requested", MySqlDbType.UInt32).Value = filters._marginal_exception_requested;
                     conn.Open();
                     using (IDataReader dr = cmd.ExecuteReader())
                     {

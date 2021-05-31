@@ -285,6 +285,9 @@ namespace DealHub_Domain.DashBoard
         public int exceptioncase_ceo { get; set; }
 
         public int is_on_hold { get; set; }
+
+
+        public int _marginal_exception_requested { get; set; }
     }
 
 
