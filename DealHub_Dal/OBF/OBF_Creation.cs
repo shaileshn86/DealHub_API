@@ -481,6 +481,128 @@ namespace DealHub_Dal.OBF
 
         }
 
+        public static EditObfParameters getEditObf(editobfarguement filter)
+        {
+            EditObfParameters editobf = new EditObfParameters();
+            editobf.Services = new List<SaveServiceParameteredit>();
+            editobf.Attachments = new List<SaveAttachmentParameter>();
+            editobf.sapio = new List<Customer_SAP_IO_Parameteredit>();
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                {
+                    MySqlDataAdapter DA = new MySqlDataAdapter();
+                    MySqlCommand cmd = new MySqlCommand("sp_getEditObfData", conn);
+                    cmd.Parameters.Add("dh_id", MySqlDbType.UInt32).Value = filter.dh_id;
+                    cmd.Parameters.Add("dh_header_id", MySqlDbType.UInt32).Value = filter.dh_header_id;
+                    cmd.Parameters.Add("usercode", MySqlDbType.UInt32).Value = filter.user_code;
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    DA.SelectCommand = cmd;
+                    cmd.Connection = new MySqlConnection(connectionString);
+                    DataSet ds = new DataSet();
+                    DA.Fill(ds);
+
+                    DataSet rds = ds.GetTableName();
+
+                    DataTable Dt_UploadDetails = rds.Tables["uploaddata"].Copy();
+
+                    DataTable Dt_SolutionServices = rds.Tables["SolutionServices"].Copy();
+                    DataView dv_distinctsolcategory = new DataView(Dt_SolutionServices);
+
+                    DataTable dt_distinctsolcategory = dv_distinctsolcategory.ToTable(true, "solutioncategory_id", "solutioncategory_name");
+
+                    DataTable Dt_Attachments = rds.Tables["Attachments"].Copy();
+
+                    DataTable Dt_Sap_IO_number = rds.Tables["Sap_IO_number"].Copy();
+                   
+                    foreach (DataRow Row in Dt_UploadDetails.Rows)
+                    {
+                        editobf._dh_id = Convert.ToInt32(Row["dh_id"]);
+                        editobf._dh_header_id = Convert.ToInt32(Row["dh_header_id"]);
+                        editobf._fname = Row["filename"].ToString();
+                        editobf._fpath = Row["filepath"].ToString();
+                        editobf._created_by = Row["created_by"].ToString();
+                        editobf._created_by = Row["created_by"].ToString();
+                        editobf._dh_project_name = Row["dh_project_name"].ToString();
+                        editobf._opportunity_id = Row["opportunity_id"].ToString();
+                        editobf._dh_location = Row["dh_location"].ToString();
+                        editobf._vertical_id = Convert.ToInt32(Row["vertical_id"].ToString());
+                        editobf._verticalhead_id = Convert.ToInt32(Row["verticalhead_id"].ToString());
+                        editobf._dh_desc = Row["dh_desc"].ToString();
+                        editobf._total_revenue = Convert.ToDecimal(Row["total_revenue"].ToString());
+                        editobf._total_cost = Convert.ToDecimal(Row["total_cost"].ToString());
+                        editobf._total_margin = Convert.ToDecimal(Row["total_margin"].ToString());
+                        editobf._total_project_life = Row["total_project_life"].ToString();
+                        editobf._irr_surplus_cash = Convert.ToDecimal(Row["irr_surplus_cash"].ToString());
+                        editobf._ebt = Convert.ToDecimal(Row["ebt"].ToString());
+                        editobf._capex = Convert.ToDecimal(Row["capex"].ToString());
+                        editobf._irr_borrowed_fund = Convert.ToDecimal(Row["irr_borrowed_fund"].ToString());
+                        editobf._is_loi_po_uploaded = Row["is_loi_po_uploaded"].ToString();
+                        editobf._assumptions_and_risks = Row["assumptions_and_risks"].ToString();
+                        editobf._payment_terms = Convert.ToInt32(Row["payment_terms"].ToString());
+                        editobf._sap_customer_code = Row["sap_customer_code"].ToString();
+                        editobf._Sector_Id = Convert.ToInt32(Row["Sector_Id"].ToString());
+                        editobf._SubSector_Id = Convert.ToInt32(Row["SubSector_Id"].ToString());
+                        editobf._customer_name = Row["customer_name"].ToString();
+                        editobf._dh_comment = Row["dh_comment"].ToString();
+                        editobf._loi_po_details = Row["loi_po_details"].ToString();
+                        editobf._payment_term_desc = Row["payment_term_desc"].ToString();
+                        editobf._solution_category_id = Convert.ToInt32(Row["solution_category_id"].ToString());
+                    }
+
+                    foreach (DataRow row in dt_distinctsolcategory.Rows)
+                    {
+                        SaveServiceParameteredit sc = new SaveServiceParameteredit();
+                        sc.Serviceslist = new List<Serviceslist>();
+                        sc.value = row["solutioncategory_id"].ToString();
+                        sc.Solutioncategory = row["solutioncategory_name"].ToString();
+
+                        DataRow[] Row_Solutions_In_Category = Dt_SolutionServices.Select("Solutioncategory_Id=" + sc.value);
+
+                        foreach(DataRow dr in Row_Solutions_In_Category)
+                        {
+                            Serviceslist servlist = new Serviceslist();
+                            servlist.value = dr["solution_id"].ToString();
+                            servlist.viewValue = dr["solution_name"].ToString();
+                            sc.Serviceslist.Add(servlist);
+                        }
+                        editobf.Services.Add(sc);
+                    }
+
+                    foreach (DataRow dr in Dt_Attachments.Rows)
+                    {
+                        SaveAttachmentParameter attachments = new SaveAttachmentParameter();
+                        attachments._dh_id = editobf._dh_id;
+                        attachments._dh_header_id = editobf._dh_header_id;
+                        attachments._created_by = editobf._created_by;
+                        attachments._fname = dr["filename"].ToString();
+                        attachments._fpath = dr["filepath"].ToString();
+                        attachments._description = dr["description"].ToString();
+                        editobf.Attachments.Add(attachments);
+                    }
+
+                    foreach (DataRow dr in Dt_Sap_IO_number.Rows)
+                    {
+                        Customer_SAP_IO_Parameteredit sap_io = new Customer_SAP_IO_Parameteredit();
+                        sap_io._Cust_SAP_IO_Number = dr["cust_sap_io_number"].ToString();
+                        editobf.sapio.Add(sap_io);
+                    }
+
+                   
+
+
+
+                    return editobf;
+
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
         public static List<SolutionCategory> get_master_solutions(string userid)
         {
             List<SolutionCategory> _SolutionCategory = new List<SolutionCategory>();
