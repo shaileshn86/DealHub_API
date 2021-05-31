@@ -18,6 +18,10 @@ namespace DealHub_Domain.Authentication
 
         public string privilege_name { get; set; }
 
+        public string role_name { get; set; }
+
+        public string UserName { get; set; }
+
     }
 
 
