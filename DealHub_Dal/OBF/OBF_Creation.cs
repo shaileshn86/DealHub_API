@@ -512,8 +512,7 @@ namespace DealHub_Dal.OBF
 
                     DataTable dt_distinctsolcategory = dv_distinctsolcategory.ToTable(true, "solutioncategory_id", "solutioncategory_name");
 
-                    DataTable Dt_Attachments = rds.Tables["Attachments"].Copy();
-
+                    
                     if (rds.Tables["Sap_IO_number"] != null)
                     { 
                     DataTable Dt_Sap_IO_number = rds.Tables["Sap_IO_number"].Copy();
@@ -579,7 +578,11 @@ namespace DealHub_Dal.OBF
                         editobf.Services.Add(sc);
                     }
 
-                    foreach (DataRow dr in Dt_Attachments.Rows)
+                    if(rds.Tables["Attachments"] != null)
+                    {
+                        DataTable Dt_Attachments = rds.Tables["Attachments"].Copy();
+
+                        foreach (DataRow dr in Dt_Attachments.Rows)
                     {
                         SaveAttachmentParameter attachments = new SaveAttachmentParameter();
                         attachments._dh_id = editobf._dh_id;
@@ -590,10 +593,11 @@ namespace DealHub_Dal.OBF
                         attachments._description = dr["description"].ToString();
                         editobf.Attachments.Add(attachments);
                     }
+                    }
 
-                    
 
-                   
+
+
 
 
 
