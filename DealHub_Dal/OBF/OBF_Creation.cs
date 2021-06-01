@@ -512,10 +512,18 @@ namespace DealHub_Dal.OBF
 
                     DataTable dt_distinctsolcategory = dv_distinctsolcategory.ToTable(true, "solutioncategory_id", "solutioncategory_name");
 
-                    DataTable Dt_Attachments = rds.Tables["Attachments"].Copy();
-
+                    
+                    if (rds.Tables["Sap_IO_number"] != null)
+                    { 
                     DataTable Dt_Sap_IO_number = rds.Tables["Sap_IO_number"].Copy();
-                   
+                        foreach (DataRow dr in Dt_Sap_IO_number.Rows)
+                        {
+                            Customer_SAP_IO_Parameteredit sap_io = new Customer_SAP_IO_Parameteredit();
+                            sap_io._Cust_SAP_IO_Number = dr["cust_sap_io_number"].ToString();
+                            editobf.sapio.Add(sap_io);
+                        }
+                    }
+
                     foreach (DataRow Row in Dt_UploadDetails.Rows)
                     {
                         editobf._dh_id = Convert.ToInt32(Row["dh_id"]);
@@ -570,7 +578,11 @@ namespace DealHub_Dal.OBF
                         editobf.Services.Add(sc);
                     }
 
-                    foreach (DataRow dr in Dt_Attachments.Rows)
+                    if(rds.Tables["Attachments"] != null)
+                    {
+                        DataTable Dt_Attachments = rds.Tables["Attachments"].Copy();
+
+                        foreach (DataRow dr in Dt_Attachments.Rows)
                     {
                         SaveAttachmentParameter attachments = new SaveAttachmentParameter();
                         attachments._dh_id = editobf._dh_id;
@@ -581,15 +593,11 @@ namespace DealHub_Dal.OBF
                         attachments._description = dr["description"].ToString();
                         editobf.Attachments.Add(attachments);
                     }
-
-                    foreach (DataRow dr in Dt_Sap_IO_number.Rows)
-                    {
-                        Customer_SAP_IO_Parameteredit sap_io = new Customer_SAP_IO_Parameteredit();
-                        sap_io._Cust_SAP_IO_Number = dr["cust_sap_io_number"].ToString();
-                        editobf.sapio.Add(sap_io);
                     }
 
-                   
+
+
+
 
 
 
@@ -707,7 +715,7 @@ namespace DealHub_Dal.OBF
                     cmd.Parameters.Add("@exceptionalcase_cfo", MySqlDbType.UInt32).Value = filters.exceptionalcase_cfo;
                     cmd.Parameters.Add("@exceptioncase_ceo", MySqlDbType.UInt32).Value = filters.exceptioncase_ceo;
                     cmd.Parameters.Add("@is_on_hold", MySqlDbType.UInt32).Value = filters.is_on_hold;
-
+                    cmd.Parameters.Add("@_marginal_exception_requested", MySqlDbType.UInt32).Value = filters._marginal_exception_requested;
                     conn.Open();
                     using (IDataReader dr = cmd.ExecuteReader())
                     {

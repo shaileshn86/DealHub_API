@@ -279,11 +279,15 @@ namespace DealHub_Domain.DashBoard
 
         public int rejectionto { get; set; }
 
+
         public int exceptionalcase_cfo { get; set; }
 
         public int exceptioncase_ceo { get; set; }
 
         public int is_on_hold { get; set; }
+
+
+        public int _marginal_exception_requested { get; set; }
     }
 
 
