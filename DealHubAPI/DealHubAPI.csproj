@@ -672,6 +672,25 @@
     <Folder Include="DealHubFiles\210521\08\" />
     <Folder Include="DealHubFiles\210525\13\" />
     <Folder Include="DealHubFiles\210525\14\" />
+    <Folder Include="DealHubFiles\210526\11\" />
+    <Folder Include="DealHubFiles\210526\14\" />
+    <Folder Include="DealHubFiles\210526\15\" />
+    <Folder Include="DealHubFiles\210526\16\" />
+    <Folder Include="DealHubFiles\210526\17\" />
+    <Folder Include="DealHubFiles\210526\19\" />
+    <Folder Include="DealHubFiles\210527\10\" />
+    <Folder Include="DealHubFiles\210527\16\" />
+    <Folder Include="DealHubFiles\210527\17\" />
+    <Folder Include="DealHubFiles\210528\11\" />
+    <Folder Include="DealHubFiles\210528\12\" />
+    <Folder Include="DealHubFiles\210528\20\" />
+    <Folder Include="DealHubFiles\210531\09\" />
+    <Folder Include="DealHubFiles\210531\11\" />
+    <Folder Include="DealHubFiles\210531\12\" />
+    <Folder Include="DealHubFiles\210531\13\" />
+    <Folder Include="DealHubFiles\210531\15\" />
+    <Folder Include="DealHubFiles\210531\16\" />
+    <Folder Include="DealHubFiles\210531\19\" />
     <Folder Include="Images\" />
   </ItemGroup>
   <ItemGroup>
