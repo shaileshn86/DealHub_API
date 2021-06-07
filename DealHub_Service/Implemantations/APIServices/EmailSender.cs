@@ -22,6 +22,11 @@ namespace DealHub_Service.Implemantations.APIServices
 
         private string HostName = ConfigurationManager.AppSettings["hostname"].ToString();
 
+
+        private string usecreditionals = ConfigurationManager.AppSettings["usecreditionals"].ToString();
+
+        private string enablessl = ConfigurationManager.AppSettings["enablessl"].ToString();
+
         public void sendEmail(EmailSendingProperties EP)
         {
             try
@@ -53,9 +58,20 @@ namespace DealHub_Service.Implemantations.APIServices
 
                     using (SmtpClient SmtpServer = new SmtpClient(HostName, portno))
                     {
-                        SmtpServer.UseDefaultCredentials = false; //Need to overwrite this
-                        SmtpServer.Credentials = new System.Net.NetworkCredential(FromEmail, EmailPassword);
+                        SmtpServer.UseDefaultCredentials = true;
+                        if (usecreditionals=="Y")
+                        {
+                            SmtpServer.UseDefaultCredentials = false; //Need to overwrite this
+                            SmtpServer.Credentials = new System.Net.NetworkCredential(FromEmail, EmailPassword);
+                        }
                         SmtpServer.EnableSsl = true;
+                        if (enablessl=="N")
+                        {
+                            SmtpServer.EnableSsl = false;
+                        }
+                        
+                        
+                        
                         SmtpServer.Send(mail);
                     }
                 }

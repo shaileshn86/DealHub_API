@@ -25,6 +25,15 @@ namespace DealHub_Dal.Extensions
                 return default(T);
         }
 
+
+        public static T IsNullColumn<T>(this DataRow row, string Name)
+        {
+            if (row[Name] != DBNull.Value)
+                return (T)row[Name];
+            else
+                return default(T);
+        }
+
         public static DataSet GetTableName (this DataSet ds)
         {
            try
