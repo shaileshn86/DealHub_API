@@ -167,5 +167,26 @@ namespace DealHubAPI.Controllers
 
 
         }
+
+
+        [AllowAnonymous, HttpPost]
+        [Route("SendEmailAlert")]
+        public HttpResponseMessage SendEmailAlert( int dh_header_id)
+        {
+            try
+            {
+                EmailSendingService.EmailSendTest();
+                return Request.CreateResponse(HttpStatusCode.OK, "");
+            }
+            catch(Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, "");
+
+            }
+
+            
+
+
+        }
     }
 }
