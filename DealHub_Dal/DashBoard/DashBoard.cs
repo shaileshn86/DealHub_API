@@ -49,7 +49,8 @@ namespace DealHub_Dal.DashBoard
                             _DashBoardDetailsParameters.version_name = dr.IsNull<string>("version_name");
                             _DashBoardDetailsParameters.currentstatus = dr.IsNull<string>("currentstatus");
                             _DashBoardDetailsParameters.shortcurrentstatus = dr.IsNull<string>("shortcurrentstatus");
-
+                            _DashBoardDetailsParameters.shortcurrentstatus = dr.IsNull<string>("shortcurrentstatus");
+                            _DashBoardDetailsParameters.phase_code = dr.IsNull<string>("phase_code");
                             DashBoardData.Add(_DashBoardDetailsParameters);
 
                         }
