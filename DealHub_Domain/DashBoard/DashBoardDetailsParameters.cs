@@ -32,6 +32,9 @@ namespace DealHub_Domain.DashBoard
         public string currentstatus { get; set; }
 
         public string shortcurrentstatus { get; set; }
+        public int ppl_init { get; set; }
+
+        public string ppl_status { get; set; }
 
     }
 
