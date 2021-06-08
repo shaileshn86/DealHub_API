@@ -125,6 +125,8 @@ namespace DealHub_Domain.DashBoard
 
         public string _dh_location { get; set; }
 
+        public int _parent_dh_main_id { get; set; }
+
         public int _vertical_id { get; set; }
 
         public int _verticalhead_id { get; set; }

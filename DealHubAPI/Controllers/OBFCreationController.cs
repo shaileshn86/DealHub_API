@@ -61,6 +61,48 @@ namespace DealHubAPI.Controllers
 
         [HttpPost]
         [AllowAnonymous]
+        [Route("EditCustomerCodeandIo")]
+        public HttpResponseMessage Edit_CustomerCode_and_io(ObfCreationParameters model)
+        {
+            if (model == null)// Incase Post Object Is Null or Not Match and Object value is null
+            {
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+            }
+            if (ModelState.IsValid)
+            {
+                List<ObfCreationDetailsParameters> _ObfCreationDetailsParameters = ObfServices.editcustomercodeandio(model);
+
+                if (_ObfCreationDetailsParameters != null)
+                {
+                    if (_ObfCreationDetailsParameters.Count != 0)
+                    {
+
+                        return Request.CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(_ObfCreationDetailsParameters));
+                    }
+                    else
+                    {
+                        result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                        return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+                    }
+
+
+
+                }
+                else
+                {
+                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+                }
+
+            }
+
+            return null;
+        }
+
+
+        [HttpPost]
+        [AllowAnonymous]
         [Route("SaveServiceSolutionSector")]
         public HttpResponseMessage SaveServiceSolution(SaveServiceSolutionParameters model)
         {
