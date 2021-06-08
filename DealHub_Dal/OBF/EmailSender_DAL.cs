@@ -21,7 +21,7 @@ namespace DealHub_Dal.OBF
                 using (MySqlConnection conn = new MySqlConnection(connectionString))
                 {
                     MySqlDataAdapter DA = new MySqlDataAdapter();
-                    MySqlCommand cmd = new MySqlCommand("sp_getOBFSummaryData", conn);
+                    MySqlCommand cmd = new MySqlCommand("sp_getEmail_Sending_Details", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.Add("@_dh_header_id", MySqlDbType.UInt32).Value = _dh_header_id;
                     cmd.Parameters.Add("@_is_shared", MySqlDbType.UInt32).Value = _is_shared;
@@ -62,19 +62,27 @@ namespace DealHub_Dal.OBF
                                 
                             }
 
-                            foreach(DataRow ToRow in ds.Tables["ToEmail"].Rows)
+                            if (rds.Tables["ToEmail"] != null)
                             {
-                                EmailToCCParameters To = new EmailToCCParameters();
-                                To.email_id = ToRow["ToEmail"].ToString();
-                                ep.SendTo.Add(To);
+                                foreach (DataRow ToRow in ds.Tables["ToEmail"].Rows)
+                                {
+                                    EmailToCCParameters To = new EmailToCCParameters();
+                                    To.email_id = ToRow["ToEmailId"].ToString();
+                                    ep.SendTo.Add(To);
+                                }
                             }
 
-                            foreach (DataRow ToRow in ds.Tables["ToEmail"].Rows)
+
+                            if (rds.Tables["CCEmail"] != null)
                             {
-                                EmailToCCParameters To = new EmailToCCParameters();
-                                To.email_id = ToRow["CCEmail"].ToString();
-                                ep.SendCC.Add(To);
+                                foreach (DataRow ToRow in ds.Tables["CCEmail"].Rows)
+                                {
+                                    EmailToCCParameters To = new EmailToCCParameters();
+                                    To.email_id = ToRow["CcEmailId"].ToString();
+                                    ep.SendCC.Add(To);
+                                }
                             }
+                           
 
                             EmailSender ES = new EmailSender();
                             ES.sendEmail(ep);

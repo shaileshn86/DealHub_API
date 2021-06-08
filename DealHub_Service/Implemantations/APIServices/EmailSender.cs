@@ -6,7 +6,7 @@ using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 using DealHub_Domain.DashBoard;
-
+using DealHub_Dal.OBF;
 namespace DealHub_Service.Implemantations.APIServices
 {
    public class EmailSendingService
@@ -36,6 +36,12 @@ namespace DealHub_Service.Implemantations.APIServices
             {
                 throw ex;
             }
+        }
+
+
+        public static List<commanmessges> Email_Sending_Details(int _dh_header_id, int _is_shared)
+        {
+            return EmailSender_DAL.Email_Sending_Details(_dh_header_id,_is_shared);
         }
 
 
