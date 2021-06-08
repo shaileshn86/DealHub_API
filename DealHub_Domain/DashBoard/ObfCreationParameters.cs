@@ -190,7 +190,7 @@ namespace DealHub_Domain.DashBoard
 
         public int _dh_phase_id { get; set; } // added  for ppl initiate part
 
-        public int _parent_dh_main_id { get; set; } // added  for ppl initiate part
+        //public int _parent_dh_main_id { get; set; } // added  for ppl initiate part
 
     }
 
