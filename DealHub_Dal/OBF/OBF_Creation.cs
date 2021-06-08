@@ -181,6 +181,65 @@ namespace DealHub_Dal.OBF
             }
         }
 
+        public static List<ObfCreationDetailsParameters> editcustomercodeandio(ObfCreationParameters filter)
+        {
+            List<ObfCreationDetailsParameters> _editcustomercodeandio = new List<ObfCreationDetailsParameters>();
+            try
+            {
+                //sp_auth_user
+                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                {
+                    MySqlCommand cmd = new MySqlCommand("sp_edit_sap_customer_code", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add("@_dh_header_id", MySqlDbType.UInt32).Value = filter._dh_header_id;
+                    cmd.Parameters.Add("@_sap_customer_code", MySqlDbType.String).Value = filter._sap_customer_code;
+                    cmd.Parameters.Add("@_user_id", MySqlDbType.String).Value = filter._created_by;
+
+                    conn.Open();
+                    using (IDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            ObfCreationDetailsParameters _ObfCreationDetailsParameters = new ObfCreationDetailsParameters();
+
+                            //_DashBoardDetailsParameters.obf_id = dr.IsNull<uint>("obf_id");
+                            _ObfCreationDetailsParameters.Result = dr.IsNull<string>("status");
+                            _ObfCreationDetailsParameters.dh_id = Convert.ToUInt32(filter._dh_id);
+                            _ObfCreationDetailsParameters.dh_header_id = Convert.ToUInt32(filter._dh_header_id);
+
+                            filter._dh_header_id = Convert.ToInt32(_ObfCreationDetailsParameters.dh_header_id);
+                            
+                            foreach (Customer_SAP_IO_Parameter SAPIO in filter.sapio)
+                            {
+                                SAPIO._dh_id = Convert.ToInt32(filter._dh_id);
+                                SAPIO._dh_header_id = Convert.ToInt32(filter._dh_header_id);
+                                SAPIO._created_by = filter._created_by;
+
+                            }
+                            _editcustomercodeandio.Add(_ObfCreationDetailsParameters);
+
+                        }
+                    }
+
+                    
+                        SaveCustomer_SAP_IO_Number(filter.sapio, filter._sap_customer_code);
+                }
+                return _editcustomercodeandio;
+            }
+            catch (Exception e)
+            {
+                ObfCreationDetailsParameters _ObfCreationDetailsParameters = new ObfCreationDetailsParameters();
+
+                //_DashBoardDetailsParameters.obf_id = dr.IsNull<uint>("obf_id");
+                _ObfCreationDetailsParameters.Result = "Failure";
+
+
+
+                _editcustomercodeandio.Add(_ObfCreationDetailsParameters);
+                return _editcustomercodeandio;
+            }
+        }
+
 
         public static List<SaveAttachementDetailsParameters> SaveServiceSolutionSector(SaveServiceSolutionParameters filter)
         {
