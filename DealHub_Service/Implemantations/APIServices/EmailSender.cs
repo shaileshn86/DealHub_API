@@ -45,6 +45,22 @@ namespace DealHub_Service.Implemantations.APIServices
         }
 
 
+       
+
+
+    }
+
+    public class SystemNotificationService
+    {
+        public static string Get_System_Notification(string _user_code)
+        {
+            return SystemNotificationDAL.Get_System_Notification(_user_code);
+        }
+
+        public static List<commanmessges> Update_System_Notification(List<systemnotificationparameters> filters)
+        {
+            return SystemNotificationDAL.Update_System_Notification(filters);
+        }
     }
     
     
