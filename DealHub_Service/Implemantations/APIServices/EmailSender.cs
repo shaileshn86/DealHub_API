@@ -5,94 +5,46 @@ using System.Linq;
 using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
-
+using DealHub_Domain.DashBoard;
+using DealHub_Dal.OBF;
 namespace DealHub_Service.Implemantations.APIServices
 {
-    class EmailSender
+   public class EmailSendingService
     {
-        
 
-        private string FromEmail = ConfigurationManager.AppSettings["FromEmail"].ToString();
-
-        private string EmailPassword = ConfigurationManager.AppSettings["EmailPassword"].ToString();
-
-        private bool EnableSsl = bool.Parse( ConfigurationManager.AppSettings["enablessl"].ToString());
-
-        private int portno = int.Parse(ConfigurationManager.AppSettings["port"].ToString());
-
-        private string HostName = ConfigurationManager.AppSettings["hostname"].ToString();
-
-        public void sendEmail(EmailSendingProperties EP)
+        public static void EmailSendTest()
         {
             try
             {
-                using (MailMessage mail = new MailMessage())
-                {
-                    mail.From = new MailAddress(FromEmail);
-                    foreach(EmailToCCParameters To in EP.SendTo)
-                    {
-                        mail.To.Add(To.email_id);
-                    }
+                EmailSendingProperties EP = new EmailSendingProperties();
+                EP.SendTo = new List<EmailToCCParameters>();
+                EP.Attachment = new List<EmailAttachmentParameters>();
+                EmailToCCParameters To = new EmailToCCParameters();
+                To.email_id = "naik.shailesh@mahindra.com";
+                EP.SendTo.Add(To);
+                EP.SendCC = new List<EmailToCCParameters>();
+                EmailToCCParameters CC = new EmailToCCParameters();
+                CC.email_id = "BHABAL.NIKESH@mahindra.com";
+                EP.SendCC.Add(CC);
+                EP.subject = "test mail from system";
+                EP.body = "Mail send for test do not reply";
+                EmailSender ES = new EmailSender();
+                ES.sendEmail(EP);
 
-                    foreach (EmailToCCParameters CC in EP.SendCC)
-                    {
-                        mail.CC.Add(CC.email_id);
-                    }
-
-                    mail.Subject = EP.subject;
-
-                    mail.Body = EP.body;
-
-                    foreach(EmailAttachmentParameters attachment in EP.Attachment)
-                    {
-                        System.Net.Mail.Attachment attach;
-                        attach = new System.Net.Mail.Attachment(attachment.file_path);
-                        mail.Attachments.Add(attach);
-
-                    }
-
-                    using (SmtpClient SmtpServer = new SmtpClient(HostName, portno))
-                    {
-                        SmtpServer.UseDefaultCredentials = false; //Need to overwrite this
-                        SmtpServer.Credentials = new System.Net.NetworkCredential(FromEmail, EmailPassword);
-                        SmtpServer.EnableSsl = true;
-                        SmtpServer.Send(mail);
-                    }
-                }
             }
             catch(Exception ex)
             {
-
+                throw ex;
             }
         }
 
 
-
-    }
-
-    class EmailSendingProperties
-    {
-        public List<EmailToCCParameters> SendTo { get; set; }
-
-        public List<EmailToCCParameters> SendCC { get; set; }
-
-        public List <EmailAttachmentParameters> Attachment { get; set; }
-
-        public string subject { get; set; }
-
-        public string body { get; set; }
+        public static List<commanmessges> Email_Sending_Details(int _dh_header_id, int _is_shared)
+        {
+            return EmailSender_DAL.Email_Sending_Details(_dh_header_id,_is_shared);
+        }
 
 
-    }
-
-    class EmailToCCParameters
-    {
-        public string email_id { get; set; }
-    }
-
-    class EmailAttachmentParameters
-    {
-        public string file_path { get; set; }
     }
     
     

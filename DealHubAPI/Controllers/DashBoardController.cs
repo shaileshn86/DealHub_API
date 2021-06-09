@@ -167,5 +167,64 @@ namespace DealHubAPI.Controllers
 
 
         }
+
+
+        [AllowAnonymous, HttpPost]
+        [Route("SendEmailAlert")]
+        public HttpResponseMessage SendEmailAlert( int dh_header_id)
+        {
+            try
+            {
+                EmailSendingService.EmailSendTest();
+                return Request.CreateResponse(HttpStatusCode.OK, "");
+            }
+            catch(Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, "");
+
+            }
+
+            
+
+
+        }
+
+
+        [AllowAnonymous, HttpGet]
+        [Route("SendEmailAlert_OBFPPL")]
+        public HttpResponseMessage SendEmailAlert_OBFPPL(int _dh_header_id, int _is_shared)
+        {
+           
+
+                List<commanmessges> _commanmessges = EmailSendingService.Email_Sending_Details(_dh_header_id,_is_shared);
+
+                if (_commanmessges != null)
+                {
+                    if (_commanmessges.Count != 0)
+                    {
+                        return Request.CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(_commanmessges));
+                    }
+                    else
+                    {
+                        result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                        return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+                    }
+
+
+
+                }
+                else
+                {
+                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+                }
+                return null;
+
+           
+
+
+
+
+        }
     }
 }

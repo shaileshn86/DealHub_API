@@ -335,6 +335,15 @@ namespace DealHub_Dal.OBF
                         }
                     }
 
+                    try
+                    {
+                        EmailSender_DAL.Email_Sending_Details(filter._dh_header_id, 0);
+                    }
+                    catch (Exception ex)
+                    {
+
+                    }
+
                     return _SaveAttachementDetailsParameters;
                 }
                 catch (Exception ex)
@@ -796,6 +805,15 @@ namespace DealHub_Dal.OBF
                     }
                 }
 
+                try
+                {
+                    EmailSender_DAL.Email_Sending_Details(filters._dh_header_id, 0);
+                }
+                catch(Exception ex)
+                {
+
+                }
+
                 return _commanmessges;
             }
             catch (Exception ex)
@@ -809,6 +827,7 @@ namespace DealHub_Dal.OBF
 
                 return _commanmessges;
             }
+
         }
 
         public static List<SaveAttachementDetailsParameters> SaveCustomer_SAP_IO_Number(List<Customer_SAP_IO_Parameter> filters,string _sap_customer_code)
@@ -904,6 +923,8 @@ namespace DealHub_Dal.OBF
 
          
         }
+
+
 
         
 
