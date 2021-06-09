@@ -92,6 +92,7 @@ namespace DealHub_Domain.DashBoard
         public string currentstatus { get; set; }
         public string comments { get; set; }
         public string TimeLine { get; set; }
+        public string actions { get; set; }
     }
 
 }
