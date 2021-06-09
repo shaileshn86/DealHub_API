@@ -128,7 +128,7 @@ namespace DealHub_Dal.OBF
 
                                 if (rds.Tables["PPLInit_ToEmail"] != null)
                                 {
-                                    foreach (DataRow ToRow in ds.Tables["ToEmail"].Rows)
+                                    foreach (DataRow ToRow in ds.Tables["PPLInit_ToEmail"].Rows)
                                     {
                                         EmailToCCParameters To = new EmailToCCParameters();
                                         To.email_id = ToRow["ToEmailId"].ToString();
