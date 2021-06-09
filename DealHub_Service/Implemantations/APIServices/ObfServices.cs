@@ -15,6 +15,11 @@ namespace DealHub_Service.Implemantations.APIServices
             return OBF_Creation.ObfCreation(filter);
         }
 
+        public static List<ObfCreationDetailsParameters> editcustomercodeandio(ObfCreationParameters filter)
+        {
+            return OBF_Creation.editcustomercodeandio(filter);
+        }
+
         public static string GetMastersOBFCreation(string userid)
         {
             return OBF_Creation.GetMastersOBFCreation(userid);
