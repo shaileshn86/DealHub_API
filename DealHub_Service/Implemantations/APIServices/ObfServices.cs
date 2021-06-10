@@ -57,6 +57,11 @@ namespace DealHub_Service.Implemantations.APIServices
         {
             return OBF_Creation.GetOBFSummaryDataVersionWise(dh_id, dh_header_id);
         }
-        
+        public static string GetAttachmentDocument(int dh_id,int dh_header_id)
+        {
+            return OBF_Creation.GetAttachmentDocument(dh_id, dh_header_id);
+        }
+
+
     }
 }

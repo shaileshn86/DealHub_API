@@ -357,6 +357,23 @@ namespace DealHubAPI.Controllers
         }
 
 
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("GetAttachmentDocument")]
+        public HttpResponseMessage GetAttachmentDocument(string dh_id,string dh_header_id)
+        {
+            string json = ObfServices.GetAttachmentDocument(Convert.ToInt32(dh_id), Convert.ToInt32(dh_header_id));
+            if (json == "" || json == "error")
+            {
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+            }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, json);
+            }
+        }
+
     }
 
 

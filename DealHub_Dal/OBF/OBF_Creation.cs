@@ -958,5 +958,36 @@ namespace DealHub_Dal.OBF
             }
 
         }
+        public static string GetAttachmentDocument(int dh_id, int dh_header_id)
+        {
+            try
+            {
+
+                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                {
+                    MySqlDataAdapter DA = new MySqlDataAdapter();
+                    MySqlCommand cmd = new MySqlCommand("sp_get_dh_attachments", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add("_dh_id", MySqlDbType.String).Value = dh_id;
+                    cmd.Parameters.Add("_dh_header_id", MySqlDbType.String).Value = dh_header_id;
+                    DA.SelectCommand = cmd;
+                    cmd.Connection = new MySqlConnection(connectionString);
+                    DataSet ds = new DataSet();
+                    DA.Fill(ds);
+
+                    DataSet rds = ds.GetTableName();
+
+                    return JsonConvert.SerializeObject(rds, Formatting.Indented); ;
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return "error";
+            }
+
+        }
+        
     }
 }
