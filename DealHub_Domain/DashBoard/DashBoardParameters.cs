@@ -16,5 +16,7 @@ namespace DealHub_Domain.DashBoard
     {
         public int _dh_system_notification_id { get; set; }
         public int _IsRead { get; set; }
+
+        public int _IsSoftDelete { get; set; }
     }
 }
