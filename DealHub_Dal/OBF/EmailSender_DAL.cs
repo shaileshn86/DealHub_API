@@ -95,6 +95,51 @@ namespace DealHub_Dal.OBF
                             cm.status = "failure";
                             _commanmessges.Add(cm);
                         }
+
+                        if (rds.Tables["PPLInit_ToEmail"] != null)
+                        {
+                            EmailSendingProperties ep1 = new EmailSendingProperties();
+                            ep1.SendTo = new List<EmailToCCParameters>();
+                            ep1.SendCC = new List<EmailToCCParameters>();
+                            ep1.Attachment = new List<EmailAttachmentParameters>();
+                            if (rds.Tables["PPLInit_EmailBody"] != null)
+                            {
+                                foreach (DataRow Dr in rds.Tables["PPLInit_EmailBody"].Rows)
+                                {
+                                    string email_subject = Dr["email_subject"].ToString();
+                                    string email_body = Dr["email_body"].ToString();
+                                    foreach (DataRow DrReplace in rds.Tables["replaceemailcontent"].Rows)
+                                    {
+                                        foreach (DataColumn DC in rds.Tables["replaceemailcontent"].Columns)
+                                        {
+
+                                            email_subject = email_subject.Replace("#" + DC.ColumnName.ToString(), DrReplace[DC.ColumnName].ToString());
+                                            email_body = email_body.Replace("#" + DC.ColumnName.ToString(), DrReplace[DC.ColumnName].ToString());
+
+
+                                        }
+
+                                    }
+
+                                    ep1.subject = email_subject;
+                                    ep1.body = email_body;
+
+                                }
+
+                                if (rds.Tables["PPLInit_ToEmail"] != null)
+                                {
+                                    foreach (DataRow ToRow in ds.Tables["PPLInit_ToEmail"].Rows)
+                                    {
+                                        EmailToCCParameters To = new EmailToCCParameters();
+                                        To.email_id = ToRow["ToEmailId"].ToString();
+                                        ep1.SendTo.Add(To);
+                                    }
+                                }
+                            }
+
+                            EmailSender ES1 = new EmailSender();
+                            ES1.sendEmail(ep1);
+                        }
                     }
                     else
                     {
@@ -116,6 +161,90 @@ namespace DealHub_Dal.OBF
             catch(Exception ex)
             {
                 return null;
+            }
+
+        }
+
+    }
+
+
+    public class SystemNotificationDAL:BaseDAL
+    {
+        public static string Get_System_Notification(string _user_code)
+        {
+            try
+            {
+
+                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                {
+                    MySqlDataAdapter DA = new MySqlDataAdapter();
+                    MySqlCommand cmd = new MySqlCommand("sp_get_system_notification", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add("@_user_code", MySqlDbType.String).Value = _user_code;
+                   
+                    DA.SelectCommand = cmd;
+                    cmd.Connection = new MySqlConnection(connectionString);
+                    DataSet ds = new DataSet();
+                    DA.Fill(ds);
+
+                    DataSet rds = ds.GetTableName();
+
+                    return JsonConvert.SerializeObject(rds, Formatting.Indented); ;
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return "error";
+            }
+
+        }
+
+        public static List<commanmessges> Update_System_Notification(List<systemnotificationparameters> filters)
+        {
+            List<commanmessges> _commanmessges = new List<commanmessges>();
+            try
+            {
+                foreach(systemnotificationparameters filter in filters)
+                {
+                    using (MySqlConnection conn = new MySqlConnection(connectionString))
+                    {
+                        MySqlCommand cmd = new MySqlCommand("sp_update_system_notification", conn);
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@_dh_system_notification_id", MySqlDbType.UInt32).Value = filter._dh_system_notification_id;
+                        cmd.Parameters.Add("@_IsRead", MySqlDbType.UInt32).Value = filter._IsRead;
+
+                        conn.Open();
+                        using (IDataReader dr = cmd.ExecuteReader())
+                        {
+                            while (dr.Read())
+                            {
+                                commanmessges _Details = new commanmessges();
+                                _Details.status = dr.IsNull<string>("status");
+                                _Details.message = dr.IsNull<string>("message");
+
+                                _commanmessges.Add(_Details);
+                            }
+                        }
+                    }
+                }
+                
+
+               
+
+                return _commanmessges;
+            }
+            catch (Exception ex)
+            {
+                _commanmessges = new List<commanmessges>();
+
+                commanmessges _Details = new commanmessges();
+                _Details.status = "Failed";
+                _Details.message = "Error in saving parameters";
+                _commanmessges.Add(_Details);
+
+                return _commanmessges;
             }
 
         }

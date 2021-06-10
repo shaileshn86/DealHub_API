@@ -226,5 +226,70 @@ namespace DealHubAPI.Controllers
 
 
         }
+
+
+        [AllowAnonymous, HttpGet]
+        [Route("Get_System_Notification")]
+        public HttpResponseMessage Get_System_Notification(string _user_code)
+        {
+
+
+            string json = SystemNotificationService.Get_System_Notification(_user_code);
+            if (json == "" || json == "error")
+            {
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+            }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, json);
+            }
+
+
+
+
+
+        }
+
+
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("Update_System_Notification")]
+        public HttpResponseMessage Update_System_Notification(List<systemnotificationparameters> model)
+        {
+            if (model == null)// Incase Post Object Is Null or Not Match and Object value is null
+            {
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+            }
+            if (ModelState.IsValid)
+            {
+                List<commanmessges> _commanmessges = SystemNotificationService.Update_System_Notification(model);
+
+                if (_commanmessges != null)
+                {
+                    if (_commanmessges.Count != 0)
+                    {
+
+                        return Request.CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(_commanmessges));
+                    }
+                    else
+                    {
+                        result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                        return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+                    }
+
+
+
+                }
+                else
+                {
+                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+                }
+            }
+            return null;
+        }
+
     }
 }
