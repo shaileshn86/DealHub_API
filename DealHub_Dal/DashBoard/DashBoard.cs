@@ -232,5 +232,36 @@ namespace DealHub_Dal.DashBoard
 
         }
 
+
+
+        public static string GetDashboardProgress(int dh_id)
+        {
+            try
+            {
+
+                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                {
+                    MySqlDataAdapter DA = new MySqlDataAdapter();
+                    MySqlCommand cmd = new MySqlCommand("sp_get_dashboard_progress", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add("_dh_id", MySqlDbType.String).Value = dh_id;
+                    DA.SelectCommand = cmd;
+                    cmd.Connection = new MySqlConnection(connectionString);
+                    DataSet ds = new DataSet();
+                    DA.Fill(ds);
+
+                    DataSet rds = ds.GetTableName();
+
+                    return JsonConvert.SerializeObject(rds, Formatting.Indented); ;
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return "error";
+            }
+
+        }
     }
 }
