@@ -214,6 +214,7 @@ namespace DealHub_Dal.OBF
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.Add("@_dh_system_notification_id", MySqlDbType.UInt32).Value = filter._dh_system_notification_id;
                         cmd.Parameters.Add("@_IsRead", MySqlDbType.UInt32).Value = filter._IsRead;
+                        cmd.Parameters.Add("@_IsSoftDelete", MySqlDbType.UInt32).Value = filter._IsSoftDelete;
 
                         conn.Open();
                         using (IDataReader dr = cmd.ExecuteReader())
