@@ -36,6 +36,26 @@ namespace DealHub_Domain.DashBoard
 
         public string ppl_status { get; set; }
 
+        public string customer_name { get; set; }
+
+        public string dh_location { get; set; }
+
+        public string Vertical_name { get; set; }
+
+        public string sap_customer_code { get; set; }
+
+        public string sector_name { get; set; }
+
+        public string subsector_name { get; set; }
+
+        public string solutioncategory_name { get; set; }
+
+
+
+
+
+
+
     }
 
 
