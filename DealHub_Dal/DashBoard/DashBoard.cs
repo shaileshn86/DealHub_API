@@ -61,6 +61,8 @@ namespace DealHub_Dal.DashBoard
                             _DashBoardDetailsParameters.sector_name = dr.IsNull<string>("sector_name");
                             _DashBoardDetailsParameters.subsector_name = dr.IsNull<string>("subsector_name");
                             _DashBoardDetailsParameters.solutioncategory_name = dr.IsNull<string>("solutioncategory_name");
+                            _DashBoardDetailsParameters.currentstatus_search = dr.IsNull<string>("currentstatus_search");
+                            _DashBoardDetailsParameters.is_submitted = dr.IsNull<int>("is_submitted");
                             DashBoardData.Add(_DashBoardDetailsParameters);
 
                         }

@@ -50,7 +50,9 @@ namespace DealHub_Domain.DashBoard
 
         public string solutioncategory_name { get; set; }
 
+        public string currentstatus_search { get; set; }
 
+        public int is_submitted { get; set; }
 
 
 
