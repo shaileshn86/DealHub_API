@@ -53,6 +53,16 @@ namespace DealHub_Dal.DashBoard
                             _DashBoardDetailsParameters.phase_code = dr.IsNull<string>("phase_code");
                             _DashBoardDetailsParameters.ppl_init = dr.IsNull<int>("ppl_init");
                             _DashBoardDetailsParameters.ppl_status = dr.IsNull<string>("ppl_status");
+
+                            _DashBoardDetailsParameters.customer_name = dr.IsNull<string>("customer_name");
+                            _DashBoardDetailsParameters.dh_location = dr.IsNull<string>("dh_location");
+                            _DashBoardDetailsParameters.Vertical_name = dr.IsNull<string>("Vertical_name");
+                            _DashBoardDetailsParameters.sap_customer_code = dr.IsNull<string>("sap_customer_code");
+                            _DashBoardDetailsParameters.sector_name = dr.IsNull<string>("sector_name");
+                            _DashBoardDetailsParameters.subsector_name = dr.IsNull<string>("subsector_name");
+                            _DashBoardDetailsParameters.solutioncategory_name = dr.IsNull<string>("solutioncategory_name");
+                            _DashBoardDetailsParameters.currentstatus_search = dr.IsNull<string>("currentstatus_search");
+                            _DashBoardDetailsParameters.is_submitted = dr.IsNull<int>("is_submitted");
                             DashBoardData.Add(_DashBoardDetailsParameters);
 
                         }
@@ -235,5 +245,36 @@ namespace DealHub_Dal.DashBoard
 
         }
 
+
+
+        public static string GetDashboardProgress(int dh_id)
+        {
+            try
+            {
+
+                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                {
+                    MySqlDataAdapter DA = new MySqlDataAdapter();
+                    MySqlCommand cmd = new MySqlCommand("sp_get_dashboard_progress", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add("_dh_id", MySqlDbType.String).Value = dh_id;
+                    DA.SelectCommand = cmd;
+                    cmd.Connection = new MySqlConnection(connectionString);
+                    DataSet ds = new DataSet();
+                    DA.Fill(ds);
+
+                    DataSet rds = ds.GetTableName();
+
+                    return JsonConvert.SerializeObject(rds, Formatting.Indented); ;
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return "error";
+            }
+
+        }
     }
 }

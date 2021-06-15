@@ -34,5 +34,11 @@ namespace DealHub_Service.Implemantations.APIServices
             return DashBoard.GetOBFSummaryDetails_version(dh_id,dh_header_id);
         }
 
+
+        public static string GetDashboardProgress(int dh_id)
+        {
+            return DashBoard.GetDashboardProgress(dh_id);
+        }
+
     }
 }

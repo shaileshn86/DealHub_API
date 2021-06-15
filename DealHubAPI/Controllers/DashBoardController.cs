@@ -291,5 +291,24 @@ namespace DealHubAPI.Controllers
             return null;
         }
 
+
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("GetDashboardProgress")]
+        public HttpResponseMessage GetDashboardProgress(string dh_id)
+        {
+            string json = DashBoardServices.GetDashboardProgress(Convert.ToInt32(dh_id));
+            if (json == "" || json == "error")
+            {
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+            }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, json);
+            }
+
+
+        }
     }
 }
