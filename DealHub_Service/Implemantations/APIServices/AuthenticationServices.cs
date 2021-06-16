@@ -13,7 +13,8 @@ namespace DealHub_Service.Implemantations.APIServices
     {
         public static List<AuthenticationDetailParameters> GetAuthenticateUser(AuthenticationParameters filter)
         {
-            return Authentication.AutheticateUser(filter);
+            //return Authentication.AutheticateUser(filter);
+            return Authentication.AutheticateUserwithattempts(filter);
         }
 
         public static string DecryptStringAES(string Secretkey, string pwd)

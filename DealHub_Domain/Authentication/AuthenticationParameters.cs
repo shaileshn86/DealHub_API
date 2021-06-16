@@ -16,5 +16,7 @@ namespace DealHub_Domain.Authentication
 
         public string _token { get; set; }
         public string _SecretKey { get; set; }
+        
+        public string _attempt { get; set; }
     }
 }
