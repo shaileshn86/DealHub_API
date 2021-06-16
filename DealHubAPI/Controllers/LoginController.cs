@@ -183,7 +183,7 @@ namespace DealHubAPI.Controllers
         public async Task sendemail(AuthenticationParameters model)
         {
             //var message = new MailMessage();
-            var ToEmailId = AuthenticationServices.sendmail(model._user_code);
+          //  var ToEmailId = AuthenticationServices.sendmail(model._user_code);
             //message.To.Add(new MailAddress(ToEmailId));
             //message.From = new MailAddress("ankita.aherkar96@gmail.com");
             //message.Subject = "Reset Password";
@@ -197,26 +197,49 @@ namespace DealHubAPI.Controllers
             //    //smtp.Send(message);
             //    await smtp.SendMailAsync(message);
             //    await Task.FromResult(0);
-            var message = new MailMessage();
-            
-            message.To.Add(new MailAddress(ToEmailId));
-            message.From = new MailAddress("ankita.aherkar96@gmail.com");
-            message.Subject = "Reset Password";
-            message.Body = "Reset Password Link http://localhost:4200/ResetPassword";
-            message.IsBodyHtml = true;
-            using (var smtp = new SmtpClient("smtp.gmail.com", 587))
-            {
 
-                //smtp.Credentials = new NetworkCredential("ankita.aherkar96@gmail.com", "Mumbai@12345");
-                smtp.EnableSsl = true;
-                //smtp.Send(message);
-                await smtp.SendMailAsync(message);
-                await Task.FromResult(0);
+            //below code commented by Kirti on 16-06-2021 for reset password mail send functioanlity 
+            //var message = new MailMessage();
+
+            //message.To.Add(new MailAddress(ToEmailId));
+            //message.From = new MailAddress("ankita.aherkar96@gmail.com");
+            //message.Subject = "Reset Password";
+            //message.Body = "Reset Password Link http://localhost:4200/ResetPassword";
+            //message.IsBodyHtml = true;
+            //using (var smtp = new SmtpClient("smtp.gmail.com", 587))
+            //{
+
+            //    //smtp.Credentials = new NetworkCredential("ankita.aherkar96@gmail.com", "Mumbai@12345");
+            //    smtp.EnableSsl = true;
+            //    //smtp.Send(message);
+            //    await smtp.SendMailAsync(message);
+            //    await Task.FromResult(0);
+
+            ////}
 
             //}
 
+            try
+            {
+                var ToEmailId = AuthenticationServices.sendmail(model._user_code);
+                EmailSendingProperties EP = new EmailSendingProperties();
+                EP.SendTo = new List<EmailToCCParameters>();
+                EP.SendCC = new List<EmailToCCParameters>();
+                EP.Attachment = new List<EmailAttachmentParameters>();
+                EmailToCCParameters To = new EmailToCCParameters();
+                To.email_id = ToEmailId;
+                EP.SendTo.Add(To);
+                EP.subject = "Reset Password";
+                EP.body = "Reset Password Link http://localhost:4200/ResetPassword";
+                EmailSender ES = new EmailSender();
+                ES.sendEmail(EP);
+
             }
-          
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
         }
 
 
