@@ -51,12 +51,17 @@ namespace DealHub_Service.Implemantations.APIServices
         }
         public static List<SaveAttachementDetailsParameters> SaveAttachment(List<SaveAttachmentParameter> filter)
         {
-            return OBF_Creation.SaveAttachments(filter);
+            return OBF_Creation.SaveAttachments_OBFSummary(filter);
         }
         public static string GetOBFSummaryDataVersionWise(int dh_id,int dh_header_id)
         {
             return OBF_Creation.GetOBFSummaryDataVersionWise(dh_id, dh_header_id);
         }
-        
+        public static string GetAttachmentDocument(int dh_id,int dh_header_id)
+        {
+            return OBF_Creation.GetAttachmentDocument(dh_id, dh_header_id);
+        }
+
+
     }
 }

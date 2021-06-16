@@ -195,11 +195,14 @@ namespace DealHub_Dal.DashBoard
                             _timelinehistroy.currentstatus = dr.IsNull<string>("currentstatus");
                             _timelinehistroy.comments = dr.IsNull<string>("comments");
                             _timelinehistroy.TimeLine= dr.IsNull<string>("TimeLine");
+                            _timelinehistroy.actions = dr.IsNull<string>("actions");
                             //_timelinehistroy.TimeLine = "ABCGFDETGHUNKKJNSYSGDHDJHDHDJHDJHDJHDJDHJDHH";
                             TimelineData.Add(_timelinehistroy);
 
                         }
                     }
+
+
                     return TimelineData;
                 }
 
