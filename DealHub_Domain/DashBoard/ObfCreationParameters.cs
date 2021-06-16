@@ -103,6 +103,8 @@ namespace DealHub_Domain.DashBoard
 
         public int _solution_category_id { get; set; }
 
+        public int _projecttype { get; set; }
+
 
 
 

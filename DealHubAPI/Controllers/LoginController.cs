@@ -21,6 +21,7 @@ using System.Web;
 using System.IO;
 using DealHub_Domain.DashBoard;
 using DealHub_Dal.OBF;
+using DealHubAPI.CommonFunctions;
 
 namespace DealHubAPI.Controllers
 {
@@ -242,6 +243,14 @@ namespace DealHubAPI.Controllers
                     //Create custom filename
                     if (postedFile != null)
                     {
+                        IFileExtensionValidation _ValidateExtension = new FileExtensionValidation();
+                        if (! _ValidateExtension.ValidateUploadedExtension(Path.GetExtension(postedFile.FileName), ','))
+                        {
+                            //throw new Exception("File Extension not allowed for upload");
+                            msg = Request.CreateResponse(HttpStatusCode.NotAcceptable, "File not uploaded : File format not supported");
+                            return msg;
+                        }
+
                         //imageName = new String(Path.GetFileNameWithoutExtension(postedFile.FileName).Take(10).ToArray()).Replace(" ", "-");
                         imageName = new String(Path.GetFileNameWithoutExtension(postedFile.FileName).ToArray()).Replace(" ", "-");
                         imageName = imageName + DateTime.Now.ToString("yymmssfff") + Path.GetExtension(postedFile.FileName);
@@ -283,5 +292,7 @@ namespace DealHubAPI.Controllers
             return msg;
 
         }
+
+        
     }
 }
