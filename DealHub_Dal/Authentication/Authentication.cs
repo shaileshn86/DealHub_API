@@ -70,6 +70,34 @@ namespace DealHub_Dal.Authentication
             }
         }
 
+        public static DeleteTokenResponse deleteToken(string usercode)
+        {
+            DeleteTokenResponse deleteResult = new DeleteTokenResponse();
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                {
+                    conn.Open();
+                    MySqlCommand cmd = new MySqlCommand("update mst_users set token='' where user_code=@usercode", conn);
+                    cmd.Parameters.AddWithValue("@usercode", usercode);
+                    int i = cmd.ExecuteNonQuery();
+                    if (i > 0)
+                    {
+                        deleteResult.result = "Success";
+                    }
+                    else
+                    {
+                        deleteResult.result = "Failure";
+                    }
+                }
+                 return deleteResult;
+            }
+            catch (Exception ex)
+            {
+                deleteResult.result = "Failure";
+                return deleteResult;
+            }
+        }
         public static List<AuthenticationDetailParameters> AutheticateUserwithattempts(AuthenticationParameters filter)
         {
             List<AuthenticationDetailParameters> authuser = new List<AuthenticationDetailParameters>();
