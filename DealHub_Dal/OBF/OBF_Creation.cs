@@ -69,8 +69,16 @@ namespace DealHub_Dal.OBF
 
                             //_DashBoardDetailsParameters.obf_id = dr.IsNull<uint>("obf_id");
                             _ObfCreationDetailsParameters.Result = dr.IsNull<string>("result");
+                            if (_ObfCreationDetailsParameters.Result != "success")
+                            {
+                                _ObfCreationData.Add(_ObfCreationDetailsParameters);
+                                return _ObfCreationData;
+                            }
                             _ObfCreationDetailsParameters.dh_id = dr.IsNull<uint>("dh_id");
                             _ObfCreationDetailsParameters.dh_header_id = dr.IsNull<uint>("dh_header_id");
+
+                          
+
 
                             filter._dh_header_id = Convert.ToInt32( _ObfCreationDetailsParameters.dh_header_id);
                             
