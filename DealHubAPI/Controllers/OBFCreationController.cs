@@ -18,7 +18,7 @@ namespace DealHubAPI.Controllers
     public class OBFCreationController : BaseApiController
     {
         [HttpPost]
-        [AllowAnonymous]
+        [AuthenticationFilterDealhUb]
         [Route("CreateOBF")]
         public HttpResponseMessage CreateOBF(ObfCreationParameters model)
         {
@@ -60,7 +60,7 @@ namespace DealHubAPI.Controllers
 
 
         [HttpPost]
-        [AllowAnonymous]
+        [AuthenticationFilterDealhUb]
         [Route("EditCustomerCodeandIo")]
         public HttpResponseMessage Edit_CustomerCode_and_io(ObfCreationParameters model)
         {
@@ -102,7 +102,7 @@ namespace DealHubAPI.Controllers
 
 
         [HttpPost]
-        [AllowAnonymous]
+        [AuthenticationFilterDealhUb]
         [Route("SaveServiceSolutionSector")]
         public HttpResponseMessage SaveServiceSolution(SaveServiceSolutionParameters model)
         {
@@ -144,7 +144,7 @@ namespace DealHubAPI.Controllers
 
 
         [HttpPost]
-        [AllowAnonymous]
+        [AuthenticationFilterDealhUb]
         [Route("SubmitOBF")]
         public HttpResponseMessage SubmitOBF(SubmitOBFParameters model)
         {
@@ -236,7 +236,7 @@ namespace DealHubAPI.Controllers
         }
 
         [HttpPost]
-        [AllowAnonymous]
+        [AuthenticationFilterDealhUb]
         [Route("geteditobfdata")]
         public HttpResponseMessage get_editobf(editobfarguement model)
         {
@@ -258,7 +258,7 @@ namespace DealHubAPI.Controllers
         }
 
         [HttpPost]
-        [AllowAnonymous]
+        [AuthenticationFilterDealhUb]
         [Route("ApproveRejectObf")]
         public HttpResponseMessage ApproveRejectObf(ApproveRejectOBFParameter model)
         {
@@ -299,7 +299,7 @@ namespace DealHubAPI.Controllers
         }
 
         [HttpPost]
-        [AllowAnonymous]
+        [AuthenticationFilterDealhUb]
         [Route("SaveAttachmentDetails")]
         public HttpResponseMessage SaveAttachmentDetails(List<SaveAttachmentParameter> model)
         {
