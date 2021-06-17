@@ -123,6 +123,8 @@ namespace DealHub_Domain.DashBoard
     {
         public string _dh_project_name { get; set; }
 
+        public string _projecttype { get; set; }
+
         public string _opportunity_id { get; set; }
 
         public string _dh_location { get; set; }
