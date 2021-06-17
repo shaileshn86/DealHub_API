@@ -124,6 +124,47 @@ namespace DealHubAPI.Controllers
                 return null;
         }
 
+
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("DeleteToken")]
+        public HttpResponseMessage DeleteToken(TokenRequestParameter model)
+        {
+            if (model == null)// Incase Post Object Is Null or Not Match and Object value is null
+            {
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+            }
+            if (ModelState.IsValid)
+            {
+                DeleteTokenResponse _DeleteTokenResponse = AuthenticationServices.DeleteToken(model._user_code);
+
+                if (_DeleteTokenResponse != null)
+                {
+                    if (_DeleteTokenResponse.result == "Success")
+                    {
+                        return Request.CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(_DeleteTokenResponse));
+                    }
+                    else
+                    {
+                        result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                        return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+                    }
+
+
+
+                }
+                else
+                {
+                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+                }
+
+            }
+
+            return null;
+        }
+
         [HttpPost]
         [AllowAnonymous]
         [Route("RemindMe")]

@@ -24,6 +24,9 @@ namespace DealHub_Domain.Authentication
 
     }
 
-
+    public class DeleteTokenResponse
+    {
+        public string result { get; set; }
+    }
  
 }

@@ -606,7 +606,8 @@ namespace DealHub_Dal.OBF
                             editobf._created_by = Row["created_by"].ToString();
                             editobf._created_by = Row["created_by"].ToString();
                             editobf._dh_project_name = Row["dh_project_name"].ToString();
-                            editobf._projecttype = getprojecttypebyID(Convert.ToInt32(Row["domain_id"]));
+                            //editobf._projecttype = getprojecttypebyID(Convert.ToInt32(Row["domain_id"].ToString().Trim() == ""?"0": Row["domain_id"].ToString()));
+                            editobf._projecttype = Convert.ToInt32(Row["domain_id"].ToString().Trim() == "" ? "0" : Row["domain_id"].ToString());
                             editobf._opportunity_id = Row["opportunity_id"].ToString();
                             editobf._dh_location = Row["dh_location"].ToString();
                             editobf._parent_dh_main_id = Convert.ToInt32(Row["parent_dh_main_id"].ToString() == ""?"0": Row["parent_dh_main_id"].ToString());

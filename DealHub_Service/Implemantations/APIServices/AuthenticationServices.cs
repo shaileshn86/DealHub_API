@@ -17,6 +17,10 @@ namespace DealHub_Service.Implemantations.APIServices
             return Authentication.AutheticateUserwithattempts(filter);
         }
 
+        public static DeleteTokenResponse DeleteToken(string usercode)
+        {
+            return Authentication.deleteToken(usercode);
+        }
         public static string DecryptStringAES(string Secretkey, string pwd)
         {
             return ASEEncryptDecrypt.DecryptStringAES(Secretkey, pwd);

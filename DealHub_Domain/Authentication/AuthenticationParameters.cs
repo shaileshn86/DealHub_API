@@ -19,4 +19,10 @@ namespace DealHub_Domain.Authentication
         
         public string _attempt { get; set; }
     }
+
+    public class TokenRequestParameter
+    {
+        public string _user_code { get; set; }
+        public string token { get; set; }
+    }
 }
