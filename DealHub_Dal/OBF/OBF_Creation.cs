@@ -598,6 +598,7 @@ namespace DealHub_Dal.OBF
                             editobf._created_by = Row["created_by"].ToString();
                             editobf._created_by = Row["created_by"].ToString();
                             editobf._dh_project_name = Row["dh_project_name"].ToString();
+                            editobf._projecttype = getprojecttypebyID(Convert.ToInt32(Row["domain_id"]));
                             editobf._opportunity_id = Row["opportunity_id"].ToString();
                             editobf._dh_location = Row["dh_location"].ToString();
                             editobf._parent_dh_main_id = Convert.ToInt32(Row["parent_dh_main_id"].ToString() == ""?"0": Row["parent_dh_main_id"].ToString());
@@ -684,6 +685,46 @@ namespace DealHub_Dal.OBF
             catch (Exception ex)
             {
                 return null;
+            }
+        }
+
+        public static string getprojecttypebyID(int domain_id)
+        {
+            string result = "";
+            try
+            {
+                DataSet ds = new DataSet();
+                
+                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                {
+                    conn.Open();
+                    MySqlCommand cmd = new MySqlCommand("select domain_name from mst_domains where domain_id=@domain_id", conn);
+                    cmd.Parameters.AddWithValue("@domain_id", domain_id);
+                   
+                    MySqlDataAdapter da = new MySqlDataAdapter(cmd);
+                    da.Fill(ds);
+                    if (ds != null)
+                    {
+                        if (ds.Tables[0].Rows.Count > 0)
+                        {
+                            result = ds.Tables[0].Rows[0]["domain_name"].ToString();
+                        }
+                        else
+                        {
+                            result = "N/A";
+                        }
+                    }
+                    else
+                    {
+                        result = "N/A";
+                    }
+                  }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                result = "N/A";
+                return result;
             }
         }
 
