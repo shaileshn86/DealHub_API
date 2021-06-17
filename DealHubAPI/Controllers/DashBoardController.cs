@@ -18,7 +18,7 @@ namespace DealHubAPI.Controllers
     public class DashBoardController : ApiController
     {
         public ReponseMessage result = new ReponseMessage();
-        [AllowAnonymous, HttpPost]
+        [AuthenticationFilterDealhUb, HttpPost]
 
         [Route("GetDashBoardData")]
         public HttpResponseMessage GetDashBoardData(DashBoardParameters model)
@@ -58,7 +58,7 @@ namespace DealHubAPI.Controllers
             return null;
         }
 
-        [AllowAnonymous, HttpPost]
+        [AuthenticationFilterDealhUb, HttpPost]
         [Route("GetDashBoardDataCount")]
         public HttpResponseMessage GetDashBoardDataCount(DashBoardParameters model)
         {
@@ -253,7 +253,7 @@ namespace DealHubAPI.Controllers
 
 
         [HttpPost]
-        [AllowAnonymous]
+        [AuthenticationFilterDealhUb]
         [Route("Update_System_Notification")]
         public HttpResponseMessage Update_System_Notification(List<systemnotificationparameters> model)
         {
