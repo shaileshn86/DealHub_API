@@ -55,6 +55,12 @@ namespace DealHubAPI.Controllers
                 }
 
             }
+            else
+            {
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Field Validation Error");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+
+            }
 
             return null;
         }
@@ -97,6 +103,13 @@ namespace DealHubAPI.Controllers
                 }
 
             }
+            else
+            {
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Field Validation Error");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+
+            }
+
 
             return null;
         }
@@ -137,6 +150,12 @@ namespace DealHubAPI.Controllers
                     result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
                     return Request.CreateResponse(HttpStatusCode.BadRequest, result);
                 }
+
+            }
+            else
+            {
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Field Validation Error");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
 
             }
 
@@ -181,56 +200,94 @@ namespace DealHubAPI.Controllers
                 }
 
             }
+            else
+            {
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Field Validation Error");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+
+            }
 
             return null;
         }
 
-        [HttpGet]
-        [AllowAnonymous]
+        [HttpPost]
+        //[AllowAnonymous]
         [Route("GetMasterOBF")]
-        public HttpResponseMessage GetMasterOBF(string userid)
+        public HttpResponseMessage GetMasterOBF(GetObfMasterParameters model)
         {
-            string json = ObfServices.GetMastersOBFCreation(userid);
-            if (json == "" || json == "error")
+            if (model == null)// Incase Post Object Is Null or Not Match and Object value is null
             {
                 result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
                 return Request.CreateResponse(HttpStatusCode.BadRequest, result);
             }
+
+            if (ModelState.IsValid)
+            {
+                string json = ObfServices.GetMastersOBFCreation(model);
+                if (json == "" || json == "error")
+                {
+                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+                }
+                else
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, json);
+                }
+            }
             else
             {
-                return Request.CreateResponse(HttpStatusCode.OK, json);
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Field Validation Error Occured");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+
             }
+
+            
+           
 
 
         }
 
 
-        [HttpGet]
-        [AllowAnonymous]
+        [HttpPost]
+       
         [Route("getmastersolutions")]
-        public HttpResponseMessage get_master_solutions(string userid)
+        public HttpResponseMessage get_master_solutions(GetObfMasterParameters model)
         {
-            List<SolutionCategory> _SolutionCategory = ObfServices.get_master_solutions(userid);
-            if (_SolutionCategory != null)
+            if (model == null)// Incase Post Object Is Null or Not Match and Object value is null
             {
-                if (_SolutionCategory.Count != 0)
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+            }
+            if (ModelState.IsValid)
+            {
+                List<SolutionCategory> _SolutionCategory = ObfServices.get_master_solutions(model);
+                if (_SolutionCategory != null)
                 {
-                    return Request.CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(_SolutionCategory));
+                    if (_SolutionCategory.Count != 0)
+                    {
+                        return Request.CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(_SolutionCategory));
+                    }
+                    else
+                    {
+                        result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                        return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+                    }
+
+
+
                 }
                 else
                 {
                     result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
                     return Request.CreateResponse(HttpStatusCode.BadRequest, result);
                 }
-
-
-
             }
             else
             {
-                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Field Validation Error");
                 return Request.CreateResponse(HttpStatusCode.BadRequest, result);
             }
+            
 
 
 
@@ -241,18 +298,33 @@ namespace DealHubAPI.Controllers
         [Route("geteditobfdata")]
         public HttpResponseMessage get_editobf(editobfarguement model)
         {
-            EditObfParameters _editobf = ObfServices.get_edit_obf(model);
-            if (_editobf != null)
-            {
-                
-                    return Request.CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(_editobf));
-                
-            }
-            else
+            if (model == null)// Incase Post Object Is Null or Not Match and Object value is null
             {
                 result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
                 return Request.CreateResponse(HttpStatusCode.BadRequest, result);
             }
+            if (ModelState.IsValid)
+            {
+                EditObfParameters _editobf = ObfServices.get_edit_obf(model);
+                if (_editobf != null)
+                {
+
+                    return Request.CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(_editobf));
+
+                }
+                else
+                {
+                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+                }
+
+            }
+            else
+            {
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Field Validation Error");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+            }
+          
 
 
 
@@ -295,6 +367,11 @@ namespace DealHubAPI.Controllers
                 }
 
             }
+            else
+            {
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Field Validation Error");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+            }
 
             return null;
         }
@@ -335,44 +412,79 @@ namespace DealHubAPI.Controllers
                     return Request.CreateResponse(HttpStatusCode.BadRequest, result);
                 }
             }
+            else
+            {
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Field Validation Error");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+            }
             return null;
         }
 
-        [HttpGet]
-        [AllowAnonymous]
+        [HttpPost]
+     
         [Route("GetOBFSummaryDataVersionWise")]
-        public HttpResponseMessage GetOBFSummaryDataVersionWise(string dh_id,string dh_header_id)
+        public HttpResponseMessage GetOBFSummaryDataVersionWise(GetOBFSummaryDataVersionWiseParameters model)
         {
-            string json = ObfServices.GetOBFSummaryDataVersionWise(Convert.ToInt32(dh_id), Convert.ToInt32(dh_header_id));
-            if (json == "" || json == "error")
+            if (model == null)// Incase Post Object Is Null or Not Match and Object value is null
             {
                 result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
                 return Request.CreateResponse(HttpStatusCode.BadRequest, result);
             }
+
+            if (ModelState.IsValid)
+            {
+                string json = ObfServices.GetOBFSummaryDataVersionWise(model);
+                if (json == "" || json == "error")
+                {
+                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+                }
+                else
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, json);
+                }
+            }
             else
             {
-                return Request.CreateResponse(HttpStatusCode.OK, json);
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Field Validation Error");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
             }
+
+           
 
 
         }
 
 
-        [HttpGet]
-        [AllowAnonymous]
+        [HttpPost]
+        
         [Route("GetAttachmentDocument")]
-        public HttpResponseMessage GetAttachmentDocument(string dh_id,string dh_header_id)
+        public HttpResponseMessage GetAttachmentDocument(GetOBFSummaryDataVersionWiseParameters model)
         {
-            string json = ObfServices.GetAttachmentDocument(Convert.ToInt32(dh_id), Convert.ToInt32(dh_header_id));
-            if (json == "" || json == "error")
+            if (model == null)// Incase Post Object Is Null or Not Match and Object value is null
             {
                 result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
                 return Request.CreateResponse(HttpStatusCode.BadRequest, result);
             }
+            if (ModelState.IsValid)
+            {
+                string json = ObfServices.GetAttachmentDocument(model);
+                if (json == "" || json == "error")
+                {
+                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+                }
+                else
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, json);
+                }
+            }
             else
             {
-                return Request.CreateResponse(HttpStatusCode.OK, json);
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Field Validation Error");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
             }
+          
         }
 
 
