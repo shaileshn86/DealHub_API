@@ -15,4 +15,15 @@ namespace DealHub_Domain.DashBoard
 
         
     }
+
+    public class EntityMainParameter
+    {
+
+        public int _dh_header_id { get; set; }
+
+        public int _is_shared { get; set; }
+
+
+    }
+
 }
