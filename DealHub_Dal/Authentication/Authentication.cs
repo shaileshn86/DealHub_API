@@ -14,6 +14,7 @@ namespace DealHub_Dal.Authentication
 {
     public class Authentication : BaseDAL
     {
+        static int attempts;
         public static List<AuthenticationDetailParameters> AutheticateUser(AuthenticationParameters filter)
         {
             List<AuthenticationDetailParameters> authuser = new List<AuthenticationDetailParameters>();
@@ -54,6 +55,191 @@ namespace DealHub_Dal.Authentication
                             authuser.Add(_AuthenticationDetailParameters);
 
                         }
+                    }
+                }
+                return authuser;
+            }
+            catch (Exception e)
+            {
+                AuthenticationDetailParameters _AuthenticationDetailParameters = new AuthenticationDetailParameters();
+                string status = "failed with exception in code";
+                _AuthenticationDetailParameters.status = status;
+                authuser.Add(_AuthenticationDetailParameters);
+                return authuser;
+
+            }
+        }
+
+        public static DeleteTokenResponse deleteToken(string usercode)
+        {
+            DeleteTokenResponse deleteResult = new DeleteTokenResponse();
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                {
+                    conn.Open();
+                    MySqlCommand cmd = new MySqlCommand("update mst_users set token='' where user_code=@usercode", conn);
+                    cmd.Parameters.AddWithValue("@usercode", usercode);
+                    int i = cmd.ExecuteNonQuery();
+                    if (i > 0)
+                    {
+                        deleteResult.result = "Success";
+                    }
+                    else
+                    {
+                        deleteResult.result = "Failure";
+                    }
+                }
+                 return deleteResult;
+            }
+            catch (Exception ex)
+            {
+                deleteResult.result = "Failure";
+                return deleteResult;
+            }
+        }
+        public static List<AuthenticationDetailParameters> AutheticateUserwithattempts(AuthenticationParameters filter)
+        {
+            List<AuthenticationDetailParameters> authuser = new List<AuthenticationDetailParameters>();
+            try
+            {
+                attempts = Convert.ToInt32(filter._attempt.ToString());
+                DataSet ds = new DataSet();
+                DataSet ds1 = new DataSet();
+                //sp_auth_user
+                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                {
+                    conn.Open();
+                    MySqlCommand cmd = new MySqlCommand("select id,LoginAttempt from mst_users where user_code=@username", conn);
+                    cmd.Parameters.AddWithValue("@username", filter._user_code);
+                    cmd.Parameters.AddWithValue("@password", filter._password);
+
+                    MySqlDataAdapter da = new MySqlDataAdapter(cmd);
+                    da.Fill(ds);
+                    if (ds != null)
+                    {
+                        if (ds.Tables[0].Rows.Count > 0)
+                        {
+                            attempts = Convert.ToInt32(ds.Tables[0].Rows[0]["LoginAttempt"]);
+                            if (attempts == 3)
+                            {
+                                AuthenticationDetailParameters _AuthenticationDetailParameters = new AuthenticationDetailParameters();
+                                string status = "Your Account Already Locked";
+                                _AuthenticationDetailParameters.status = status;
+                                authuser.Add(_AuthenticationDetailParameters);
+                               // return authuser;
+                            }
+                            else
+                            {
+                                cmd = new MySqlCommand("sp_auth_user_attempt", conn);
+                                cmd.CommandType = CommandType.StoredProcedure;
+                                cmd.Parameters.Add("@_user_code", MySqlDbType.String).Value = filter._user_code;
+                                cmd.Parameters.Add("@_password", MySqlDbType.String).Value = filter._password;
+                                da = new MySqlDataAdapter(cmd);
+                                da.Fill(ds1);
+
+
+                                if (ds1 != null)
+                                {
+                                    if (ds1.Tables[0].Rows.Count > 0 && ds1.Tables[0].Rows[0]["LoginAttempt"].ToString() !="")
+                                    {
+                                        filter._attempt = ds1.Tables[0].Rows[0]["LoginAttempt"].ToString();
+                                        if (Convert.ToInt32(filter._attempt.ToString()) != 3)
+                                        {
+                                            cmd = new MySqlCommand("update mst_users set LoginAttempt=0 where user_code=@username and password=@password", conn);
+                                            cmd.Parameters.AddWithValue("@username", filter._user_code);
+                                            cmd.Parameters.AddWithValue("@password", filter._password);
+                                            cmd.ExecuteNonQuery();
+                                            AuthenticationDetailParameters _AuthenticationDetailParameters = new AuthenticationDetailParameters();
+                                            string status = ds1.Tables[0].Rows[0]["status"].ToString();
+                                            _AuthenticationDetailParameters.status = status;
+                                            if (status != "success")
+                                            {
+
+                                                _AuthenticationDetailParameters.user_code = "";
+
+
+                                            }
+                                            else
+                                            {
+                                                _AuthenticationDetailParameters.user_id = Convert.ToUInt32(ds1.Tables[0].Rows[0]["id"].ToString());
+                                                _AuthenticationDetailParameters.user_code = ds1.Tables[0].Rows[0]["user_code"].ToString();
+                                                _AuthenticationDetailParameters.password = ds1.Tables[0].Rows[0]["password"].ToString();
+                                                _AuthenticationDetailParameters.privilege_name = ds1.Tables[0].Rows[0]["privilege_name"].ToString();
+                                                _AuthenticationDetailParameters.role_name = ds1.Tables[0].Rows[0]["role_name"].ToString();
+                                                _AuthenticationDetailParameters.UserName = ds1.Tables[0].Rows[0]["user_name"].ToString();
+
+                                            }
+                                            authuser.Add(_AuthenticationDetailParameters);
+                                          //  return authuser;
+
+                                        }
+                                        else
+                                        {
+                                            AuthenticationDetailParameters _AuthenticationDetailParameters = new AuthenticationDetailParameters();
+                                            string status = "Your Account Already Locked...Contact Administrator";
+                                            _AuthenticationDetailParameters.status = status;
+                                            authuser.Add(_AuthenticationDetailParameters);
+                                           // return authuser;
+                                        }
+                                    }
+                                    else
+                                    {
+
+                                        AuthenticationDetailParameters _AuthenticationDetailParameters = new AuthenticationDetailParameters();
+
+                                        string strquery = string.Empty;
+                                        if (attempts > 2)
+                                        {
+                                            strquery = "update mst_users set islocked=1, LoginAttempt=@attempts where user_code=@username and password=@password";
+                                            string status = "You Reached Maximum Attempts. Your account has been locked";
+                                            _AuthenticationDetailParameters.status = status;
+                                        }
+                                        else
+                                        {
+                                            attempts = attempts + 1;
+                                            filter._attempt = attempts.ToString();
+                                           
+                                            if (attempts == 3)
+                                            {
+                                                strquery = "update mst_users set islocked=1,LoginAttempt=@attempts where user_code=@username";
+                                                string status = "Your Account Locked";
+                                                _AuthenticationDetailParameters.status = status;
+                                            }
+                                            else
+                                            {
+                                                strquery = "update mst_users set LoginAttempt=@attempts where user_code=@username";
+                                                string status = "Your Password Wrong you have only " + (3 - attempts) + " attempts";
+                                                _AuthenticationDetailParameters.status = status;
+                                            }
+                                        }
+                                        cmd = new MySqlCommand(strquery, conn);
+                                        cmd.Parameters.AddWithValue("@username", filter._user_code);
+                                        cmd.Parameters.AddWithValue("@password", filter._password);
+                                        cmd.Parameters.AddWithValue("@attempts", attempts);
+                                        cmd.ExecuteNonQuery();
+                                        authuser.Add(_AuthenticationDetailParameters);
+                                        //return authuser;
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            AuthenticationDetailParameters _AuthenticationDetailParameters = new AuthenticationDetailParameters();
+                            string status = "UserName does not exist";
+                            _AuthenticationDetailParameters.status = status;
+                            authuser.Add(_AuthenticationDetailParameters);
+                           // return authuser;
+                        }
+                    }
+                    else
+                    {
+                        AuthenticationDetailParameters _AuthenticationDetailParameters = new AuthenticationDetailParameters();
+                        string status = "UserName does not exist";
+                        _AuthenticationDetailParameters.status = status;
+                        authuser.Add(_AuthenticationDetailParameters);
+                       // return authuser;
                     }
                 }
                 return authuser;
@@ -165,20 +351,23 @@ namespace DealHub_Dal.Authentication
                         {
                             string status = dr.IsNull<string>("status");
                             string EmailId = dr.IsNull<string>("email_id");
+                            if(status == "success")
                             return EmailId;
+                            else
+                                return "No Result UnAuthorized";
                         }
                     }
                 }
                 return "No Result UnAuthorized";
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return "System Error";
             }
         }
 
-       
+
 
 
     }

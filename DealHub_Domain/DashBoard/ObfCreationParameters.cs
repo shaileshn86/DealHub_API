@@ -103,6 +103,8 @@ namespace DealHub_Domain.DashBoard
 
         public int _solution_category_id { get; set; }
 
+        public int _projecttype { get; set; }
+
 
 
 
@@ -120,6 +122,8 @@ namespace DealHub_Domain.DashBoard
     public class EditObfParameters : CommonParamter
     {
         public string _dh_project_name { get; set; }
+
+        public int _projecttype { get; set; }
 
         public string _opportunity_id { get; set; }
 
