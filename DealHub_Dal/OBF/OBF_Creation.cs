@@ -984,9 +984,10 @@ namespace DealHub_Dal.OBF
             try
             {
                 int i = 0;
-                foreach (SaveAttachmentParameter filter in filters)
-                {
-                   
+              
+                    foreach (SaveAttachmentParameter filter in filters)
+                    {
+
                     using (MySqlConnection conn = new MySqlConnection(connectionString))
                     {
                         if (i == 0)
@@ -996,34 +997,37 @@ namespace DealHub_Dal.OBF
                             cmd1.Parameters.Add("_dh_header_id", MySqlDbType.String).Value = filter._dh_header_id;
                             cmd1.Parameters.Add("_description", MySqlDbType.String).Value = filter._description;
                             conn.Open();
-                           // cmd1.Connection = new MySqlConnection(conn);
+                            // cmd1.Connection = new MySqlConnection(conn);
                             int result = cmd1.ExecuteNonQuery();
                             i++;
                             conn.Close();
                         }
-
-                        MySqlCommand cmd = new MySqlCommand("sp_save_dh_attachments", conn);
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Parameters.Add("@_dh_id", MySqlDbType.UInt32).Value = filter._dh_id;
-                        cmd.Parameters.Add("@_dh_header_id", MySqlDbType.UInt32).Value = filter._dh_header_id;
-                        cmd.Parameters.Add("@_fname", MySqlDbType.String).Value = filter._fname;
-                        cmd.Parameters.Add("@_fpath", MySqlDbType.String).Value = filter._fpath;
-                        cmd.Parameters.Add("@_description", MySqlDbType.String).Value = filter._description;
-                        cmd.Parameters.Add("@_user_id", MySqlDbType.String).Value = filter._created_by;
-                        conn.Open();
-                        using (IDataReader dr = cmd.ExecuteReader())
+                        if (filter._fname != "Remove all Details" && filter._fpath != "Remove all Details")
                         {
-                            while (dr.Read())
+                            MySqlCommand cmd = new MySqlCommand("sp_save_dh_attachments", conn);
+                            cmd.CommandType = CommandType.StoredProcedure;
+                            cmd.Parameters.Add("@_dh_id", MySqlDbType.UInt32).Value = filter._dh_id;
+                            cmd.Parameters.Add("@_dh_header_id", MySqlDbType.UInt32).Value = filter._dh_header_id;
+                            cmd.Parameters.Add("@_fname", MySqlDbType.String).Value = filter._fname;
+                            cmd.Parameters.Add("@_fpath", MySqlDbType.String).Value = filter._fpath;
+                            cmd.Parameters.Add("@_description", MySqlDbType.String).Value = filter._description;
+                            cmd.Parameters.Add("@_user_id", MySqlDbType.String).Value = filter._created_by;
+                            conn.Open();
+                            using (IDataReader dr = cmd.ExecuteReader())
                             {
-                                SaveAttachementDetailsParameters _Details = new SaveAttachementDetailsParameters();
-                                _Details.status = dr.IsNull<string>("status");
-                                _Details.message = dr.IsNull<string>("message");
-                                _SaveAttachementDetailsParameters.Add(_Details);
+                                while (dr.Read())
+                                {
+                                    SaveAttachementDetailsParameters _Details = new SaveAttachementDetailsParameters();
+                                    _Details.status = dr.IsNull<string>("status");
+                                    _Details.message = dr.IsNull<string>("message");
+                                    _SaveAttachementDetailsParameters.Add(_Details);
+                                }
                             }
-                        }
 
+                        }
                     }
-                }
+                    }
+                
 
                 return _SaveAttachementDetailsParameters;
             }
