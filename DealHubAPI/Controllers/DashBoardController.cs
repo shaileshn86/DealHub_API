@@ -171,12 +171,20 @@ namespace DealHubAPI.Controllers
 
         [AllowAnonymous, HttpPost]
         [Route("SendEmailAlert")]
-        public HttpResponseMessage SendEmailAlert( int dh_header_id)
+        public HttpResponseMessage SendEmailAlert(testforregularexpression model)
         {
             try
             {
-                EmailSendingService.EmailSendTest();
-                return Request.CreateResponse(HttpStatusCode.OK, "");
+                if (model !=null)
+                {
+                    if (ModelState.IsValid)
+                    {
+                        EmailSendingService.EmailSendTest();
+                        return Request.CreateResponse(HttpStatusCode.OK, "");
+                    }
+                }
+                return Request.CreateResponse(HttpStatusCode.NotAcceptable, "Invalid value in model");
+
             }
             catch(Exception ex)
             {
