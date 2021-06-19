@@ -21,6 +21,7 @@ using System.Web;
 using System.IO;
 using DealHub_Domain.DashBoard;
 using DealHub_Dal.OBF;
+using DealHubAPI.CommonFunctions;
 
 namespace DealHubAPI.Controllers
 {
@@ -41,6 +42,7 @@ namespace DealHubAPI.Controllers
             if (ModelState.IsValid)
             {
                 string password = AuthenticationServices.DecryptStringAES(model._SecretKey,model._password);
+                password = AuthenticationServices.ReturnMD5Hash(password);
                 model._password = password;
                 List<AuthenticationDetailParameters> _AuthenticationDetailParameters = AuthenticationServices.GetAuthenticateUser(model);
                 foreach (AuthenticationDetailParameters auth in _AuthenticationDetailParameters)
@@ -123,6 +125,47 @@ namespace DealHubAPI.Controllers
                 return null;
         }
 
+
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("DeleteToken")]
+        public HttpResponseMessage DeleteToken(TokenRequestParameter model)
+        {
+            if (model == null)// Incase Post Object Is Null or Not Match and Object value is null
+            {
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+            }
+            if (ModelState.IsValid)
+            {
+                DeleteTokenResponse _DeleteTokenResponse = AuthenticationServices.DeleteToken(model._user_code);
+
+                if (_DeleteTokenResponse != null)
+                {
+                    if (_DeleteTokenResponse.result == "Success")
+                    {
+                        return Request.CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(_DeleteTokenResponse));
+                    }
+                    else
+                    {
+                        result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                        return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+                    }
+
+
+
+                }
+                else
+                {
+                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+                }
+
+            }
+
+            return null;
+        }
+
         [HttpPost]
         [AllowAnonymous]
         [Route("RemindMe")]
@@ -183,7 +226,7 @@ namespace DealHubAPI.Controllers
         public async Task sendemail(AuthenticationParameters model)
         {
             //var message = new MailMessage();
-            var ToEmailId = AuthenticationServices.sendmail(model._user_code);
+          //  var ToEmailId = AuthenticationServices.sendmail(model._user_code);
             //message.To.Add(new MailAddress(ToEmailId));
             //message.From = new MailAddress("ankita.aherkar96@gmail.com");
             //message.Subject = "Reset Password";
@@ -197,26 +240,49 @@ namespace DealHubAPI.Controllers
             //    //smtp.Send(message);
             //    await smtp.SendMailAsync(message);
             //    await Task.FromResult(0);
-            var message = new MailMessage();
-            
-            message.To.Add(new MailAddress(ToEmailId));
-            message.From = new MailAddress("ankita.aherkar96@gmail.com");
-            message.Subject = "Reset Password";
-            message.Body = "Reset Password Link http://localhost:4200/ResetPassword";
-            message.IsBodyHtml = true;
-            using (var smtp = new SmtpClient("smtp.gmail.com", 587))
-            {
 
-                //smtp.Credentials = new NetworkCredential("ankita.aherkar96@gmail.com", "Mumbai@12345");
-                smtp.EnableSsl = true;
-                //smtp.Send(message);
-                await smtp.SendMailAsync(message);
-                await Task.FromResult(0);
+            //below code commented by Kirti on 16-06-2021 for reset password mail send functioanlity 
+            //var message = new MailMessage();
+
+            //message.To.Add(new MailAddress(ToEmailId));
+            //message.From = new MailAddress("ankita.aherkar96@gmail.com");
+            //message.Subject = "Reset Password";
+            //message.Body = "Reset Password Link http://localhost:4200/ResetPassword";
+            //message.IsBodyHtml = true;
+            //using (var smtp = new SmtpClient("smtp.gmail.com", 587))
+            //{
+
+            //    //smtp.Credentials = new NetworkCredential("ankita.aherkar96@gmail.com", "Mumbai@12345");
+            //    smtp.EnableSsl = true;
+            //    //smtp.Send(message);
+            //    await smtp.SendMailAsync(message);
+            //    await Task.FromResult(0);
+
+            ////}
 
             //}
 
+            try
+            {
+                var ToEmailId = AuthenticationServices.sendmail(model._user_code);
+                EmailSendingProperties EP = new EmailSendingProperties();
+                EP.SendTo = new List<EmailToCCParameters>();
+                EP.SendCC = new List<EmailToCCParameters>();
+                EP.Attachment = new List<EmailAttachmentParameters>();
+                EmailToCCParameters To = new EmailToCCParameters();
+                To.email_id = ToEmailId;
+                EP.SendTo.Add(To);
+                EP.subject = "Reset Password";
+                EP.body = "Reset Password Link http://localhost:4200/ResetPassword";
+                EmailSender ES = new EmailSender();
+                ES.sendEmail(EP);
+
             }
-          
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
         }
 
 
@@ -242,6 +308,14 @@ namespace DealHubAPI.Controllers
                     //Create custom filename
                     if (postedFile != null)
                     {
+                        IFileExtensionValidation _ValidateExtension = new FileExtensionValidation();
+                        if (! _ValidateExtension.ValidateUploadedExtension(Path.GetExtension(postedFile.FileName), ','))
+                        {
+                            //throw new Exception("File Extension not allowed for upload");
+                            msg = Request.CreateResponse(HttpStatusCode.NotAcceptable, "File not uploaded : File format not supported");
+                            return msg;
+                        }
+
                         //imageName = new String(Path.GetFileNameWithoutExtension(postedFile.FileName).Take(10).ToArray()).Replace(" ", "-");
                         imageName = new String(Path.GetFileNameWithoutExtension(postedFile.FileName).ToArray()).Replace(" ", "-");
                         imageName = imageName + DateTime.Now.ToString("yymmssfff") + Path.GetExtension(postedFile.FileName);
@@ -283,5 +357,7 @@ namespace DealHubAPI.Controllers
             return msg;
 
         }
+
+        
     }
 }

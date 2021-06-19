@@ -58,6 +58,7 @@ namespace DealHub_Dal.OBF
                     cmd.Parameters.Add("@_loi_po_details", MySqlDbType.String).Value = filter._loi_po_details;
                     cmd.Parameters.Add("@_payment_term_desc", MySqlDbType.String).Value = filter._payment_term_desc;
                     cmd.Parameters.Add("@_solution_category_id", MySqlDbType.UInt32).Value = filter._solution_category_id;
+                    cmd.Parameters.Add("@_domain_id", MySqlDbType.UInt32).Value = filter._projecttype;
 
                     conn.Open();
                     using (IDataReader dr = cmd.ExecuteReader())
@@ -68,8 +69,16 @@ namespace DealHub_Dal.OBF
 
                             //_DashBoardDetailsParameters.obf_id = dr.IsNull<uint>("obf_id");
                             _ObfCreationDetailsParameters.Result = dr.IsNull<string>("result");
+                            if (_ObfCreationDetailsParameters.Result != "success")
+                            {
+                                _ObfCreationData.Add(_ObfCreationDetailsParameters);
+                                return _ObfCreationData;
+                            }
                             _ObfCreationDetailsParameters.dh_id = dr.IsNull<uint>("dh_id");
                             _ObfCreationDetailsParameters.dh_header_id = dr.IsNull<uint>("dh_header_id");
+
+                          
+
 
                             filter._dh_header_id = Convert.ToInt32( _ObfCreationDetailsParameters.dh_header_id);
                             
@@ -597,6 +606,8 @@ namespace DealHub_Dal.OBF
                             editobf._created_by = Row["created_by"].ToString();
                             editobf._created_by = Row["created_by"].ToString();
                             editobf._dh_project_name = Row["dh_project_name"].ToString();
+                            //editobf._projecttype = getprojecttypebyID(Convert.ToInt32(Row["domain_id"].ToString().Trim() == ""?"0": Row["domain_id"].ToString()));
+                            editobf._projecttype = Convert.ToInt32(Row["domain_id"].ToString().Trim() == "" ? "0" : Row["domain_id"].ToString());
                             editobf._opportunity_id = Row["opportunity_id"].ToString();
                             editobf._dh_location = Row["dh_location"].ToString();
                             editobf._parent_dh_main_id = Convert.ToInt32(Row["parent_dh_main_id"].ToString() == ""?"0": Row["parent_dh_main_id"].ToString());
@@ -683,6 +694,46 @@ namespace DealHub_Dal.OBF
             catch (Exception ex)
             {
                 return null;
+            }
+        }
+
+        public static string getprojecttypebyID(int domain_id)
+        {
+            string result = "";
+            try
+            {
+                DataSet ds = new DataSet();
+                
+                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                {
+                    conn.Open();
+                    MySqlCommand cmd = new MySqlCommand("select domain_name from mst_domains where domain_id=@domain_id", conn);
+                    cmd.Parameters.AddWithValue("@domain_id", domain_id);
+                   
+                    MySqlDataAdapter da = new MySqlDataAdapter(cmd);
+                    da.Fill(ds);
+                    if (ds != null)
+                    {
+                        if (ds.Tables[0].Rows.Count > 0)
+                        {
+                            result = ds.Tables[0].Rows[0]["domain_name"].ToString();
+                        }
+                        else
+                        {
+                            result = "N/A";
+                        }
+                    }
+                    else
+                    {
+                        result = "N/A";
+                    }
+                  }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                result = "N/A";
+                return result;
             }
         }
 
@@ -949,6 +1000,7 @@ namespace DealHub_Dal.OBF
                             // cmd1.Connection = new MySqlConnection(conn);
                             int result = cmd1.ExecuteNonQuery();
                             i++;
+
                             conn.Close();
                         }
                         if (filter._fname != "Remove all Details" && filter._fpath != "Remove all Details")
@@ -973,6 +1025,13 @@ namespace DealHub_Dal.OBF
                                 }
                             }
 
+                        }
+                        else
+                        {
+                            SaveAttachementDetailsParameters _Details = new SaveAttachementDetailsParameters();
+                            _Details.status = "Success";
+                            _Details.message = "Successfull";
+                            _SaveAttachementDetailsParameters.Add(_Details);
                         }
                     }
                     }
