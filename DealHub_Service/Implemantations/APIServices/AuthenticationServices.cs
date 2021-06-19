@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DealHub_Dal.Authentication;
 using DealHub_Domain.Authentication;
-
+using System.Security.Cryptography;
 
 namespace DealHub_Service.Implemantations.APIServices
 {
@@ -24,6 +24,18 @@ namespace DealHub_Service.Implemantations.APIServices
         public static string DecryptStringAES(string Secretkey, string pwd)
         {
             return ASEEncryptDecrypt.DecryptStringAES(Secretkey, pwd);
+        }
+
+        public static string ReturnMD5Hash(string input)
+        {
+            MD5 md5 = new MD5CryptoServiceProvider();
+            byte[] originalBytes = ASCIIEncoding.Default.GetBytes(input);
+            byte[] encodedBytes = md5.ComputeHash(originalBytes);
+            md5.Clear();
+
+            string hashedString = BitConverter.ToString(encodedBytes);
+            hashedString = hashedString.Replace("-", string.Empty).ToLower();
+            return hashedString;
         }
 
         public static int UpdateToken(AuthenticationParameters filter)

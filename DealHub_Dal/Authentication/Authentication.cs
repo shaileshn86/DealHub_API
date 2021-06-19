@@ -9,6 +9,8 @@ using MySql.Data.MySqlClient;
 using System.Data;
 using DealHub_Dal.Extensions;
 using System.Net.Mail;
+using DealHub_Dal.ErrorLog;
+using System.Configuration;
 
 namespace DealHub_Dal.Authentication
 {
@@ -20,6 +22,7 @@ namespace DealHub_Dal.Authentication
             List<AuthenticationDetailParameters> authuser = new List<AuthenticationDetailParameters>();
             try
             {
+                filter._user_code = filter._user_code.ToLower();
                 //sp_auth_user
                 using (MySqlConnection conn = new MySqlConnection(connectionString))
                 {
@@ -103,6 +106,7 @@ namespace DealHub_Dal.Authentication
             List<AuthenticationDetailParameters> authuser = new List<AuthenticationDetailParameters>();
             try
             {
+                filter._user_code = filter._user_code.ToLower();
                 attempts = Convert.ToInt32(filter._attempt.ToString());
                 DataSet ds = new DataSet();
                 DataSet ds1 = new DataSet();
@@ -110,7 +114,7 @@ namespace DealHub_Dal.Authentication
                 using (MySqlConnection conn = new MySqlConnection(connectionString))
                 {
                     conn.Open();
-                    MySqlCommand cmd = new MySqlCommand("select id,LoginAttempt from mst_users where user_code=@username", conn);
+                    MySqlCommand cmd = new MySqlCommand("select id,LoginAttempt from mst_users where user_code=@username or email_id=@username", conn);
                     cmd.Parameters.AddWithValue("@username", filter._user_code);
                     cmd.Parameters.AddWithValue("@password", filter._password);
 
@@ -146,7 +150,7 @@ namespace DealHub_Dal.Authentication
                                         filter._attempt = ds1.Tables[0].Rows[0]["LoginAttempt"].ToString();
                                         if (Convert.ToInt32(filter._attempt.ToString()) != 3)
                                         {
-                                            cmd = new MySqlCommand("update mst_users set LoginAttempt=0 where user_code=@username and password=@password", conn);
+                                            cmd = new MySqlCommand("update mst_users set LoginAttempt=0 where (user_code=@username or email_id =@username)  and password=@password", conn);
                                             cmd.Parameters.AddWithValue("@username", filter._user_code);
                                             cmd.Parameters.AddWithValue("@password", filter._password);
                                             cmd.ExecuteNonQuery();
@@ -191,7 +195,7 @@ namespace DealHub_Dal.Authentication
                                         string strquery = string.Empty;
                                         if (attempts > 2)
                                         {
-                                            strquery = "update mst_users set islocked=1, LoginAttempt=@attempts where user_code=@username and password=@password";
+                                            strquery = "update mst_users set islocked=1, LoginAttempt=@attempts where (user_code=@username or email_id =@username) and password=@password";
                                             string status = "You Reached Maximum Attempts. Your account has been locked";
                                             _AuthenticationDetailParameters.status = status;
                                         }
@@ -202,13 +206,13 @@ namespace DealHub_Dal.Authentication
                                            
                                             if (attempts == 3)
                                             {
-                                                strquery = "update mst_users set islocked=1,LoginAttempt=@attempts where user_code=@username";
+                                                strquery = "update mst_users set islocked=1,LoginAttempt=@attempts where user_code=@username or email_id =@username";
                                                 string status = "Your Account Locked";
                                                 _AuthenticationDetailParameters.status = status;
                                             }
                                             else
                                             {
-                                                strquery = "update mst_users set LoginAttempt=@attempts where user_code=@username";
+                                                strquery = "update mst_users set LoginAttempt=@attempts where user_code=@username or email_id =@username";
                                                 string status = "Your Password Wrong you have only " + (3 - attempts) + " attempts";
                                                 _AuthenticationDetailParameters.status = status;
                                             }
@@ -246,6 +250,8 @@ namespace DealHub_Dal.Authentication
             }
             catch (Exception e)
             {
+                WritetoLogFile W = new WritetoLogFile();
+                W.LogEvent(ConfigurationManager.AppSettings["logfilepath"].ToString(), e.ToString(), true);
                 AuthenticationDetailParameters _AuthenticationDetailParameters = new AuthenticationDetailParameters();
                 string status = "failed with exception in code";
                 _AuthenticationDetailParameters.status = status;

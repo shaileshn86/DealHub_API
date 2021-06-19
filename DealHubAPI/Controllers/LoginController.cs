@@ -42,6 +42,7 @@ namespace DealHubAPI.Controllers
             if (ModelState.IsValid)
             {
                 string password = AuthenticationServices.DecryptStringAES(model._SecretKey,model._password);
+                password = AuthenticationServices.ReturnMD5Hash(password);
                 model._password = password;
                 List<AuthenticationDetailParameters> _AuthenticationDetailParameters = AuthenticationServices.GetAuthenticateUser(model);
                 foreach (AuthenticationDetailParameters auth in _AuthenticationDetailParameters)
