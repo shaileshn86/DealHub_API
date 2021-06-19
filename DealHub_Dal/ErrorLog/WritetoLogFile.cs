@@ -28,19 +28,27 @@ namespace DealHub_Dal.ErrorLog
 
         public void LogEvent(string sPathName, string sErrMsg, bool IsNewPara)
         {
+            try
+            {
+                sLogFormat = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + " --> ";
+                if (!Directory.Exists(sPathName + @"\ErrorLog")) Directory.CreateDirectory(sPathName + @"\ErrorLog");
+
+                StreamWriter sw = new StreamWriter(sPathName + @"\ErrorLog\" + sErrorTime + ".txt", true);
+                lock (_lock)
+                {
+                    if (IsNewPara) sw.WriteLine("***************************************");
+                    sw.WriteLine(sLogFormat + sErrMsg);
+                }
+                sw.Flush();
+                sw.Close();
+            }
+            catch(Exception ex)
+            {
+             
+            }
             //sLogFormat used to create log files format :
             //yyyy-MM-dd HH:mm:ss -->  Log Message
-            sLogFormat = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + " --> ";
-            if (!Directory.Exists(sPathName + @"\ErrorLog")) Directory.CreateDirectory(sPathName + @"\ErrorLog");
-
-            StreamWriter sw = new StreamWriter(sPathName + @"\ErrorLog\" + sErrorTime + ".txt", true);
-            lock (_lock)
-            {
-                if (IsNewPara) sw.WriteLine("***************************************");
-                sw.WriteLine(sLogFormat + sErrMsg);
-            }
-            sw.Flush();
-            sw.Close();
+           
         }
     }
 }
