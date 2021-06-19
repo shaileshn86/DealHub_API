@@ -1000,6 +1000,7 @@ namespace DealHub_Dal.OBF
                             // cmd1.Connection = new MySqlConnection(conn);
                             int result = cmd1.ExecuteNonQuery();
                             i++;
+
                             conn.Close();
                         }
                         if (filter._fname != "Remove all Details" && filter._fpath != "Remove all Details")
@@ -1024,6 +1025,13 @@ namespace DealHub_Dal.OBF
                                 }
                             }
 
+                        }
+                        else
+                        {
+                            SaveAttachementDetailsParameters _Details = new SaveAttachementDetailsParameters();
+                            _Details.status = "Success";
+                            _Details.message = "Successfull";
+                            _SaveAttachementDetailsParameters.Add(_Details);
                         }
                     }
                     }
