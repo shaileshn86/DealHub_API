@@ -286,8 +286,7 @@ namespace DealHubAPI.Controllers
         }
 
 
-        [HttpPost]
-        [AllowAnonymous]
+        [AuthenticationFilterDealhUb,HttpPost]
         [Route("UploadImage")]
         public HttpResponseMessage UploadImage()
         {
