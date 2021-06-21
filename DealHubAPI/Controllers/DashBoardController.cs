@@ -492,5 +492,40 @@ namespace DealHubAPI.Controllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, result);
             }
         }
+
+        //[HttpGet]
+        //[Route("antiforgerytoken")]
+        //public HttpResponseMessage GetAntiForgeryToken()
+        //{
+        //    HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
+
+        //    System.Web.HttpCookie cookie = System.Web.HttpContext.Current.Request.Cookies["xsrf-token"];
+
+        //    string cookieToken;
+        //    string formToken;
+        //    System.Web.Helpers.AntiForgery.GetTokens(cookie == null ? "" : cookie.Value, out cookieToken, out formToken);
+
+        //    AntiForgeryTokenModel content = new AntiForgeryTokenModel
+        //    {
+        //        AntiForgeryToken = formToken
+        //    };
+
+        //    response.Content = new StringContent(
+        //             JsonConvert.SerializeObject(content), System.Text.Encoding.UTF8, "application/json");
+
+        //    if (!string.IsNullOrEmpty(cookieToken))
+        //    {
+        //        response.Headers.AddCookies(new[]
+        //        {
+        //    new System.Net.Http.Headers.CookieHeaderValue("xsrf-token", cookieToken)
+        //    {
+        //        Expires = DateTimeOffset.Now.AddMinutes(10),
+        //        Path = "/"
+        //    }
+        //});
+        //    }
+
+        //    return response;
+        //}
     }
 }

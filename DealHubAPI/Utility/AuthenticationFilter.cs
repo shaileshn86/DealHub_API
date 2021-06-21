@@ -32,6 +32,15 @@ namespace DealHubAPI.Utility
 
                 var userloginid = filterContext.Request.Headers.SingleOrDefault(x => x.Key == "_user_login").Value;
                 string user_code = userloginid.First();
+                //added 
+                var RequestId = filterContext.Request.Headers.SingleOrDefault(x => x.Key == "_RequestId").Value;
+                string AntiforgeryKey = RequestId.First();
+
+                bool Isverify = DealHubAPI.Utility.AnitiforgeryVerify.VerifyRequestKey(user_code, AntiforgeryKey);
+                if (Isverify==false)
+                {
+                    return false;
+                }
 
                 return CheckIsAuthorized(_passtoken, user_code);
             }
