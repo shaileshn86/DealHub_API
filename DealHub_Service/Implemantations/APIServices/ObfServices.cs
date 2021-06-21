@@ -20,14 +20,14 @@ namespace DealHub_Service.Implemantations.APIServices
             return OBF_Creation.editcustomercodeandio(filter);
         }
 
-        public static string GetMastersOBFCreation(string userid)
+        public static string GetMastersOBFCreation(GetObfMasterParameters model)
         {
-            return OBF_Creation.GetMastersOBFCreation(userid);
+            return OBF_Creation.GetMastersOBFCreation(model);
         }
 
-        public static List<SolutionCategory> get_master_solutions(string userid)
+        public static List<SolutionCategory> get_master_solutions(GetObfMasterParameters model)
         {
-            return OBF_Creation.get_master_solutions(userid);
+            return OBF_Creation.get_master_solutions(model);
         }
 
         public static EditObfParameters get_edit_obf(editobfarguement model)
@@ -53,13 +53,13 @@ namespace DealHub_Service.Implemantations.APIServices
         {
             return OBF_Creation.SaveAttachments_OBFSummary(filter);
         }
-        public static string GetOBFSummaryDataVersionWise(int dh_id,int dh_header_id)
+        public static string GetOBFSummaryDataVersionWise(GetOBFSummaryDataVersionWiseParameters model)
         {
-            return OBF_Creation.GetOBFSummaryDataVersionWise(dh_id, dh_header_id);
+            return OBF_Creation.GetOBFSummaryDataVersionWise(model);
         }
-        public static string GetAttachmentDocument(int dh_id,int dh_header_id)
+        public static string GetAttachmentDocument(GetOBFSummaryDataVersionWiseParameters model)
         {
-            return OBF_Creation.GetAttachmentDocument(dh_id, dh_header_id);
+            return OBF_Creation.GetAttachmentDocument(model);
         }
 
 

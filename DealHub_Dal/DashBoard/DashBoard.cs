@@ -207,9 +207,9 @@ namespace DealHub_Dal.DashBoard
                 }
 
             }
-            catch (Exception ex)
+            catch 
             {
-                return null;
+                throw;
             }
 
         }
@@ -238,9 +238,10 @@ namespace DealHub_Dal.DashBoard
                 }
 
             }
-            catch (Exception ex)
+            
+            catch 
             {
-                return "error";
+                throw;
             }
 
         }
@@ -270,9 +271,10 @@ namespace DealHub_Dal.DashBoard
                 }
 
             }
-            catch (Exception ex)
+            catch //(Exception ex)
             {
-                return "error";
+                throw;
+               // return "error";
             }
 
         }

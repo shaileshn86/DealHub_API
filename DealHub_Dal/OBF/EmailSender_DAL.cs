@@ -158,9 +158,9 @@ namespace DealHub_Dal.OBF
 
                 
             }
-            catch(Exception ex)
+            catch 
             {
-                return null;
+                throw;
             }
 
         }
@@ -194,9 +194,9 @@ namespace DealHub_Dal.OBF
                 }
 
             }
-            catch (Exception ex)
+            catch  
             {
-                return "error";
+                throw;
             }
 
         }

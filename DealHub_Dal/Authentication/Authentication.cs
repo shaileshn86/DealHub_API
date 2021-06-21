@@ -9,6 +9,8 @@ using MySql.Data.MySqlClient;
 using System.Data;
 using DealHub_Dal.Extensions;
 using System.Net.Mail;
+using DealHub_Dal.ErrorLog;
+using System.Configuration;
 
 namespace DealHub_Dal.Authentication
 {
@@ -248,6 +250,8 @@ namespace DealHub_Dal.Authentication
             }
             catch (Exception e)
             {
+                WritetoLogFile W = new WritetoLogFile();
+                W.LogEvent(ConfigurationManager.AppSettings["logfilepath"].ToString(), e.ToString(), true);
                 AuthenticationDetailParameters _AuthenticationDetailParameters = new AuthenticationDetailParameters();
                 string status = "failed with exception in code";
                 _AuthenticationDetailParameters.status = status;

@@ -528,7 +528,7 @@ namespace DealHub_Dal.OBF
             }
         }
 
-        public static string GetMastersOBFCreation(string userid)
+        public static string GetMastersOBFCreation(GetObfMasterParameters model)
         {
             try
             {
@@ -538,7 +538,7 @@ namespace DealHub_Dal.OBF
                     MySqlDataAdapter DA = new MySqlDataAdapter();
                     MySqlCommand cmd = new MySqlCommand("sp_get_master_list", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.Add("_user_id", MySqlDbType.String).Value = userid;
+                    cmd.Parameters.Add("_user_id", MySqlDbType.String).Value = model.userid;
                     DA.SelectCommand = cmd;
                     cmd.Connection = new MySqlConnection(connectionString);
                     DataSet ds = new DataSet();
@@ -737,7 +737,7 @@ namespace DealHub_Dal.OBF
             }
         }
 
-        public static List<SolutionCategory> get_master_solutions(string userid)
+        public static List<SolutionCategory> get_master_solutions(GetObfMasterParameters model)
         {
             List<SolutionCategory> _SolutionCategory = new List<SolutionCategory>();
             try
@@ -746,7 +746,7 @@ namespace DealHub_Dal.OBF
                 {
                     MySqlDataAdapter DA = new MySqlDataAdapter();
                     MySqlCommand cmd = new MySqlCommand("sp_get_master_solutions", conn);
-                    cmd.Parameters.Add("_user_id", MySqlDbType.String).Value = userid;
+                    cmd.Parameters.Add("_user_id", MySqlDbType.String).Value = model.userid;
                     cmd.CommandType = CommandType.StoredProcedure;
                    
                     DA.SelectCommand = cmd;
@@ -1000,6 +1000,7 @@ namespace DealHub_Dal.OBF
                             // cmd1.Connection = new MySqlConnection(conn);
                             int result = cmd1.ExecuteNonQuery();
                             i++;
+
                             conn.Close();
                         }
                         if (filter._fname != "Remove all Details" && filter._fpath != "Remove all Details")
@@ -1025,6 +1026,13 @@ namespace DealHub_Dal.OBF
                             }
 
                         }
+                        else
+                        {
+                            SaveAttachementDetailsParameters _Details = new SaveAttachementDetailsParameters();
+                            _Details.status = "Success";
+                            _Details.message = "Successfull";
+                            _SaveAttachementDetailsParameters.Add(_Details);
+                        }
                     }
                     }
                 
@@ -1044,7 +1052,7 @@ namespace DealHub_Dal.OBF
             }
         }
 
-        public static string GetOBFSummaryDataVersionWise(int dh_id,int dh_header_id)
+        public static string GetOBFSummaryDataVersionWise(GetOBFSummaryDataVersionWiseParameters model)
         {
             try
             {
@@ -1054,8 +1062,8 @@ namespace DealHub_Dal.OBF
                     MySqlDataAdapter DA = new MySqlDataAdapter();
                     MySqlCommand cmd = new MySqlCommand("sp_getOBFSummaryData_versionwise", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.Add("dh_id", MySqlDbType.String).Value = dh_id;
-                    cmd.Parameters.Add("dh_header_id", MySqlDbType.String).Value = dh_header_id;
+                    cmd.Parameters.Add("dh_id", MySqlDbType.String).Value =model.dh_id;
+                    cmd.Parameters.Add("dh_header_id", MySqlDbType.String).Value =model.dh_header_id;
                     DA.SelectCommand = cmd;
                     cmd.Connection = new MySqlConnection(connectionString);
                     DataSet ds = new DataSet();
@@ -1074,7 +1082,7 @@ namespace DealHub_Dal.OBF
             }
 
         }
-        public static string GetAttachmentDocument(int dh_id, int dh_header_id)
+        public static string GetAttachmentDocument(GetOBFSummaryDataVersionWiseParameters model)
         {
             try
             {
@@ -1084,8 +1092,8 @@ namespace DealHub_Dal.OBF
                     MySqlDataAdapter DA = new MySqlDataAdapter();
                     MySqlCommand cmd = new MySqlCommand("sp_get_dh_attachments", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.Add("_dh_id", MySqlDbType.String).Value = dh_id;
-                    cmd.Parameters.Add("_dh_header_id", MySqlDbType.String).Value = dh_header_id;
+                    cmd.Parameters.Add("_dh_id", MySqlDbType.String).Value = model.dh_id;
+                    cmd.Parameters.Add("_dh_header_id", MySqlDbType.String).Value = model.dh_header_id;
                     DA.SelectCommand = cmd;
                     cmd.Connection = new MySqlConnection(connectionString);
                     DataSet ds = new DataSet();
