@@ -25,15 +25,19 @@ using DealHubAPI.CommonFunctions;
 
 namespace DealHubAPI.Controllers
 {
+    
     [RoutePrefix("Api/Auth")]
     [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class LoginController : BaseApiController
     {
+        public static List<UserKeyModel> LoginKey = new List<UserKeyModel>();
         [HttpPost]
         [AllowAnonymous]
         [Route("Login")]
         public HttpResponseMessage VerifyLogin(AuthenticationParameters model)
         {
+             
+
             if (model == null)// Incase Post Object Is Null or Not Match and Object value is null
             {
                 result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
@@ -41,7 +45,15 @@ namespace DealHubAPI.Controllers
             }
             if (ModelState.IsValid)
             {
-                string password = AuthenticationServices.DecryptStringAES(model._SecretKey,model._password);
+               string _SecretKey=  VerifyClientIDkey(model);
+                if (_SecretKey == "401")
+                {
+                    result = new ReponseMessage(MsgNo: HttpStatusCode.Unauthorized.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Invalid client!");
+                    return Request.CreateResponse(HttpStatusCode.Unauthorized, result);
+
+                }
+               // string password = AuthenticationServices.DecryptStringAES(model._SecretKey, model._password);
+                string password = AuthenticationServices.DecryptStringAES(_SecretKey, model._password);
                 password = AuthenticationServices.ReturnMD5Hash(password);
                 model._password = password;
                 List<AuthenticationDetailParameters> _AuthenticationDetailParameters = AuthenticationServices.GetAuthenticateUser(model);
@@ -65,6 +77,7 @@ namespace DealHubAPI.Controllers
                         login.user.role_name = auth.role_name;
                         login.user.UserName = auth.UserName;
                         login.user.UserId = auth.user_id;
+                        login.user.AntiforgeryKey = AnitiforgeryVerify.RequestKey(auth.user_code);
                         model._token = key;
                         int tokeupdated = AuthenticationServices.UpdateToken(model);
                         //  result = new ReponseMessage(KeyName: "api_key", Code: key, MsgNo: HttpStatusCode.OK.ToCode(), MsgType: MsgTypeEnum.S.ToString(), Message: "Success");
@@ -357,6 +370,57 @@ namespace DealHubAPI.Controllers
 
         }
 
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("GetClientKey")]
+        public HttpResponseMessage GetClientKey()
+        {
+          //  string aa = DealHubAPI.Utility.AnitiforgeryVerify.RequestKey("123");
+          //  string aa2 = DealHubAPI.Utility.AnitiforgeryVerify.VerifyRequestKey("123", aa);
+
+            Random rand = new Random();
+            int randomNumber = rand.Next(1000, 9999);
+            int randomNumber2 = rand.Next(1000, 9999);
+            string key = "$!$030!m0l0l" + randomNumber.ToString()+ randomNumber2.ToString();
+            var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(key);
+            string currentsecretkey = System.Convert.ToBase64String(plainTextBytes);
+
+            //var userkey= LoginKey.Where(u=>u.KeyID)
+            UserKeyModel userkey = new UserKeyModel() { ClientID = Guid.NewGuid().ToString(),Secretkey = currentsecretkey };
+            LoginKey.Add(userkey);
+            return Request.CreateResponse(HttpStatusCode.OK, userkey);
+        }
         
-    }
+       // [HttpPost]
+       // [AllowAnonymous]
+       // [Route("MyVerifyLogin")]
+       // [Throttle(Count =5 ,timeUnit = TimeUnit.Minute)]
+        protected string VerifyClientIDkey(AuthenticationParameters model)
+        {
+            try
+            {
+
+                // var skey = LoginKey.Where(u => u.ClientID == model._SecretKey).FirstOrDefault();
+                var skey = LoginKey.Where(u => u.ClientID == model._ClientId).FirstOrDefault();
+                if (skey != null)
+                    {
+                        byte[] keyBytes = Convert.FromBase64String(skey.Secretkey);
+                        string SecretText = System.Text.Encoding.UTF8.GetString(keyBytes);
+                        string mainSecretkey = SecretText.Remove(SecretText.Length - 4);
+                        LoginKey.Remove(skey);
+                        return mainSecretkey;
+                    }
+                    else
+                    {
+                        return HttpStatusCode.Unauthorized.ToCode();
+                    }
+            }
+            catch (Exception ex)
+            {
+                // Log Error in Error Log
+                return HttpStatusCode.Unauthorized.ToCode();
+            }
+        }
+
+        }
 }
