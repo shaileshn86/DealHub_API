@@ -28,7 +28,7 @@ namespace DealHub_Domain.DashBoard
         [Required(ErrorMessage = "vertical head  is mandetory")]
         public int _verticalhead_id { get; set; }
 
-        [RegularExpression(@"([a-zA-Z0-9@#$&;|,.?-_]+)", ErrorMessage = "not valid expression")]
+       // [RegularExpression(@"([a-zA-Z0-9@#$&;|,.?-_]+)", ErrorMessage = "not valid expression")] --  commented by Kirti, because it contains some special characters
         [Required(ErrorMessage = "project Description  is mandetory")]
         public string _dh_desc { get; set; }
 
@@ -60,7 +60,7 @@ namespace DealHub_Domain.DashBoard
         [RegularExpression(@"([a-zA-Z0-9@#$&;|,.?-_]+)", ErrorMessage = "not valid expression")]
         public string _is_loi_po_uploaded { get; set; }
 
-        [RegularExpression(@"([a-zA-Z0-9@#$&;|,.?-_]+)", ErrorMessage = "not valid expression")]
+        //[RegularExpression(@"([a-zA-Z0-9@#$&;|,.?-_]+)", ErrorMessage = "not valid expression")] ----  commented by Kirti, because it contains some special characters
         [Required(ErrorMessage = "assumption and risks  is mandetory")]
         public string _assumptions_and_risks { get; set; }
 
@@ -114,12 +114,12 @@ namespace DealHub_Domain.DashBoard
         public string _dh_comment { get; set; }
 
 
-        [RegularExpression(@"([a-zA-Z0-9@#$&;|,.?-_]+)", ErrorMessage = "not valid expression")]
+        //[RegularExpression(@"([a-zA-Z0-9@#$&;|,.?-_]+)", ErrorMessage = "not valid expression")] --  commented by Kirti, because it contains some special characters
         [Required(ErrorMessage = "loi/po  is mandetory")]
         public string _loi_po_details { get; set; }
 
         [Required(ErrorMessage = "payment terms  is mandetory")]
-        [RegularExpression(@"([a-zA-Z0-9@#$&;|,.?-_]+)", ErrorMessage = "not valid expression")]
+        //  [RegularExpression(@"([a-zA-Z0-9@#$&;|,.?-_]+)", ErrorMessage = "not valid expression")] --  commented by Kirti, because it contains some special characters
         public string _payment_term_desc { get; set; }
 
 
