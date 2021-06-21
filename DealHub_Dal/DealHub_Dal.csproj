@@ -72,6 +72,7 @@
     <Compile Include="ErrorLog\DALErrorlogs.cs" />
     <Compile Include="ErrorLog\DALlogApiRequestResponse.cs" />
     <Compile Include="DashBoard\DashBoard.cs" />
+    <Compile Include="ErrorLog\WritetoLogFile.cs" />
     <Compile Include="Extensions\DataReaderExt.cs" />
     <Compile Include="MenuBinding\MenuBinding.cs" />
     <Compile Include="OBF\EmailSender_DAL.cs" />
