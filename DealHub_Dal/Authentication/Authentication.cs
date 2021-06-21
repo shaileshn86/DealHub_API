@@ -79,7 +79,7 @@ namespace DealHub_Dal.Authentication
                 using (MySqlConnection conn = new MySqlConnection(connectionString))
                 {
                     conn.Open();
-                    MySqlCommand cmd = new MySqlCommand("update mst_users set token='' where user_code=@usercode", conn);
+                    MySqlCommand cmd = new MySqlCommand("SET SQL_SAFE_UPDATES = 0;update mst_users set token='' where user_code=@usercode;SET SQL_SAFE_UPDATES = 1;", conn);
                     cmd.Parameters.AddWithValue("@usercode", usercode);
                     int i = cmd.ExecuteNonQuery();
                     if (i > 0)
@@ -148,7 +148,7 @@ namespace DealHub_Dal.Authentication
                                         filter._attempt = ds1.Tables[0].Rows[0]["LoginAttempt"].ToString();
                                         if (Convert.ToInt32(filter._attempt.ToString()) != 3)
                                         {
-                                            cmd = new MySqlCommand("update mst_users set LoginAttempt=0 where (user_code=@username or email_id =@username)  and password=@password", conn);
+                                            cmd = new MySqlCommand("SET SQL_SAFE_UPDATES = 0;update mst_users set LoginAttempt=0 where (user_code=@username or email_id =@username)  and password=@password;SET SQL_SAFE_UPDATES = 1;", conn);
                                             cmd.Parameters.AddWithValue("@username", filter._user_code);
                                             cmd.Parameters.AddWithValue("@password", filter._password);
                                             cmd.ExecuteNonQuery();
@@ -193,7 +193,7 @@ namespace DealHub_Dal.Authentication
                                         string strquery = string.Empty;
                                         if (attempts > 2)
                                         {
-                                            strquery = "update mst_users set islocked=1, LoginAttempt=@attempts where (user_code=@username or email_id =@username) and password=@password";
+                                            strquery = "SET SQL_SAFE_UPDATES = 0;update mst_users set islocked=1, LoginAttempt=@attempts where (user_code=@username or email_id =@username) and password=@password;SET SQL_SAFE_UPDATES = 1;";
                                             string status = "You Reached Maximum Attempts. Your account has been locked";
                                             _AuthenticationDetailParameters.status = status;
                                         }
@@ -204,13 +204,13 @@ namespace DealHub_Dal.Authentication
                                            
                                             if (attempts == 3)
                                             {
-                                                strquery = "update mst_users set islocked=1,LoginAttempt=@attempts where user_code=@username or email_id =@username";
+                                                strquery = "SET SQL_SAFE_UPDATES = 0;update mst_users set islocked=1,LoginAttempt=@attempts where user_code=@username or email_id =@username;SET SQL_SAFE_UPDATES = 1;";
                                                 string status = "Your Account Locked";
                                                 _AuthenticationDetailParameters.status = status;
                                             }
                                             else
                                             {
-                                                strquery = "update mst_users set LoginAttempt=@attempts where user_code=@username or email_id =@username";
+                                                strquery = "SET SQL_SAFE_UPDATES = 0;update mst_users set LoginAttempt=@attempts where user_code=@username or email_id =@username;SET SQL_SAFE_UPDATES = 1;";
                                                 string status = "Your Password Wrong you have only " + (3 - attempts) + " attempts";
                                                 _AuthenticationDetailParameters.status = status;
                                             }
