@@ -53,6 +53,15 @@ namespace DealHubAPI.Utility
          
         }
 
+        protected override void HandleUnauthorizedRequest(HttpActionContext actionContext)
+        {
+            actionContext.Response = new HttpResponseMessage
+            {
+                StatusCode = HttpStatusCode.Unauthorized,
+                Content = new StringContent("You are unauthorized to access this resource")
+            };
+        }
+
         public bool CheckIsAuthorized(string _token,string user_code)
         {
             AuthenticationParameters _auth = new AuthenticationParameters();
