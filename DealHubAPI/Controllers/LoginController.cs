@@ -381,7 +381,8 @@ namespace DealHubAPI.Controllers
             Random rand = new Random();
             int randomNumber = rand.Next(1000, 9999);
             int randomNumber2 = rand.Next(1000, 9999);
-            string key = "$!$030!m0l0l" + randomNumber.ToString()+ randomNumber2.ToString();
+            //string key = "$!$030!m0l0l" + randomNumber.ToString()+ randomNumber2.ToString();
+            string key = Guid.NewGuid().ToString().Replace("-","!").Substring(0,12) + randomNumber.ToString() + randomNumber2.ToString();
             var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(key);
             string currentsecretkey = System.Convert.ToBase64String(plainTextBytes);
 
@@ -422,5 +423,7 @@ namespace DealHubAPI.Controllers
             }
         }
 
-        }
+
+       
+    }
 }
