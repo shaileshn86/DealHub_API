@@ -356,9 +356,12 @@ namespace DealHub_Dal.Authentication
                         while (dr.Read())
                         {
                             string status = dr.IsNull<string>("status");
-                            string EmailId = dr.IsNull<string>("email_id");
-                            if(status == "success")
+                            if (status == "success")
+                            { 
+                                string EmailId = dr.IsNull<string>("email_id");
+                            
                             return EmailId;
+                            }
                             else
                                 return "No Result UnAuthorized";
                         }
