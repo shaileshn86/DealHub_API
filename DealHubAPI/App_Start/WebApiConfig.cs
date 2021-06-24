@@ -14,7 +14,7 @@ namespace DealHubAPI
         public static void Register(HttpConfiguration config)
         {
             //config.EnableCors(new EnableCorsAttribute("*", "*", "*"));
-            config.EnableCors();
+          //  config.EnableCors();
             var cors = new System.Web.Http.Cors.EnableCorsAttribute("*", "*", "*");
             //config.EnableCors(cors);
             // Web API configuration and services
@@ -35,7 +35,7 @@ namespace DealHubAPI
                 defaults: new { id = RouteParameter.Optional }
             );
 
-            SetThrottleURL(config);
+           SetThrottleURL(config);
         }
 
         /// <summary>
@@ -51,44 +51,44 @@ namespace DealHubAPI
                 {
                     IpThrottling = true,
                     ClientThrottling = true,
-                    EndpointThrottling = true,
-                    EndpointRules = new Dictionary<string, RateLimits>
+                   EndpointThrottling = true,
+                   EndpointRules = new Dictionary<string, RateLimits>
                 { 
                 //Fine tune throttling per specific API here
                 // Login
-                { "/Api/Auth/Login", new RateLimits { PerSecond = 1, PerMinute = 100, PerHour = 1000 } },
-                { "/Api/Auth/GetMenuDetails", new RateLimits { PerSecond = 1, PerMinute = 100, PerHour = 1000 } },
-                { "/Api/Auth/DeleteToken", new RateLimits { PerSecond = 1, PerMinute = 100, PerHour = 1000 } },
-                { "/Api/Auth/RemindMe", new RateLimits { PerSecond = 1, PerMinute = 100, PerHour = 1000 } },
-                { "/Api/Auth/ResetPassword", new RateLimits { PerSecond = 1, PerMinute = 100, PerHour = 1000 } },
-                { "/Api/Auth/sendemail", new RateLimits { PerSecond = 1, PerMinute = 100, PerHour = 1000 } },
+                { "/Api/Auth/Login", new RateLimits { PerSecond = 5, PerMinute = 100, PerHour = 1000 } },
+                { "/Api/Auth/GetMenuDetails", new RateLimits { PerSecond = 5, PerMinute = 100, PerHour = 1000 } },
+                { "/Api/Auth/DeleteToken", new RateLimits { PerSecond = 5, PerMinute = 100, PerHour = 1000 } },
+                { "/Api/Auth/RemindMe", new RateLimits { PerSecond = 5, PerMinute = 100, PerHour = 1000 } },
+                { "/Api/Auth/ResetPassword", new RateLimits { PerSecond = 5, PerMinute = 100, PerHour = 1000 } },
+                { "/Api/Auth/sendemail", new RateLimits { PerSecond = 5, PerMinute = 100, PerHour = 1000 } },
                 { "/Api/Auth/UploadImage", new RateLimits { PerSecond = 5, PerMinute = 100, PerHour = 1000 } },
-                { "/Api/Auth/GetClientKey", new RateLimits { PerSecond = 1, PerMinute = 100, PerHour = 1000 } },
+                { "/Api/Auth/GetClientKey", new RateLimits { PerSecond = 5, PerMinute = 100, PerHour = 1000 } },
 
                 //DashBoard
-                { "/Api/DashBoard/GetDashBoardData", new RateLimits { PerSecond = 1, PerMinute = 100, PerHour = 1000 } },
-                { "/Api/DashBoard/GetDashBoardDataCount", new RateLimits { PerSecond = 1, PerMinute = 100, PerHour = 1000 } },
-                { "/Api/DashBoard/GetOBFSummaryDetails", new RateLimits { PerSecond = 1, PerMinute = 100, PerHour = 1000 } },
-                { "/Api/DashBoard/GetDetailTimelineHistory", new RateLimits { PerSecond = 1, PerMinute = 100, PerHour = 1000 } },
-                { "/Api/DashBoard/GetOBFSummaryDetails_version", new RateLimits { PerSecond = 1, PerMinute = 100, PerHour = 1000 } },
-                { "/Api/DashBoard/SendEmailAlert", new RateLimits { PerSecond = 1, PerMinute = 100, PerHour = 1000 } },
-                { "/Api/DashBoard/SendEmailAlert_OBFPPL", new RateLimits { PerSecond = 1, PerMinute = 100, PerHour = 1000 } },
-                { "/Api/DashBoard/Get_System_Notification", new RateLimits { PerSecond = 1, PerMinute = 100, PerHour = 1000 } },
-                { "/Api/DashBoard/Update_System_Notification", new RateLimits { PerSecond = 1, PerMinute = 100, PerHour = 1000 } },
-                { "/Api/DashBoard/GetDashboardProgress", new RateLimits { PerSecond = 1, PerMinute = 100, PerHour = 1000 } },
+                { "/Api/DashBoard/GetDashBoardData", new RateLimits { PerSecond = 5, PerMinute = 100, PerHour = 1000 } },
+                { "/Api/DashBoard/GetDashBoardDataCount", new RateLimits { PerSecond = 5, PerMinute = 100, PerHour = 1000 } },
+                { "/Api/DashBoard/GetOBFSummaryDetails", new RateLimits { PerSecond = 5, PerMinute = 100, PerHour = 1000 } },
+                { "/Api/DashBoard/GetDetailTimelineHistory", new RateLimits { PerSecond = 5, PerMinute = 100, PerHour = 1000 } },
+                { "/Api/DashBoard/GetOBFSummaryDetails_version", new RateLimits { PerSecond = 5, PerMinute = 100, PerHour = 1000 } },
+                { "/Api/DashBoard/SendEmailAlert", new RateLimits { PerSecond = 5, PerMinute = 100, PerHour = 1000 } },
+                { "/Api/DashBoard/SendEmailAlert_OBFPPL", new RateLimits { PerSecond = 5, PerMinute = 100, PerHour = 1000 } },
+                { "/Api/DashBoard/Get_System_Notification", new RateLimits { PerSecond = 5, PerMinute = 100, PerHour = 1000 } },
+                { "/Api/DashBoard/Update_System_Notification", new RateLimits { PerSecond = 5, PerMinute = 100, PerHour = 1000 } },
+                { "/Api/DashBoard/GetDashboardProgress", new RateLimits { PerSecond = 5, PerMinute = 100, PerHour = 1000 } },
                 //Manage_OBF
-                { "/Api/Manage_OBF/CreateOBF", new RateLimits { PerSecond = 1, PerMinute = 100, PerHour = 1000 } },
-                { "/Api/Manage_OBF/EditCustomerCodeandIo", new RateLimits { PerSecond = 1, PerMinute = 100, PerHour = 1000 } },
-                { "/Api/Manage_OBF/SaveServiceSolutionSector", new RateLimits { PerSecond = 1, PerMinute = 100, PerHour = 1000 } },
-                { "/Api/Manage_OBF/SubmitOBF", new RateLimits { PerSecond = 1, PerMinute = 100, PerHour = 1000 } },
-                { "/Api/Manage_OBF/GetMasterOBF", new RateLimits { PerSecond = 1, PerMinute = 100, PerHour = 1000 } },
-                { "/Api/Manage_OBF/getmastersolutions", new RateLimits { PerSecond = 1, PerMinute = 100, PerHour = 1000 } },
-                { "/Api/Manage_OBF/geteditobfdata", new RateLimits { PerSecond = 1, PerMinute = 100, PerHour = 1000 } },
-                { "/Api/Manage_OBF/ApproveRejectObf", new RateLimits { PerSecond = 1, PerMinute = 100, PerHour = 1000 } },
-                { "/Api/Manage_OBF/SaveAttachmentDetails", new RateLimits { PerSecond = 1, PerMinute = 100, PerHour = 1000 } },
-                { "/Api/Manage_OBF/GetOBFSummaryDataVersionWise", new RateLimits { PerSecond = 1, PerMinute = 100, PerHour = 1000 } },
-                { "/Api/Manage_OBF/GetAttachmentDocument", new RateLimits { PerSecond = 1, PerMinute = 100, PerHour = 1000 } }
-                
+                { "/Api/Manage_OBF/CreateOBF", new RateLimits { PerSecond = 5, PerMinute = 100, PerHour = 1000 } },
+                { "/Api/Manage_OBF/EditCustomerCodeandIo", new RateLimits { PerSecond = 5, PerMinute = 100, PerHour = 1000 } },
+                { "/Api/Manage_OBF/SaveServiceSolutionSector", new RateLimits { PerSecond = 5, PerMinute = 100, PerHour = 1000 } },
+                { "/Api/Manage_OBF/SubmitOBF", new RateLimits { PerSecond = 5, PerMinute = 100, PerHour = 1000 } },
+                { "/Api/Manage_OBF/GetMasterOBF", new RateLimits { PerSecond = 5, PerMinute = 100, PerHour = 1000 } },
+                { "/Api/Manage_OBF/getmastersolutions", new RateLimits { PerSecond = 5, PerMinute = 100, PerHour = 1000 } },
+                { "/Api/Manage_OBF/geteditobfdata", new RateLimits { PerSecond = 5, PerMinute = 100, PerHour = 1000 } },
+                { "/Api/Manage_OBF/ApproveRejectObf", new RateLimits { PerSecond = 5, PerMinute = 100, PerHour = 1000 } },
+                { "/Api/Manage_OBF/SaveAttachmentDetails", new RateLimits { PerSecond = 5, PerMinute = 100, PerHour = 1000 } },
+                { "/Api/Manage_OBF/GetOBFSummaryDataVersionWise", new RateLimits { PerSecond = 5, PerMinute = 100, PerHour = 1000 } },
+                { "/Api/Manage_OBF/GetAttachmentDocument", new RateLimits { PerSecond = 5, PerMinute = 100, PerHour = 1000 } }
+
 
 
                 }

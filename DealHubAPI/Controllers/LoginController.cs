@@ -245,6 +245,57 @@ namespace DealHubAPI.Controllers
 
         [HttpPost]
         [AllowAnonymous]
+        [Route("ResetPasswordDashboard")]
+        public HttpResponseMessage ResetPasswordDashboard(AuthenticationParameters model)
+        {
+            try
+            {
+                if (model == null)// Incase Post Object Is Null or Not Match and Object value is null
+                {
+                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+                }
+                if (ModelState.IsValid)
+                {
+                    string _SecretKey = VerifyClientIDkey(model);
+                    if (_SecretKey == "401")
+                    {
+                        result = new ReponseMessage(MsgNo: HttpStatusCode.Unauthorized.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Invalid client!");
+                        return Request.CreateResponse(HttpStatusCode.Unauthorized, result);
+
+                    }
+                    // string password = AuthenticationServices.DecryptStringAES(model._SecretKey, model._password);
+                    string password = AuthenticationServices.DecryptStringAES(_SecretKey, model._password);
+                    password = AuthenticationServices.ReturnMD5Hash(password);
+                    model._password = password;
+
+                    string Authenticated = AuthenticationServices.ResetPasswordDashboard(model);
+
+                    if (Authenticated != "success")
+                        throw new Exception("Password already exist");
+                    else if (Authenticated == "success")
+                        return Request.CreateResponse(HttpStatusCode.OK, "Password updated successfully");
+                    else
+                        return Request.CreateResponse(HttpStatusCode.OK, Authenticated);
+
+                }
+                else
+                {
+
+                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "", Validation: ModelState.AllErrors());
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: ex.Message, Validation: ModelState.AllErrors());
+                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+            }
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
         [Route("sendemail")]
 
         public HttpResponseMessage sendemail(AuthenticationParameters model)
