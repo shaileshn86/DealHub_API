@@ -25,6 +25,7 @@ namespace DealHubAPI
             config.SuppressDefaultHostAuthentication();
             config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
 
+            ///
             GlobalConfiguration.Configuration.MessageHandlers.Add(new Models.CustomLogDelegatHandler());
             // Web API routes
             config.MapHttpAttributeRoutes();
@@ -34,6 +35,7 @@ namespace DealHubAPI
                 routeTemplate: "api/{controller}/{action}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
 
             config.MessageHandlers.Add(new ThrottlingHandler()
             {
@@ -57,6 +59,7 @@ namespace DealHubAPI
                 // Generic rate limit applied to ALL APIs
                 Policy = new ThrottlePolicy(perSecond: 1, perMinute: 20, perHour: 200)
                 {
+
                     IpThrottling = true,
 
                     IpRules = new Dictionary<string, RateLimits>
@@ -70,6 +73,8 @@ namespace DealHubAPI
                     ClientThrottling = true,
                     EndpointThrottling = true,
                     
+
+
                 //    EndpointRules = new Dictionary<string, RateLimits>
                 //{ 
                 ////Fine tune throttling per specific API here
