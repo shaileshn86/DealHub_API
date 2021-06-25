@@ -13,9 +13,9 @@ namespace DealHub_Domain.DashBoard
         public uint dh_header_id { get; set; }
         public uint dh_phase_id { get; set; }
         public string phase_code { get; set; }
-        public string CurrentStatus { get; set; }
+        public string Current_Status { get; set; }
         
-        public string ProjectName { get; set; }
+        public string Project_Name { get; set; }
         public string Code { get; set; }
         public string Opp_Id { get; set; }
         public DateTime Created_On { get; set; }

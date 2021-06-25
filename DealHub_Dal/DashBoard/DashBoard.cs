@@ -34,8 +34,8 @@ namespace DealHub_Dal.DashBoard
                            
                             _DashBoardDetailsParameters.dh_id = dr.IsNull<uint>("dh_id");
                             _DashBoardDetailsParameters.dh_header_id = dr.IsNull<uint>("dh_header_id");
-                            _DashBoardDetailsParameters.CurrentStatus = dr.IsNull<string>("CurrentStatus");
-                            _DashBoardDetailsParameters.ProjectName = dr.IsNull<string>("dh_project_name");
+                            _DashBoardDetailsParameters.Current_Status = dr.IsNull<string>("CurrentStatus");
+                            _DashBoardDetailsParameters.Project_Name = dr.IsNull<string>("dh_project_name");
                             _DashBoardDetailsParameters.Code = dr.IsNull<string>("dh_code");
                             _DashBoardDetailsParameters.Opp_Id = dr.IsNull<string>("opportunity_id");
                             _DashBoardDetailsParameters.Created_On = dr.IsNull<DateTime>("createdon");
@@ -47,7 +47,7 @@ namespace DealHub_Dal.DashBoard
                             _DashBoardDetailsParameters.mainobf = dr.IsNull<string>("mainobf");
                            
                             _DashBoardDetailsParameters.version_name = dr.IsNull<string>("version_name");
-                            _DashBoardDetailsParameters.currentstatus = dr.IsNull<string>("currentstatus");
+                            _DashBoardDetailsParameters.Current_Status = dr.IsNull<string>("currentstatus");
                             _DashBoardDetailsParameters.shortcurrentstatus = dr.IsNull<string>("shortcurrentstatus");
                            
                             _DashBoardDetailsParameters.phase_code = dr.IsNull<string>("phase_code");
