@@ -62,7 +62,7 @@ namespace DealHubAPI
             config.MessageHandlers.Add(new ThrottlingHandler()
             {
                 // Generic rate limit applied to ALL APIs
-                Policy = new ThrottlePolicy(perSecond: 1, perMinute: 20, perHour: 200)
+                Policy = new ThrottlePolicy(perSecond: 10, perMinute: 200, perHour: 2000)
                 {
 
                     IpThrottling = true,
@@ -89,6 +89,7 @@ namespace DealHubAPI
                         { "/Api/Auth/DeleteToken", new RateLimits { PerSecond = 2, PerMinute = 100, PerHour = 1000 } },
                         { "/Api/Auth/RemindMe", new RateLimits { PerSecond = 2, PerMinute = 100, PerHour = 1000 } },
                         { "/Api/Auth/ResetPassword", new RateLimits { PerSecond =2, PerMinute = 100, PerHour = 1000 } },
+                        { "/Api/Auth/ResetPasswordDashboard", new RateLimits { PerSecond =2, PerMinute = 100, PerHour = 1000 } },
                         { "/Api/Auth/sendemail", new RateLimits { PerSecond = 2, PerMinute = 100, PerHour = 1000 } },
                         { "/Api/Auth/UploadImage", new RateLimits { PerSecond = 5, PerMinute = 100, PerHour = 1000 } },
                         { "/Api/Auth/GetClientKey", new RateLimits { PerSecond = 2, PerMinute = 100, PerHour = 1000 } },
