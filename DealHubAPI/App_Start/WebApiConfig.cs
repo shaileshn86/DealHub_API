@@ -37,7 +37,7 @@ namespace DealHubAPI
             );
 
 
-<<<<<<< HEAD
+
             //config.MessageHandlers.Add(new ThrottlingHandler()
             //{
             //    Policy = new ThrottlePolicy(perSecond: 2, perMinute: 2*60, perHour: 2*60*60, perDay: 120 * 60 * 24)//, perWeek: 3000
@@ -46,18 +46,11 @@ namespace DealHubAPI
             //    },
             //    Repository = new CacheRepository()
             //});
+
             SetThrottleURL(config);
-=======
-            config.MessageHandlers.Add(new ThrottlingHandler()
-            {
-                Policy = new ThrottlePolicy(perSecond: 10, perMinute: 2*60, perHour: 2*60*60, perDay: 120 * 60 * 24)//, perWeek: 3000
-                {
-                    IpThrottling = true
-                },
-                Repository = new CacheRepository()
-            });
+ 
            // SetThrottleURL(config);
->>>>>>> 12bdef8b00260792fd24ad04ade1045f1ea6bb9f
+
         }
 
         /// <summary>
@@ -83,12 +76,11 @@ namespace DealHubAPI
                     //IpWhitelist = new List<string> { "127.0.0.1", "192.168.0.0/24" },
 
                     ClientThrottling = true,
-<<<<<<< HEAD
                     EndpointThrottling = true,
 
 
 
-                            EndpointRules = new Dictionary<string, RateLimits>
+                    EndpointRules = new Dictionary<string, RateLimits>
                         { 
                         //Fine tune throttling per specific API here
                         // Login
@@ -128,58 +120,13 @@ namespace DealHubAPI
 
 
                         }
-=======
-                   EndpointThrottling = true,
-                    
-
-
-                //    EndpointRules = new Dictionary<string, RateLimits>
-                //{ 
-                ////Fine tune throttling per specific API here
-                //// Login
-                //{ "/Api/Auth/Login", new RateLimits { PerSecond = 1, PerMinute = 100, PerHour = 1000 } },
-                //{ "/Api/Auth/GetMenuDetails", new RateLimits { PerSecond = 1, PerMinute = 100, PerHour = 1000 } },
-                //{ "/Api/Auth/DeleteToken", new RateLimits { PerSecond = 1, PerMinute = 100, PerHour = 1000 } },
-                //{ "/Api/Auth/RemindMe", new RateLimits { PerSecond = 1, PerMinute = 100, PerHour = 1000 } },
-                //{ "/Api/Auth/ResetPassword", new RateLimits { PerSecond = 1, PerMinute = 100, PerHour = 1000 } },
-                //{ "/Api/Auth/sendemail", new RateLimits { PerSecond = 1, PerMinute = 100, PerHour = 1000 } },
-                //{ "/Api/Auth/UploadImage", new RateLimits { PerSecond = 5, PerMinute = 100, PerHour = 1000 } },
-                //{ "/Api/Auth/GetClientKey", new RateLimits { PerSecond = 2, PerMinute = 100, PerHour = 1000 } },
-
-                ////DashBoard
-                //{ "/Api/DashBoard/GetDashBoardData", new RateLimits { PerSecond = 1, PerMinute = 100, PerHour = 1000 } },
-                //{ "/Api/DashBoard/GetDashBoardDataCount", new RateLimits { PerSecond = 1, PerMinute = 100, PerHour = 1000 } },
-                //{ "/Api/DashBoard/GetOBFSummaryDetails", new RateLimits { PerSecond = 1, PerMinute = 100, PerHour = 1000 } },
-                //{ "/Api/DashBoard/GetDetailTimelineHistory", new RateLimits { PerSecond = 1, PerMinute = 100, PerHour = 1000 } },
-                //{ "/Api/DashBoard/GetOBFSummaryDetails_version", new RateLimits { PerSecond = 1, PerMinute = 100, PerHour = 1000 } },
-                //{ "/Api/DashBoard/SendEmailAlert", new RateLimits { PerSecond = 1, PerMinute = 100, PerHour = 1000 } },
-                //{ "/Api/DashBoard/SendEmailAlert_OBFPPL", new RateLimits { PerSecond = 1, PerMinute = 100, PerHour = 1000 } },
-                //{ "/Api/DashBoard/Get_System_Notification", new RateLimits { PerSecond = 1, PerMinute = 100, PerHour = 1000 } },
-                //{ "/Api/DashBoard/Update_System_Notification", new RateLimits { PerSecond = 1, PerMinute = 100, PerHour = 1000 } },
-                //{ "/Api/DashBoard/GetDashboardProgress", new RateLimits { PerSecond = 1, PerMinute = 100, PerHour = 1000 } },
-                ////Manage_OBF
-                //{ "/Api/Manage_OBF/CreateOBF", new RateLimits { PerSecond = 1, PerMinute = 100, PerHour = 1000 } },
-                //{ "/Api/Manage_OBF/EditCustomerCodeandIo", new RateLimits { PerSecond = 1, PerMinute = 100, PerHour = 1000 } },
-                //{ "/Api/Manage_OBF/SaveServiceSolutionSector", new RateLimits { PerSecond = 1, PerMinute = 100, PerHour = 1000 } },
-                //{ "/Api/Manage_OBF/SubmitOBF", new RateLimits { PerSecond = 1, PerMinute = 100, PerHour = 1000 } },
-                //{ "/Api/Manage_OBF/GetMasterOBF", new RateLimits { PerSecond = 1, PerMinute = 100, PerHour = 1000 } },
-                //{ "/Api/Manage_OBF/getmastersolutions", new RateLimits { PerSecond = 1, PerMinute = 100, PerHour = 1000 } },
-                //{ "/Api/Manage_OBF/geteditobfdata", new RateLimits { PerSecond = 1, PerMinute = 100, PerHour = 1000 } },
-                //{ "/Api/Manage_OBF/ApproveRejectObf", new RateLimits { PerSecond = 1, PerMinute = 100, PerHour = 1000 } },
-                //{ "/Api/Manage_OBF/SaveAttachmentDetails", new RateLimits { PerSecond = 1, PerMinute = 100, PerHour = 1000 } },
-                //{ "/Api/Manage_OBF/GetOBFSummaryDataVersionWise", new RateLimits { PerSecond = 1, PerMinute = 100, PerHour = 1000 } },
-                //{ "/Api/Manage_OBF/GetAttachmentDocument", new RateLimits { PerSecond = 1, PerMinute = 100, PerHour = 1000 } }
-                
-
-
-                //}
->>>>>>> 12bdef8b00260792fd24ad04ade1045f1ea6bb9f
                 },
                 Repository = new CacheRepository()
             });
         }
 
+
     }
 
-    
+
 }
