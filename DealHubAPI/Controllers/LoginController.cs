@@ -375,9 +375,11 @@ namespace DealHubAPI.Controllers
         [Route("GetClientKey")]
         public HttpResponseMessage GetClientKey()
         {
-          //  string aa = DealHubAPI.Utility.AnitiforgeryVerify.RequestKey("123");
-          //  string aa2 = DealHubAPI.Utility.AnitiforgeryVerify.VerifyRequestKey("123", aa);
-
+            //  string aa = DealHubAPI.Utility.AnitiforgeryVerify.RequestKey("123");
+            //  string aa2 = DealHubAPI.Utility.AnitiforgeryVerify.VerifyRequestKey("123", aa);
+            LoginKey.RemoveAll(s => (DateTime.Now.Subtract(Convert.ToDateTime(s.StampDate.Value)).Minutes > 5));
+            
+             
             Random rand = new Random();
             int randomNumber = rand.Next(1000, 9999);
             int randomNumber2 = rand.Next(1000, 9999);
@@ -387,8 +389,13 @@ namespace DealHubAPI.Controllers
             string currentsecretkey = System.Convert.ToBase64String(plainTextBytes);
 
             //var userkey= LoginKey.Where(u=>u.KeyID)
-            UserKeyModel userkey = new UserKeyModel() { ClientID = Guid.NewGuid().ToString(),Secretkey = currentsecretkey };
-            LoginKey.Add(userkey);
+            UserKeyModel userkey = new UserKeyModel() { ClientID = Guid.NewGuid().ToString(),Secretkey = currentsecretkey , StampDate =null };
+            UserKeyModel userMankey = new UserKeyModel() { ClientID = userkey.ClientID, Secretkey = userkey.Secretkey, StampDate = DateTime.Now };
+
+           // LoginKey.Add(userkey);
+            LoginKey.Add(userMankey);
+
+
             return Request.CreateResponse(HttpStatusCode.OK, userkey);
         }
         
@@ -409,6 +416,7 @@ namespace DealHubAPI.Controllers
                         string SecretText = System.Text.Encoding.UTF8.GetString(keyBytes);
                         string mainSecretkey = SecretText.Remove(SecretText.Length - 4);
                         LoginKey.Remove(skey);
+
                         return mainSecretkey;
                     }
                     else
