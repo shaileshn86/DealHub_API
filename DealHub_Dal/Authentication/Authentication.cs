@@ -341,6 +341,36 @@ namespace DealHub_Dal.Authentication
             }
         }
 
+        public static string ResetPasswordDashboard(AuthenticationParameters filter)
+        {
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                {
+                    MySqlCommand cmd = new MySqlCommand("sp_resetpasswordDashboard", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add("@_user_code", MySqlDbType.String).Value = filter._user_code;
+                    cmd.Parameters.Add("@_password", MySqlDbType.String).Value = filter._password;
+                    cmd.Parameters.Add("@_current_password", MySqlDbType.String).Value = filter._CurrentPassword;
+                    conn.Open();
+                    using (IDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            string status = dr.IsNull<string>("status");
+                            return status;
+                        }
+                    }
+                }
+
+                return "No Result UnAuthorized";
+            }
+            catch (Exception e)
+            {
+                return "System Error";
+            }
+        }
+
         public static string sendmail(string usercode)
         {
             try
@@ -356,9 +386,12 @@ namespace DealHub_Dal.Authentication
                         while (dr.Read())
                         {
                             string status = dr.IsNull<string>("status");
-                            string EmailId = dr.IsNull<string>("email_id");
-                            if(status == "success")
+                            if (status == "success")
+                            { 
+                                string EmailId = dr.IsNull<string>("email_id");
+                            
                             return EmailId;
+                            }
                             else
                                 return "No Result UnAuthorized";
                         }

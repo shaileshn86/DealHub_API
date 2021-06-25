@@ -139,8 +139,8 @@ namespace DealHubAPI.Controllers
         }
 
 
-        [HttpPost]
-        [AllowAnonymous]
+        [AuthenticationFilterDealhUb,HttpPost]
+        //[AllowAnonymous]
         [Route("DeleteToken")]
         public HttpResponseMessage DeleteToken(TokenRequestParameter model)
         {
@@ -217,6 +217,17 @@ namespace DealHubAPI.Controllers
             }
             if (ModelState.IsValid)
             {
+                string _SecretKey = VerifyClientIDkey(model);
+                if (_SecretKey == "401")
+                {
+                    result = new ReponseMessage(MsgNo: HttpStatusCode.Unauthorized.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Invalid client!");
+                    return Request.CreateResponse(HttpStatusCode.Unauthorized, result);
+
+                }
+                // string password = AuthenticationServices.DecryptStringAES(model._SecretKey, model._password);
+                string password = AuthenticationServices.DecryptStringAES(_SecretKey, model._password);
+                password = AuthenticationServices.ReturnMD5Hash(password);
+                model._password = password;
 
                 string Authenticated = AuthenticationServices.ResetPassword(model);
 
@@ -234,9 +245,64 @@ namespace DealHubAPI.Controllers
 
         [HttpPost]
         [AllowAnonymous]
+        [Route("ResetPasswordDashboard")]
+        public HttpResponseMessage ResetPasswordDashboard(AuthenticationParameters model)
+        {
+            try
+            {
+                if (model == null)// Incase Post Object Is Null or Not Match and Object value is null
+                {
+                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+                }
+                if (ModelState.IsValid)
+                {
+                    string _SecretKey = VerifyClientIDkey(model);
+                    if (_SecretKey == "401")
+                    {
+                        result = new ReponseMessage(MsgNo: HttpStatusCode.Unauthorized.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Invalid client!");
+                        return Request.CreateResponse(HttpStatusCode.Unauthorized, result);
+
+                    }
+                    // string password = AuthenticationServices.DecryptStringAES(model._SecretKey, model._password);
+                    string password = AuthenticationServices.DecryptStringAES(_SecretKey, model._password);
+                    password = AuthenticationServices.ReturnMD5Hash(password);
+                    model._password = password;
+
+                    string currentpassword = AuthenticationServices.DecryptStringAES(_SecretKey, model._CurrentPassword);
+                    currentpassword = AuthenticationServices.ReturnMD5Hash(currentpassword);
+                    model._CurrentPassword = currentpassword;
+
+                    string Authenticated = AuthenticationServices.ResetPasswordDashboard(model);
+
+                    if (Authenticated != "success")
+                        throw new Exception("Current password does not match, Kindly check");
+                    else if (Authenticated == "success")
+                        return Request.CreateResponse(HttpStatusCode.OK, "Password updated successfully");
+                    else
+                        return Request.CreateResponse(HttpStatusCode.OK, Authenticated);
+
+                }
+                else
+                {
+
+                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "", Validation: ModelState.AllErrors());
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: ex.Message, Validation: ModelState.AllErrors());
+                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+            }
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
         [Route("sendemail")]
 
-        public async Task sendemail(AuthenticationParameters model)
+        public HttpResponseMessage sendemail(AuthenticationParameters model)
         {
             //var message = new MailMessage();
           //  var ToEmailId = AuthenticationServices.sendmail(model._user_code);
@@ -278,6 +344,8 @@ namespace DealHubAPI.Controllers
             try
             {
                 var ToEmailId = AuthenticationServices.sendmail(model._user_code);
+                if (ToEmailId == "No Result UnAuthorized")
+                    throw new Exception("No email id found");
                 EmailSendingProperties EP = new EmailSendingProperties();
                 EP.SendTo = new List<EmailToCCParameters>();
                 EP.SendCC = new List<EmailToCCParameters>();
@@ -289,11 +357,12 @@ namespace DealHubAPI.Controllers
                 EP.body = "Reset Password Link http://localhost:4200/ResetPassword";
                 EmailSender ES = new EmailSender();
                 ES.sendEmail(EP);
-
+                return Request.CreateResponse(HttpStatusCode.OK, "Mail send");
             }
             catch (Exception ex)
             {
-                throw ex;
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message:ex.Message.ToString());
+                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
             }
 
         }
@@ -360,6 +429,44 @@ namespace DealHubAPI.Controllers
                         msg = Request.CreateResponse(HttpStatusCode.BadRequest, "File not uploaded : " + imageName);
                     }
                 }
+                
+            }
+            catch (Exception ex)
+            {
+                msg = Request.CreateResponse(HttpStatusCode.BadRequest, ex.Message.ToString());
+            }
+            return msg;
+
+        }
+
+        [AuthenticationFilterDealhUb, HttpPost]
+        [Route("deletefile")]
+        public HttpResponseMessage deletefile(fileinfo filename)
+        {
+            string imageName = null;
+            HttpResponseMessage msg = new HttpResponseMessage();
+            var httpRequest = HttpContext.Current.Request;
+            //Upload Image
+            string DocsPathMain = ConfigurationManager.AppSettings["APIURL"];//"http://localhost:52229";
+            string docpath = "";
+            var postedFilenew = httpRequest.Files;
+            string filepathdetails = "";
+            try
+            {
+               
+                        var filePath = filename.ToString();
+                   FileInfo file = new FileInfo(filePath);
+                    if (file.Exists)
+                        {
+                            file.Delete();
+                            msg = Request.CreateResponse(HttpStatusCode.OK, "File deleted successfully");
+                         }
+                        else
+                        {
+                          msg = Request.CreateResponse(HttpStatusCode.BadRequest,"File not deleted");
+                        }
+                       // filepathdetails += docpath.ToString() + ",";
+                        
                 
             }
             catch (Exception ex)
