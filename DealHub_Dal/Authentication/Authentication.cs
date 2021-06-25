@@ -351,7 +351,7 @@ namespace DealHub_Dal.Authentication
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.Add("@_user_code", MySqlDbType.String).Value = filter._user_code;
                     cmd.Parameters.Add("@_password", MySqlDbType.String).Value = filter._password;
-                    cmd.Parameters.Add("@_current_password", MySqlDbType.String).Value = filter._CurrentClientId;
+                    cmd.Parameters.Add("@_current_password", MySqlDbType.String).Value = filter._CurrentPassword;
                     conn.Open();
                     using (IDataReader dr = cmd.ExecuteReader())
                     {

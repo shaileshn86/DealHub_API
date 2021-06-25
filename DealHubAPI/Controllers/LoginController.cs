@@ -269,10 +269,14 @@ namespace DealHubAPI.Controllers
                     password = AuthenticationServices.ReturnMD5Hash(password);
                     model._password = password;
 
+                    string currentpassword = AuthenticationServices.DecryptStringAES(_SecretKey, model._CurrentPassword);
+                    currentpassword = AuthenticationServices.ReturnMD5Hash(currentpassword);
+                    model._CurrentPassword = currentpassword;
+
                     string Authenticated = AuthenticationServices.ResetPasswordDashboard(model);
 
                     if (Authenticated != "success")
-                        throw new Exception("Password already exist");
+                        throw new Exception("Current password does not match, Kindly check");
                     else if (Authenticated == "success")
                         return Request.CreateResponse(HttpStatusCode.OK, "Password updated successfully");
                     else

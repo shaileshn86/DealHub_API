@@ -22,7 +22,7 @@ namespace DealHub_Domain.Authentication
         public string _attempt { get; set; }
         public string _ClientId { get; set; }
 
-        public string _CurrentClientId { get; set; }
+        public string _CurrentPassword { get; set; }
     }
 
     public class fileinfo

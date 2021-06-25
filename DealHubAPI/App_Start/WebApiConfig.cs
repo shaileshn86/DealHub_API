@@ -39,7 +39,7 @@ namespace DealHubAPI
 
             config.MessageHandlers.Add(new ThrottlingHandler()
             {
-                Policy = new ThrottlePolicy(perSecond: 2, perMinute: 2*60, perHour: 2*60*60, perDay: 120 * 60 * 24)//, perWeek: 3000
+                Policy = new ThrottlePolicy(perSecond: 10, perMinute: 2*60, perHour: 2*60*60, perDay: 120 * 60 * 24)//, perWeek: 3000
                 {
                     IpThrottling = true
                 },
