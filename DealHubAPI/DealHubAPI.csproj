@@ -248,6 +248,7 @@
     <Compile Include="CommonFunctions\FileExtensionValidation.cs" />
     <Compile Include="Controllers\BaseApiController.cs" />
     <Compile Include="Controllers\DashBoardController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\OBFCreationController.cs" />
     <Compile Include="Global.asax.cs">

@@ -368,7 +368,7 @@ namespace DealHubAPI.Controllers
         }
 
 
-        [AuthenticationFilterDealhUb,HttpPost]
+      //  [AuthenticationFilterDealhUb,HttpPost]
         [Route("UploadImage")]
         public HttpResponseMessage UploadImage()
         {
@@ -420,8 +420,19 @@ namespace DealHubAPI.Controllers
                         else
                         {
                             postedFile.SaveAs(filePath);
+                          bool IsValidFile=  ValidateFileType(filePath);
+                            // IsValidFile == false then delete save file
+                            if (!IsValidFile) { 
+                                if (File.Exists(filePath))
+                                {
+                                    File.Delete(filePath);
+
+                                }
+                            }
                         }
                         filepathdetails += docpath.ToString() + ",";
+
+
                         msg = Request.CreateResponse(HttpStatusCode.OK, filepathdetails);
                     }
                     else
