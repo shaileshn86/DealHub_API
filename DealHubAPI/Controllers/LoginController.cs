@@ -368,7 +368,8 @@ namespace DealHubAPI.Controllers
         }
 
 
-      //  [AuthenticationFilterDealhUb,HttpPost]
+        [HttpPost]
+        [AllowAnonymous]
         [Route("UploadImage")]
         public HttpResponseMessage UploadImage()
         {
@@ -426,7 +427,7 @@ namespace DealHubAPI.Controllers
                                 if (File.Exists(filePath))
                                 {
                                     File.Delete(filePath);
-
+                                    return Request.CreateResponse(HttpStatusCode.BadRequest, "File not uploaded : " + imageName+", because file format is not proper");
                                 }
                             }
                         }

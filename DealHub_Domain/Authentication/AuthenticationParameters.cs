@@ -10,10 +10,10 @@ namespace DealHub_Domain.Authentication
     public class AuthenticationParameters
     {
         [Required]
-       // [RegularExpression(@"([a-zA-Z0-9@#$&;|,.?-_]+)", ErrorMessage = "not valid expression")]
+       // [RegularExpression(@"([a-zA-Z0-9@#$&;|,.?-_ ]+)", ErrorMessage = "not valid expression")]
         public string _user_code { get; set; }
 
-       // [RegularExpression(@"([a-zA-Z0-9@#$&;|,.?-_]+)", ErrorMessage = "not valid expression")]
+       // [RegularExpression(@"([a-zA-Z0-9@#$&;|,.?-_ ]+)", ErrorMessage = "not valid expression")]
         public string _password { get; set; }
 
         public string _token { get; set; }

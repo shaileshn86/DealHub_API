@@ -115,7 +115,7 @@ namespace DealHubAPI
                         { "/Api/Manage_OBF/geteditobfdata", new RateLimits { PerSecond = 3, PerMinute = 100, PerHour = 1000 } },
                         { "/Api/Manage_OBF/ApproveRejectObf", new RateLimits { PerSecond = 3, PerMinute = 100, PerHour = 1000 } },
                         { "/Api/Manage_OBF/SaveAttachmentDetails", new RateLimits { PerSecond = 3, PerMinute = 100, PerHour = 1000 } },
-                        { "/Api/Manage_OBF/GetOBFSummaryDataVersionWise", new RateLimits { PerSecond = 3, PerMinute = 100, PerHour = 1000 } },
+                        { "/Api/Manage_OBF/GetOBFSummaryDataVersionWise", new RateLimits { PerSecond = 5, PerMinute = 100, PerHour = 1000 } },
                         { "/Api/Manage_OBF/GetAttachmentDocument", new RateLimits { PerSecond = 3, PerMinute = 100, PerHour = 1000 } }
 
 
