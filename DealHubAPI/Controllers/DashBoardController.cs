@@ -513,13 +513,19 @@ namespace DealHubAPI.Controllers
                 }
 
 
+        //    if (!string.IsNullOrEmpty(cookieToken))
+        //    {
+        //        response.Headers.AddCookies(new[]
+        //        {
+        //    new System.Net.Http.Headers.CookieHeaderValue("xsrf-token", cookieToken)
+        //    {
+        //        Expires = DateTimeOffset.Now.AddMinutes(10),
+        //        Path = "/"
+        //    }
+        //});
+        //    }
 
-            }
-            else
-            {
-                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
-                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
-            }
-        }
+        //    return response;
+        //}
     }
 }

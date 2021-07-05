@@ -25,15 +25,19 @@ using DealHubAPI.CommonFunctions;
 
 namespace DealHubAPI.Controllers
 {
+    
     [RoutePrefix("Api/Auth")]
     [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class LoginController : BaseApiController
     {
+        public static List<UserKeyModel> LoginKey = new List<UserKeyModel>();
         [HttpPost]
         [AllowAnonymous]
         [Route("Login")]
         public HttpResponseMessage VerifyLogin(AuthenticationParameters model)
         {
+             
+
             if (model == null)// Incase Post Object Is Null or Not Match and Object value is null
             {
                 result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
@@ -41,7 +45,15 @@ namespace DealHubAPI.Controllers
             }
             if (ModelState.IsValid)
             {
-                string password = AuthenticationServices.DecryptStringAES(model._SecretKey,model._password);
+               string _SecretKey=  VerifyClientIDkey(model);
+                if (_SecretKey == "401")
+                {
+                    result = new ReponseMessage(MsgNo: HttpStatusCode.Unauthorized.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Invalid client!");
+                    return Request.CreateResponse(HttpStatusCode.Unauthorized, result);
+
+                }
+               // string password = AuthenticationServices.DecryptStringAES(model._SecretKey, model._password);
+                string password = AuthenticationServices.DecryptStringAES(_SecretKey, model._password);
                 password = AuthenticationServices.ReturnMD5Hash(password);
                 model._password = password;
                 List<AuthenticationDetailParameters> _AuthenticationDetailParameters = AuthenticationServices.GetAuthenticateUser(model);
@@ -65,6 +77,7 @@ namespace DealHubAPI.Controllers
                         login.user.role_name = auth.role_name;
                         login.user.UserName = auth.UserName;
                         login.user.UserId = auth.user_id;
+                        login.user.AntiforgeryKey = AnitiforgeryVerify.RequestKey(auth.user_code);
                         model._token = key;
                         int tokeupdated = AuthenticationServices.UpdateToken(model);
                         //  result = new ReponseMessage(KeyName: "api_key", Code: key, MsgNo: HttpStatusCode.OK.ToCode(), MsgType: MsgTypeEnum.S.ToString(), Message: "Success");
@@ -126,8 +139,8 @@ namespace DealHubAPI.Controllers
         }
 
 
-        [HttpPost]
-        [AllowAnonymous]
+        [AuthenticationFilterDealhUb,HttpPost]
+        //[AllowAnonymous]
         [Route("DeleteToken")]
         public HttpResponseMessage DeleteToken(TokenRequestParameter model)
         {
@@ -204,6 +217,17 @@ namespace DealHubAPI.Controllers
             }
             if (ModelState.IsValid)
             {
+                string _SecretKey = VerifyClientIDkey(model);
+                if (_SecretKey == "401")
+                {
+                    result = new ReponseMessage(MsgNo: HttpStatusCode.Unauthorized.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Invalid client!");
+                    return Request.CreateResponse(HttpStatusCode.Unauthorized, result);
+
+                }
+                // string password = AuthenticationServices.DecryptStringAES(model._SecretKey, model._password);
+                string password = AuthenticationServices.DecryptStringAES(_SecretKey, model._password);
+                password = AuthenticationServices.ReturnMD5Hash(password);
+                model._password = password;
 
                 string Authenticated = AuthenticationServices.ResetPassword(model);
 
@@ -221,9 +245,64 @@ namespace DealHubAPI.Controllers
 
         [HttpPost]
         [AllowAnonymous]
+        [Route("ResetPasswordDashboard")]
+        public HttpResponseMessage ResetPasswordDashboard(AuthenticationParameters model)
+        {
+            try
+            {
+                if (model == null)// Incase Post Object Is Null or Not Match and Object value is null
+                {
+                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+                }
+                if (ModelState.IsValid)
+                {
+                    string _SecretKey = VerifyClientIDkey(model);
+                    if (_SecretKey == "401")
+                    {
+                        result = new ReponseMessage(MsgNo: HttpStatusCode.Unauthorized.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Invalid client!");
+                        return Request.CreateResponse(HttpStatusCode.Unauthorized, result);
+
+                    }
+                    // string password = AuthenticationServices.DecryptStringAES(model._SecretKey, model._password);
+                    string password = AuthenticationServices.DecryptStringAES(_SecretKey, model._password);
+                    password = AuthenticationServices.ReturnMD5Hash(password);
+                    model._password = password;
+
+                    string currentpassword = AuthenticationServices.DecryptStringAES(_SecretKey, model._CurrentPassword);
+                    currentpassword = AuthenticationServices.ReturnMD5Hash(currentpassword);
+                    model._CurrentPassword = currentpassword;
+
+                    string Authenticated = AuthenticationServices.ResetPasswordDashboard(model);
+
+                    if (Authenticated != "success")
+                        throw new Exception("Current password does not match, Kindly check");
+                    else if (Authenticated == "success")
+                        return Request.CreateResponse(HttpStatusCode.OK, "Password updated successfully");
+                    else
+                        return Request.CreateResponse(HttpStatusCode.OK, Authenticated);
+
+                }
+                else
+                {
+
+                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "", Validation: ModelState.AllErrors());
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: ex.Message, Validation: ModelState.AllErrors());
+                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+            }
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
         [Route("sendemail")]
 
-        public async Task sendemail(AuthenticationParameters model)
+        public HttpResponseMessage sendemail(AuthenticationParameters model)
         {
             //var message = new MailMessage();
           //  var ToEmailId = AuthenticationServices.sendmail(model._user_code);
@@ -265,6 +344,8 @@ namespace DealHubAPI.Controllers
             try
             {
                 var ToEmailId = AuthenticationServices.sendmail(model._user_code);
+                if (ToEmailId == "No Result UnAuthorized")
+                    throw new Exception("No email id found");
                 EmailSendingProperties EP = new EmailSendingProperties();
                 EP.SendTo = new List<EmailToCCParameters>();
                 EP.SendCC = new List<EmailToCCParameters>();
@@ -276,18 +357,18 @@ namespace DealHubAPI.Controllers
                 EP.body = "Reset Password Link http://localhost:4200/ResetPassword";
                 EmailSender ES = new EmailSender();
                 ES.sendEmail(EP);
-
+                return Request.CreateResponse(HttpStatusCode.OK, "Mail send");
             }
             catch (Exception ex)
             {
-                throw ex;
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message:ex.Message.ToString());
+                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
             }
 
         }
 
 
-        [HttpPost]
-        [AllowAnonymous]
+      //  [AuthenticationFilterDealhUb,HttpPost]
         [Route("UploadImage")]
         public HttpResponseMessage UploadImage()
         {
@@ -339,8 +420,19 @@ namespace DealHubAPI.Controllers
                         else
                         {
                             postedFile.SaveAs(filePath);
+                          bool IsValidFile=  ValidateFileType(filePath);
+                            // IsValidFile == false then delete save file
+                            if (!IsValidFile) { 
+                                if (File.Exists(filePath))
+                                {
+                                    File.Delete(filePath);
+
+                                }
+                            }
                         }
                         filepathdetails += docpath.ToString() + ",";
+
+
                         msg = Request.CreateResponse(HttpStatusCode.OK, filepathdetails);
                     }
                     else
@@ -358,6 +450,106 @@ namespace DealHubAPI.Controllers
 
         }
 
+        [AuthenticationFilterDealhUb, HttpPost]
+        [Route("deletefile")]
+        public HttpResponseMessage deletefile(fileinfo filename)
+        {
+            string imageName = null;
+            HttpResponseMessage msg = new HttpResponseMessage();
+            var httpRequest = HttpContext.Current.Request;
+            //Upload Image
+            string DocsPathMain = ConfigurationManager.AppSettings["APIURL"];//"http://localhost:52229";
+            string docpath = "";
+            var postedFilenew = httpRequest.Files;
+            string filepathdetails = "";
+            try
+            {
+               
+                        var filePath = filename.ToString();
+                   FileInfo file = new FileInfo(filePath);
+                    if (file.Exists)
+                        {
+                            file.Delete();
+                            msg = Request.CreateResponse(HttpStatusCode.OK, "File deleted successfully");
+                         }
+                        else
+                        {
+                          msg = Request.CreateResponse(HttpStatusCode.BadRequest,"File not deleted");
+                        }
+                       // filepathdetails += docpath.ToString() + ",";
+                        
+                
+            }
+            catch (Exception ex)
+            {
+                msg = Request.CreateResponse(HttpStatusCode.BadRequest, ex.Message.ToString());
+            }
+            return msg;
+
+        }
+      
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("GetClientKey")]
+        public HttpResponseMessage GetClientKey()
+        {
+            //  string aa = DealHubAPI.Utility.AnitiforgeryVerify.RequestKey("123");
+            //  string aa2 = DealHubAPI.Utility.AnitiforgeryVerify.VerifyRequestKey("123", aa);
+            LoginKey.RemoveAll(s => (DateTime.Now.Subtract(Convert.ToDateTime(s.StampDate.Value)).Minutes > 5));
+            
+             
+            Random rand = new Random();
+            int randomNumber = rand.Next(1000, 9999);
+            int randomNumber2 = rand.Next(1000, 9999);
+            //string key = "$!$030!m0l0l" + randomNumber.ToString()+ randomNumber2.ToString();
+            string key = Guid.NewGuid().ToString().Replace("-","!").Substring(0,12) + randomNumber.ToString() + randomNumber2.ToString();
+            var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(key);
+            string currentsecretkey = System.Convert.ToBase64String(plainTextBytes);
+
+            //var userkey= LoginKey.Where(u=>u.KeyID)
+            UserKeyModel userkey = new UserKeyModel() { ClientID = Guid.NewGuid().ToString(),Secretkey = currentsecretkey , StampDate =null };
+            UserKeyModel userMankey = new UserKeyModel() { ClientID = userkey.ClientID, Secretkey = userkey.Secretkey, StampDate = DateTime.Now };
+
+           // LoginKey.Add(userkey);
+            LoginKey.Add(userMankey);
+
+
+            return Request.CreateResponse(HttpStatusCode.OK, userkey);
+        }
         
+       // [HttpPost]
+       // [AllowAnonymous]
+       // [Route("MyVerifyLogin")]
+       // [Throttle(Count =5 ,timeUnit = TimeUnit.Minute)]
+        protected string VerifyClientIDkey(AuthenticationParameters model)
+        {
+            try
+            {
+
+                // var skey = LoginKey.Where(u => u.ClientID == model._SecretKey).FirstOrDefault();
+                var skey = LoginKey.Where(u => u.ClientID == model._ClientId).FirstOrDefault();
+                if (skey != null)
+                    {
+                        byte[] keyBytes = Convert.FromBase64String(skey.Secretkey);
+                        string SecretText = System.Text.Encoding.UTF8.GetString(keyBytes);
+                        string mainSecretkey = SecretText.Remove(SecretText.Length - 4);
+                        LoginKey.Remove(skey);
+
+                        return mainSecretkey;
+                    }
+                    else
+                    {
+                        return HttpStatusCode.Unauthorized.ToCode();
+                    }
+            }
+            catch (Exception ex)
+            {
+                // Log Error in Error Log
+                return HttpStatusCode.Unauthorized.ToCode();
+            }
+        }
+
+
+       
     }
 }
