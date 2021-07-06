@@ -69,7 +69,7 @@ namespace DealHubAPI
                 ////Logger.Log(exception);
                 //Server.ClearError();
                 //Server.Transfer("~/ErrorPage.aspx");
-                ILogger LogEvent = new WriteLogToFile();
+                //ILogger LogEvent = new WriteLogToFile();
                 string exceptionDetails = 
                 "DealHub ERROR : " +
                 "MESSAGE: " + ex.Message +
@@ -80,7 +80,7 @@ namespace DealHubAPI
                 "\nSTACKTRACE: " + ex.StackTrace;
 
 
-                LogEvent.LogEvent(ConfigurationManager.AppSettings["logfilepath"].ToString(), exceptionDetails, true);
+                //LogEvent.LogEvent(ConfigurationManager.AppSettings["logfilepath"].ToString(), exceptionDetails, true);
 
             }
         }
