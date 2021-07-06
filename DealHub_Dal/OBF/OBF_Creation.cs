@@ -629,6 +629,7 @@ namespace DealHub_Dal.OBF
                             editobf._Sector_Id = Convert.ToInt32(Row["Sector_Id"].ToString());
                             editobf._SubSector_Id = Convert.ToInt32(Row["SubSector_Id"].ToString());
                             editobf._customer_name = Row["customer_name"].ToString();
+                            editobf._version_name = Row["version_name"].ToString();
                             editobf._dh_comment = Row["dh_comment"].ToString();
                             editobf._loi_po_details = Row["loi_po_details"].ToString();
                             editobf._payment_term_desc = Row["payment_term_desc"].ToString();

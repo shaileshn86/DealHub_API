@@ -213,7 +213,8 @@ namespace DealHub_Dal.Authentication
                                             else
                                             {
                                                 strquery = "SET SQL_SAFE_UPDATES = 0;update mst_users set LoginAttempt=@attempts where user_code=@username or email_id =@username;SET SQL_SAFE_UPDATES = 1;";
-                                                string status = "Your Password Wrong you have only " + (3 - attempts) + " attempts";
+                                                // string status = "Your Email ID or Password is wrong, you have only " + (3 - attempts) + " attempts";
+                                                string status = "Your Email ID or Password is wrong";
                                                 _AuthenticationDetailParameters.status = status;
                                             }
                                         }
@@ -231,7 +232,8 @@ namespace DealHub_Dal.Authentication
                         else
                         {
                             AuthenticationDetailParameters _AuthenticationDetailParameters = new AuthenticationDetailParameters();
-                            string status = "UserName does not exist";
+                           // string status = "UserName does not exist";
+                            string status = "Your Email ID or Password is wrong";
                             _AuthenticationDetailParameters.status = status;
                             authuser.Add(_AuthenticationDetailParameters);
                            // return authuser;
@@ -240,7 +242,8 @@ namespace DealHub_Dal.Authentication
                     else
                     {
                         AuthenticationDetailParameters _AuthenticationDetailParameters = new AuthenticationDetailParameters();
-                        string status = "UserName does not exist";
+                        //string status = "UserName does not exist";
+                        string status = "Your Email ID or Password is wrong";
                         _AuthenticationDetailParameters.status = status;
                         authuser.Add(_AuthenticationDetailParameters);
                        // return authuser;

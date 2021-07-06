@@ -110,7 +110,7 @@ namespace DealHub_Domain.DashBoard
         
         public string _customer_name { get; set; }
 
-        [RegularExpression(@"([a-zA-Z0-9@#$&;|,.?-_ ]+)", ErrorMessage = "not valid expression")]
+        [RegularExpression(@"([a-zA-Z0-9@#$&;|,.?-_ ()]+)", ErrorMessage = "not valid expression")]
         public string _dh_comment { get; set; }
 
 
@@ -227,6 +227,7 @@ namespace DealHub_Domain.DashBoard
         public int _dh_phase_id { get; set; } // added  for ppl initiate part
 
         //public int _parent_dh_main_id { get; set; } // added  for ppl initiate part
+        public string _version_name { get; set; }
 
     }
 
