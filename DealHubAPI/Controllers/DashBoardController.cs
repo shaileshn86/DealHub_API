@@ -15,11 +15,11 @@ using DealHub_Service.Implemantations;
 namespace DealHubAPI.Controllers
 {
     [RoutePrefix("Api/DashBoard")]
+    [AuthenticationFilterDealhUb]
     public class DashBoardController : ApiController
     {
         public ReponseMessage result = new ReponseMessage();
-        [AllowAnonymous, HttpPost]
-
+        [HttpPost]
         [Route("GetDashBoardData")]
         public HttpResponseMessage GetDashBoardData(DashBoardParameters model)
         {
@@ -58,7 +58,7 @@ namespace DealHubAPI.Controllers
             return null;
         }
 
-        [AllowAnonymous, HttpPost]
+        [AuthenticationFilterDealhUb, HttpPost]
         [Route("GetDashBoardDataCount")]
         public HttpResponseMessage GetDashBoardDataCount(DashBoardParameters model)
         {
@@ -97,86 +97,204 @@ namespace DealHubAPI.Controllers
             return null;
         }
 
-        [HttpGet]
-        [AllowAnonymous]
+        /// <summary>
+        /// OBF SummaryDetails 
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        // Updated By Ramajor
+        // [AllowAnonymous]
+        [HttpPost]
         [Route("GetOBFSummaryDetails")]
-        public HttpResponseMessage GetOBFSummaryDetails(string dh_id)
+        public HttpResponseMessage GetOBFSummaryDetails(CommonDetailsParameter model)
         {
-            string json = DashBoardServices.GetOBFSummaryDetails(Convert.ToInt32(dh_id));
-            if (json == "" || json == "error")
+            try
+            {
+
+
+            if (model == null)
             {
                 result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
                 return Request.CreateResponse(HttpStatusCode.BadRequest, result);
-            }
-            else
+            }else 
+            if (model.dh_id == 0 )
             {
-                return Request.CreateResponse(HttpStatusCode.OK, json);
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "DhId Must be required!");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
             }
 
+            if (ModelState.IsValid)
+            {
+                string json = DashBoardServices.GetOBFSummaryDetails(Convert.ToInt32(model.dh_id));
 
-        }
-
-        [HttpGet]
-        [AllowAnonymous]
-        [Route("GetDetailTimelineHistory")]
-        public HttpResponseMessage GetDetailTimelineHistory(int dh_id,int dh_header_id)
-        {
-            
-                List<timelinehistroy> _DashBoardDetailsParameters = DashBoardServices.GetDetailTimelineHistory(Convert.ToInt32(dh_id), Convert.ToInt32(dh_header_id));
-
-                if (_DashBoardDetailsParameters != null)
-                {
-                    if (_DashBoardDetailsParameters.Count != 0)
-                    {
-                        return Request.CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(_DashBoardDetailsParameters));
-                    }
-                    else
-                    {
-                        result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
-                        return Request.CreateResponse(HttpStatusCode.BadRequest, result);
-                    }
-
-
-
-                }
-                else
+                if (json == "" || json == "error")
                 {
                     result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
                     return Request.CreateResponse(HttpStatusCode.BadRequest, result);
                 }
-            return null;
-            
-        }
-
-
-        [HttpGet]
-        [AllowAnonymous]
-        [Route("GetOBFSummaryDetails_version")]
-        public HttpResponseMessage GetOBFSummaryDetails_version(int dh_id, int dh_header_id)
-        {
-            string json = DashBoardServices.GetOBFSummaryDetails_version(dh_id,dh_header_id);
-            if (json == "" || json == "error")
-            {
-                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
-                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+                else
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, json);
+                }
             }
             else
             {
-                return Request.CreateResponse(HttpStatusCode.OK, json);
+                string jsonOBJ = JsonConvert.SerializeObject(ModelState.AllErrors());
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: jsonOBJ);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
             }
 
+
+            }
+            catch (Exception ex)
+            {
+
+                string jsonOBJ = JsonConvert.SerializeObject(model);
+               // LogExceptionToDB(ex, "Login", GetRequestURL(), jsonOBJ, "UserController", GetUserIp());
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: ex.Message);
+
+                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+            }
+
+
+        }
+
+        /// <summary>
+        /// Detail Timeline History
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        // Updated By Ramajor
+        //  [AllowAnonymous]
+        [HttpPost]
+        [Route("GetDetailTimelineHistory")]
+        public HttpResponseMessage GetDetailTimelineHistory(CommonDetailsParameter model)
+        {
+            try
+            {
+                if (model == null)
+                {
+                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+                }
+                else
+            if (model.dh_id == 0 || model.dh_header_id==0 )
+                {
+                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "dh_id or  dh_header_id Must be required!");
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+                }
+
+                
+                    List<timelinehistroy> _DashBoardDetailsParameters = DashBoardServices.GetDetailTimelineHistory(Convert.ToInt32(model.dh_id), Convert.ToInt32(model.dh_header_id));
+                if (_DashBoardDetailsParameters.Count > 0)
+                        {
+                    return Request.CreateResponse(HttpStatusCode.OK, _DashBoardDetailsParameters);
+                   
+
+                }else {
+                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Data not found!");
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+                }
+
+                //if (_DashBoardDetailsParameters != null)
+                //{
+                //    if (_DashBoardDetailsParameters.Count != 0)
+                //    {
+                //  return Request.CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(_DashBoardDetailsParameters));
+
+                //}
+                //else
+                //{
+                //    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                //    return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+                //}
+
+
+
+                //}
+                //else
+                //{
+                //    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                //    return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+                //}
+
+
+            }
+            catch (Exception ex)
+            {
+
+               
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: ex.Message);
+
+                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+            }
+          
+            
+        }
+
+        /// <summary>
+        /// OBF SummaryDetails Version
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        // Updated By Ramajor
+        [HttpPost]
+       // [AllowAnonymous]
+        [Route("GetOBFSummaryDetails_version")]
+        public HttpResponseMessage GetOBFSummaryDetails_version(CommonDetailsParameter model)
+        {
+            try
+            {
+                if (model == null)
+                {
+                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+                }
+                else
+           if (model.dh_id == 0 || model.dh_header_id == 0)
+                {
+                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "dh_id or  dh_header_id Must be required!");
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+                }
+
+                string json = DashBoardServices.GetOBFSummaryDetails_version(Convert.ToInt32( model.dh_id),Convert.ToInt32( model.dh_header_id));
+                if (json == "")
+                {
+                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Data not found!");
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+                }
+                else
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, json);
+                }
+            }
+            catch (Exception ex)
+            {
+
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: ex.Message);
+
+                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+            }
 
         }
 
 
         [AllowAnonymous, HttpPost]
         [Route("SendEmailAlert")]
-        public HttpResponseMessage SendEmailAlert( int dh_header_id)
+        public HttpResponseMessage SendEmailAlert(testforregularexpression model)
         {
             try
             {
-                EmailSendingService.EmailSendTest();
-                return Request.CreateResponse(HttpStatusCode.OK, "");
+                if (model !=null)
+                {
+                    if (ModelState.IsValid)
+                    {
+                        EmailSendingService.EmailSendTest();
+                        return Request.CreateResponse(HttpStatusCode.OK, "");
+                    }
+                }
+                return Request.CreateResponse(HttpStatusCode.NotAcceptable, "Invalid value in model");
+
             }
             catch(Exception ex)
             {
@@ -189,14 +307,33 @@ namespace DealHubAPI.Controllers
 
         }
 
-
-        [AllowAnonymous, HttpGet]
+        /// <summary>
+        /// Send Email Alert OBFPPL
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        // Updated By Ramajor
+        [HttpPost]
+        // [AllowAnonymous]
         [Route("SendEmailAlert_OBFPPL")]
-        public HttpResponseMessage SendEmailAlert_OBFPPL(int _dh_header_id, int _is_shared)
+        public HttpResponseMessage SendEmailAlert_OBFPPL(EntityMainParameter model)//int _dh_header_id, int _is_shared
         {
-           
+            try
+            {
 
-                List<commanmessges> _commanmessges = EmailSendingService.Email_Sending_Details(_dh_header_id,_is_shared);
+                if (model == null)
+                {
+                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+                }
+                else
+              if (model._dh_header_id == 0 )
+                {
+                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "dh_header_id must be required!");
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+                }
+
+                List<commanmessges> _commanmessges = EmailSendingService.Email_Sending_Details(model._dh_header_id, model._is_shared);
 
                 if (_commanmessges != null)
                 {
@@ -206,7 +343,7 @@ namespace DealHubAPI.Controllers
                     }
                     else
                     {
-                        result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                        result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Data not found!");
                         return Request.CreateResponse(HttpStatusCode.BadRequest, result);
                     }
 
@@ -218,24 +355,47 @@ namespace DealHubAPI.Controllers
                     result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
                     return Request.CreateResponse(HttpStatusCode.BadRequest, result);
                 }
-                return null;
+                
 
-           
 
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
 
 
 
         }
 
-
-        [AllowAnonymous, HttpGet]
+        /// <summary>
+        /// Get System Notification
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        // Updated By Ramajor
+        //[AllowAnonymous]
+        [HttpPost]
         [Route("Get_System_Notification")]
-        public HttpResponseMessage Get_System_Notification(string _user_code)
+        public HttpResponseMessage Get_System_Notification(DashBoardParameters model )//string _user_code
         {
+            try
+            {
 
+                if (model == null)
+                {
+                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+                }
+                if (string.IsNullOrEmpty(model._user_code))
+                {
+                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "User code must be required!");
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+                }
 
-            string json = SystemNotificationService.Get_System_Notification(_user_code);
-            if (json == "" || json == "error")
+                string json = SystemNotificationService.Get_System_Notification(model._user_code);
+            if (json == "")
             {
                 result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
                 return Request.CreateResponse(HttpStatusCode.BadRequest, result);
@@ -245,7 +405,14 @@ namespace DealHubAPI.Controllers
                 return Request.CreateResponse(HttpStatusCode.OK, json);
             }
 
+            }
+            catch (Exception ex)
+            {
 
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: ex.Message);
+
+                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+            }
 
 
 
@@ -253,7 +420,7 @@ namespace DealHubAPI.Controllers
 
 
         [HttpPost]
-        [AllowAnonymous]
+        [AuthenticationFilterDealhUb]
         [Route("Update_System_Notification")]
         public HttpResponseMessage Update_System_Notification(List<systemnotificationparameters> model)
         {
@@ -290,17 +457,25 @@ namespace DealHubAPI.Controllers
             }
             return null;
         }
-
-
-        [HttpGet]
-        [AllowAnonymous]
+        /// <summary>
+        ///  Dashboard Progress
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        // Updated By Ramajor
+        [HttpPost]
+      //  [AllowAnonymous]
         [Route("GetDashboardProgress")]
-        public HttpResponseMessage GetDashboardProgress(string dh_id)
+        public HttpResponseMessage GetDashboardProgress(CommonDetailsParameter model)//string dh_id
         {
-            string json = DashBoardServices.GetDashboardProgress(Convert.ToInt32(dh_id));
-            if (json == "" || json == "error")
+            try
             {
-                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+
+          
+            string json = DashBoardServices.GetDashboardProgress(Convert.ToInt32(model.dh_id));
+            if (json == ""  )
+            {
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Data Not Found!");
                 return Request.CreateResponse(HttpStatusCode.BadRequest, result);
             }
             else
@@ -308,7 +483,49 @@ namespace DealHubAPI.Controllers
                 return Request.CreateResponse(HttpStatusCode.OK, json);
             }
 
+            }
+            catch (Exception ex)
+            {
 
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: ex.Message);
+
+                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+            }
         }
+
+        //[HttpGet]
+        //[Route("antiforgerytoken")]
+        //public HttpResponseMessage GetAntiForgeryToken()
+        //{
+        //    HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
+
+        //    System.Web.HttpCookie cookie = System.Web.HttpContext.Current.Request.Cookies["xsrf-token"];
+
+        //    string cookieToken;
+        //    string formToken;
+        //    System.Web.Helpers.AntiForgery.GetTokens(cookie == null ? "" : cookie.Value, out cookieToken, out formToken);
+
+        //    AntiForgeryTokenModel content = new AntiForgeryTokenModel
+        //    {
+        //        AntiForgeryToken = formToken
+        //    };
+
+        //    response.Content = new StringContent(
+        //             JsonConvert.SerializeObject(content), System.Text.Encoding.UTF8, "application/json");
+
+        //    if (!string.IsNullOrEmpty(cookieToken))
+        //    {
+        //        response.Headers.AddCookies(new[]
+        //        {
+        //    new System.Net.Http.Headers.CookieHeaderValue("xsrf-token", cookieToken)
+        //    {
+        //        Expires = DateTimeOffset.Now.AddMinutes(10),
+        //        Path = "/"
+        //    }
+        //});
+        //    }
+
+        //    return response;
+        //}
     }
 }

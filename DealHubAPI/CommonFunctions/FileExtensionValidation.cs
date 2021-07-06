@@ -23,6 +23,21 @@ namespace DealHubAPI.CommonFunctions
             return false;
         }
 
+        public bool ValidateObfUploadedExtension(string extension, char seperator)
+        {
+            string[] allowedExtension = { ".xlsx", ".xls" };
+
+            for (int i = 0; i < allowedExtension.Length; i++)
+            {
+                if (allowedExtension[i] == extension)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         public bool ValidateMagicNumber(string filepath)
         {
             return false;
@@ -34,6 +49,8 @@ namespace DealHubAPI.CommonFunctions
     public interface IFileExtensionValidation
     {
          bool ValidateUploadedExtension(string extension,char seperator);
+
+        bool ValidateObfUploadedExtension(string extension, char seperator);
         bool ValidateMagicNumber(string filepath);
     }
 }

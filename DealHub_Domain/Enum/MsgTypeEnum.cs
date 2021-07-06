@@ -12,4 +12,6 @@ namespace DealHub_Domain.Enum
         S, // Success
         I // Information
     }
+
+   
 }

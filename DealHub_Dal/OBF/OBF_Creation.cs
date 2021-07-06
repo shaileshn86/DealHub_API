@@ -528,7 +528,7 @@ namespace DealHub_Dal.OBF
             }
         }
 
-        public static string GetMastersOBFCreation(string userid)
+        public static string GetMastersOBFCreation(GetObfMasterParameters model)
         {
             try
             {
@@ -538,7 +538,7 @@ namespace DealHub_Dal.OBF
                     MySqlDataAdapter DA = new MySqlDataAdapter();
                     MySqlCommand cmd = new MySqlCommand("sp_get_master_list", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.Add("_user_id", MySqlDbType.String).Value = userid;
+                    cmd.Parameters.Add("_user_id", MySqlDbType.String).Value = model.userid;
                     DA.SelectCommand = cmd;
                     cmd.Connection = new MySqlConnection(connectionString);
                     DataSet ds = new DataSet();
@@ -629,6 +629,7 @@ namespace DealHub_Dal.OBF
                             editobf._Sector_Id = Convert.ToInt32(Row["Sector_Id"].ToString());
                             editobf._SubSector_Id = Convert.ToInt32(Row["SubSector_Id"].ToString());
                             editobf._customer_name = Row["customer_name"].ToString();
+                            editobf._version_name = Row["version_name"].ToString();
                             editobf._dh_comment = Row["dh_comment"].ToString();
                             editobf._loi_po_details = Row["loi_po_details"].ToString();
                             editobf._payment_term_desc = Row["payment_term_desc"].ToString();
@@ -737,7 +738,7 @@ namespace DealHub_Dal.OBF
             }
         }
 
-        public static List<SolutionCategory> get_master_solutions(string userid)
+        public static List<SolutionCategory> get_master_solutions(GetObfMasterParameters model)
         {
             List<SolutionCategory> _SolutionCategory = new List<SolutionCategory>();
             try
@@ -746,7 +747,7 @@ namespace DealHub_Dal.OBF
                 {
                     MySqlDataAdapter DA = new MySqlDataAdapter();
                     MySqlCommand cmd = new MySqlCommand("sp_get_master_solutions", conn);
-                    cmd.Parameters.Add("_user_id", MySqlDbType.String).Value = userid;
+                    cmd.Parameters.Add("_user_id", MySqlDbType.String).Value = model.userid;
                     cmd.CommandType = CommandType.StoredProcedure;
                    
                     DA.SelectCommand = cmd;
@@ -1052,7 +1053,7 @@ namespace DealHub_Dal.OBF
             }
         }
 
-        public static string GetOBFSummaryDataVersionWise(int dh_id,int dh_header_id)
+        public static string GetOBFSummaryDataVersionWise(GetOBFSummaryDataVersionWiseParameters model)
         {
             try
             {
@@ -1062,8 +1063,8 @@ namespace DealHub_Dal.OBF
                     MySqlDataAdapter DA = new MySqlDataAdapter();
                     MySqlCommand cmd = new MySqlCommand("sp_getOBFSummaryData_versionwise", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.Add("dh_id", MySqlDbType.String).Value = dh_id;
-                    cmd.Parameters.Add("dh_header_id", MySqlDbType.String).Value = dh_header_id;
+                    cmd.Parameters.Add("dh_id", MySqlDbType.String).Value =model.dh_id;
+                    cmd.Parameters.Add("dh_header_id", MySqlDbType.String).Value =model.dh_header_id;
                     DA.SelectCommand = cmd;
                     cmd.Connection = new MySqlConnection(connectionString);
                     DataSet ds = new DataSet();
@@ -1082,7 +1083,7 @@ namespace DealHub_Dal.OBF
             }
 
         }
-        public static string GetAttachmentDocument(int dh_id, int dh_header_id)
+        public static string GetAttachmentDocument(GetOBFSummaryDataVersionWiseParameters model)
         {
             try
             {
@@ -1092,8 +1093,8 @@ namespace DealHub_Dal.OBF
                     MySqlDataAdapter DA = new MySqlDataAdapter();
                     MySqlCommand cmd = new MySqlCommand("sp_get_dh_attachments", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.Add("_dh_id", MySqlDbType.String).Value = dh_id;
-                    cmd.Parameters.Add("_dh_header_id", MySqlDbType.String).Value = dh_header_id;
+                    cmd.Parameters.Add("_dh_id", MySqlDbType.String).Value = model.dh_id;
+                    cmd.Parameters.Add("_dh_header_id", MySqlDbType.String).Value = model.dh_header_id;
                     DA.SelectCommand = cmd;
                     cmd.Connection = new MySqlConnection(connectionString);
                     DataSet ds = new DataSet();

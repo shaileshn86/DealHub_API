@@ -150,7 +150,7 @@ namespace DealHub_Dal.Authentication
                                         filter._attempt = ds1.Tables[0].Rows[0]["LoginAttempt"].ToString();
                                         if (Convert.ToInt32(filter._attempt.ToString()) != 3)
                                         {
-                                            cmd = new MySqlCommand("SET SQL_SAFE_UPDATES = 0; update mst_users set LoginAttempt=0 where (user_code=@username or email_id =@username)  and password=@password;SET SQL_SAFE_UPDATES = 1;", conn);
+                                            cmd = new MySqlCommand("SET SQL_SAFE_UPDATES = 0;update mst_users set LoginAttempt=0 where (user_code=@username or email_id =@username)  and password=@password;SET SQL_SAFE_UPDATES = 1;", conn);
                                             cmd.Parameters.AddWithValue("@username", filter._user_code);
                                             cmd.Parameters.AddWithValue("@password", filter._password);
                                             cmd.ExecuteNonQuery();
@@ -195,7 +195,7 @@ namespace DealHub_Dal.Authentication
                                         string strquery = string.Empty;
                                         if (attempts > 2)
                                         {
-                                            strquery = "SET SQL_SAFE_UPDATES = 0; update mst_users set islocked=1, LoginAttempt=@attempts where (user_code=@username or email_id =@username) and password=@password ;SET SQL_SAFE_UPDATES = 1;";
+                                            strquery = "SET SQL_SAFE_UPDATES = 0;update mst_users set islocked=1, LoginAttempt=@attempts where (user_code=@username or email_id =@username) and password=@password;SET SQL_SAFE_UPDATES = 1;";
                                             string status = "You Reached Maximum Attempts. Your account has been locked";
                                             _AuthenticationDetailParameters.status = status;
                                         }
@@ -213,7 +213,8 @@ namespace DealHub_Dal.Authentication
                                             else
                                             {
                                                 strquery = "SET SQL_SAFE_UPDATES = 0;update mst_users set LoginAttempt=@attempts where user_code=@username or email_id =@username;SET SQL_SAFE_UPDATES = 1;";
-                                                string status = "Your Password Wrong you have only " + (3 - attempts) + " attempts";
+                                                // string status = "Your Email ID or Password is wrong, you have only " + (3 - attempts) + " attempts";
+                                                string status = "Your Email ID or Password is wrong";
                                                 _AuthenticationDetailParameters.status = status;
                                             }
                                         }
@@ -231,7 +232,8 @@ namespace DealHub_Dal.Authentication
                         else
                         {
                             AuthenticationDetailParameters _AuthenticationDetailParameters = new AuthenticationDetailParameters();
-                            string status = "UserName does not exist";
+                           // string status = "UserName does not exist";
+                            string status = "Your Email ID or Password is wrong";
                             _AuthenticationDetailParameters.status = status;
                             authuser.Add(_AuthenticationDetailParameters);
                            // return authuser;
@@ -240,7 +242,8 @@ namespace DealHub_Dal.Authentication
                     else
                     {
                         AuthenticationDetailParameters _AuthenticationDetailParameters = new AuthenticationDetailParameters();
-                        string status = "UserName does not exist";
+                        //string status = "UserName does not exist";
+                        string status = "Your Email ID or Password is wrong";
                         _AuthenticationDetailParameters.status = status;
                         authuser.Add(_AuthenticationDetailParameters);
                        // return authuser;
@@ -341,6 +344,36 @@ namespace DealHub_Dal.Authentication
             }
         }
 
+        public static string ResetPasswordDashboard(AuthenticationParameters filter)
+        {
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                {
+                    MySqlCommand cmd = new MySqlCommand("sp_resetpasswordDashboard", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add("@_user_code", MySqlDbType.String).Value = filter._user_code;
+                    cmd.Parameters.Add("@_password", MySqlDbType.String).Value = filter._password;
+                    cmd.Parameters.Add("@_current_password", MySqlDbType.String).Value = filter._CurrentPassword;
+                    conn.Open();
+                    using (IDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            string status = dr.IsNull<string>("status");
+                            return status;
+                        }
+                    }
+                }
+
+                return "No Result UnAuthorized";
+            }
+            catch (Exception e)
+            {
+                return "System Error";
+            }
+        }
+
         public static string sendmail(string usercode)
         {
             try
@@ -356,9 +389,12 @@ namespace DealHub_Dal.Authentication
                         while (dr.Read())
                         {
                             string status = dr.IsNull<string>("status");
-                            string EmailId = dr.IsNull<string>("email_id");
-                            if(status == "success")
+                            if (status == "success")
+                            { 
+                                string EmailId = dr.IsNull<string>("email_id");
+                            
                             return EmailId;
+                            }
                             else
                                 return "No Result UnAuthorized";
                         }
