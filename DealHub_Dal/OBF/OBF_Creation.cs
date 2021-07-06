@@ -572,7 +572,7 @@ namespace DealHub_Dal.OBF
                     MySqlCommand cmd = new MySqlCommand("sp_getEditObfData", conn);
                     cmd.Parameters.Add("dh_id", MySqlDbType.UInt32).Value = filter.dh_id;
                     cmd.Parameters.Add("dh_header_id", MySqlDbType.UInt32).Value = filter.dh_header_id;
-                    cmd.Parameters.Add("usercode", MySqlDbType.UInt32).Value = filter.user_code;
+                    cmd.Parameters.Add("usercode", MySqlDbType.VarChar).Value = filter.user_code;
                     cmd.CommandType = CommandType.StoredProcedure;
 
                     DA.SelectCommand = cmd;

@@ -40,7 +40,7 @@ namespace DealHub_Domain.DashBoard
 
         public string dh_location { get; set; }
 
-        public string Vertical_name { get; set; }
+        public string Vertical_Name { get; set; }
 
         public string sap_customer_code { get; set; }
 
@@ -54,7 +54,9 @@ namespace DealHub_Domain.DashBoard
 
         public int is_submitted { get; set; }
 
+        public string Project_Type { get; set; }
 
+     
 
 
 

@@ -56,13 +56,15 @@ namespace DealHub_Dal.DashBoard
 
                             _DashBoardDetailsParameters.customer_name = dr.IsNull<string>("customer_name");
                             _DashBoardDetailsParameters.dh_location = dr.IsNull<string>("dh_location");
-                            _DashBoardDetailsParameters.Vertical_name = dr.IsNull<string>("Vertical_name");
+                            _DashBoardDetailsParameters.Vertical_Name = dr.IsNull<string>("Vertical_name");
                             _DashBoardDetailsParameters.sap_customer_code = dr.IsNull<string>("sap_customer_code");
                             _DashBoardDetailsParameters.sector_name = dr.IsNull<string>("sector_name");
                             _DashBoardDetailsParameters.subsector_name = dr.IsNull<string>("subsector_name");
                             _DashBoardDetailsParameters.solutioncategory_name = dr.IsNull<string>("solutioncategory_name");
                             _DashBoardDetailsParameters.currentstatus_search = dr.IsNull<string>("currentstatus_search");
                             _DashBoardDetailsParameters.is_submitted = dr.IsNull<int>("is_submitted");
+                            _DashBoardDetailsParameters.Project_Type = dr.IsNull<string>("project_type");
+                           
                             DashBoardData.Add(_DashBoardDetailsParameters);
 
                         }
