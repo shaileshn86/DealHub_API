@@ -368,7 +368,8 @@ namespace DealHubAPI.Controllers
         }
 
 
-      //  [AuthenticationFilterDealhUb,HttpPost]
+        [HttpPost]
+        [AllowAnonymous]
         [Route("UploadImage")]
         public HttpResponseMessage UploadImage()
         {
@@ -420,13 +421,13 @@ namespace DealHubAPI.Controllers
                         else
                         {
                             postedFile.SaveAs(filePath);
-                          bool IsValidFile=  ValidateFileType(filePath);
+                          bool IsValidFile=  ValidateFileType(filePath,"All");
                             // IsValidFile == false then delete save file
                             if (!IsValidFile) { 
                                 if (File.Exists(filePath))
                                 {
                                     File.Delete(filePath);
-
+                                    return Request.CreateResponse(HttpStatusCode.BadRequest, "File not uploaded : " + imageName+", because file format is not proper");
                                 }
                             }
                         }
@@ -441,6 +442,90 @@ namespace DealHubAPI.Controllers
                     }
                 }
                 
+            }
+            catch (Exception ex)
+            {
+                msg = Request.CreateResponse(HttpStatusCode.BadRequest, ex.Message.ToString());
+            }
+            return msg;
+
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("UploadObfFile")]
+        public HttpResponseMessage UploadObfFile()
+        {
+            string imageName = null;
+            HttpResponseMessage msg = new HttpResponseMessage();
+            var httpRequest = HttpContext.Current.Request;
+            //Upload Image
+            string DocsPathMain = ConfigurationManager.AppSettings["APIURL"];//"http://localhost:52229";
+            string docpath = "";
+            var postedFilenew = httpRequest.Files;
+            string filepathdetails = "";
+            try
+            {
+                foreach (string fileName in httpRequest.Files)
+                {
+                    var postedFile = httpRequest.Files[fileName];
+                    // var postedFile = httpRequest.Files["Image"];
+                    //Create custom filename
+                    if (postedFile != null)
+                    {
+                        IFileExtensionValidation _ValidateExtension = new FileExtensionValidation();
+                        if (!_ValidateExtension.ValidateObfUploadedExtension(Path.GetExtension(postedFile.FileName), ','))
+                        {
+                            //throw new Exception("File Extension not allowed for upload");
+                            msg = Request.CreateResponse(HttpStatusCode.NotAcceptable, "File not uploaded : File format not supported");
+                            return msg;
+                        }
+
+                        //imageName = new String(Path.GetFileNameWithoutExtension(postedFile.FileName).Take(10).ToArray()).Replace(" ", "-");
+                        imageName = new String(Path.GetFileNameWithoutExtension(postedFile.FileName).ToArray()).Replace(" ", "-");
+                        imageName = imageName + DateTime.Now.ToString("yymmssfff") + Path.GetExtension(postedFile.FileName);
+                        string urlpath = string.Format("/DealHubFiles/{0}/{1}", DateTime.Now.ToString("yyMMdd"), DateTime.Now.Hour.ToString().PadLeft(2, '0')); // "~/Images/" + DateTime.Now.ToString("yymmssfff") + "/" + cDateTime.Now.Hour.ToString().PadLeft(2, '0');
+                        docpath = DocsPathMain + urlpath + "/" + imageName; ;
+                        string folderpath = string.Format("~/DealHubFiles/{0}/{1}", DateTime.Now.ToString("yyMMdd"), DateTime.Now.Hour.ToString().PadLeft(2, '0')); // "~/Images/" + DateTime.Now.ToString("yymmssfff") + "/" + cDateTime.Now.Hour.ToString().PadLeft(2, '0');
+
+
+
+                        if (!Directory.Exists(HttpContext.Current.Server.MapPath(folderpath)))
+                        {
+                            Directory.CreateDirectory(HttpContext.Current.Server.MapPath(folderpath));
+                        }
+
+                        var filePath = HttpContext.Current.Server.MapPath(folderpath + "/" + imageName);
+                        if (File.Exists(filePath))
+                        {
+                            File.Delete(filePath);
+
+                        }
+                        else
+                        {
+                            postedFile.SaveAs(filePath);
+                            bool IsValidFile = ValidateFileType(filePath, "obf");
+                            // IsValidFile == false then delete save file
+                            if (!IsValidFile)
+                            {
+                                if (File.Exists(filePath))
+                                {
+                                    File.Delete(filePath);
+                                    return Request.CreateResponse(HttpStatusCode.BadRequest, "File not uploaded : " + imageName + ", because file format is not proper");
+                                }
+                            }
+                        }
+                        filepathdetails += docpath.ToString() + ",";
+
+
+                        msg = Request.CreateResponse(HttpStatusCode.OK, filepathdetails);
+                    }
+                    else
+                    {
+                        msg = Request.CreateResponse(HttpStatusCode.BadRequest, "File not uploaded : " + imageName);
+                    }
+                }
+
             }
             catch (Exception ex)
             {

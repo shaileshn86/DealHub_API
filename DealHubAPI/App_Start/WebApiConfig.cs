@@ -95,28 +95,28 @@ namespace DealHubAPI
                         { "/Api/Auth/GetClientKey", new RateLimits { PerSecond = 2, PerMinute = 100, PerHour = 1000 } },
 
                         //DashBoard
-                        { "/Api/DashBoard/GetDashBoardData", new RateLimits { PerSecond = 5, PerMinute = 100, PerHour = 1000 } },
-                        { "/Api/DashBoard/GetDashBoardDataCount", new RateLimits { PerSecond = 5, PerMinute = 100, PerHour = 1000 } },
-                        { "/Api/DashBoard/GetOBFSummaryDetails", new RateLimits { PerSecond = 5, PerMinute = 100, PerHour = 1000 } },
-                        { "/Api/DashBoard/GetDetailTimelineHistory", new RateLimits { PerSecond = 5, PerMinute = 100, PerHour = 1000 } },
-                        { "/Api/DashBoard/GetOBFSummaryDetails_version", new RateLimits { PerSecond = 5, PerMinute = 100, PerHour = 1000 } },
-                        { "/Api/DashBoard/SendEmailAlert", new RateLimits { PerSecond = 5, PerMinute = 100, PerHour = 1000 } },
-                        { "/Api/DashBoard/SendEmailAlert_OBFPPL", new RateLimits { PerSecond = 5, PerMinute = 100, PerHour = 1000 } },
-                        { "/Api/DashBoard/Get_System_Notification", new RateLimits { PerSecond = 5, PerMinute = 100, PerHour = 1000 } },
-                        { "/Api/DashBoard/Update_System_Notification", new RateLimits { PerSecond = 5, PerMinute = 100, PerHour = 1000 } },
-                        { "/Api/DashBoard/GetDashboardProgress", new RateLimits { PerSecond = 5, PerMinute = 100, PerHour = 1000 } },
+                        { "/Api/DashBoard/GetDashBoardData", new RateLimits { PerSecond = 3, PerMinute = 100, PerHour = 1000 } },
+                        { "/Api/DashBoard/GetDashBoardDataCount", new RateLimits { PerSecond = 3, PerMinute = 100, PerHour = 1000 } },
+                        { "/Api/DashBoard/GetOBFSummaryDetails", new RateLimits { PerSecond = 3, PerMinute = 100, PerHour = 1000 } },
+                        { "/Api/DashBoard/GetDetailTimelineHistory", new RateLimits { PerSecond = 3, PerMinute = 100, PerHour = 1000 } },
+                        { "/Api/DashBoard/GetOBFSummaryDetails_version", new RateLimits { PerSecond = 3, PerMinute = 100, PerHour = 1000 } },
+                        { "/Api/DashBoard/SendEmailAlert", new RateLimits { PerSecond = 3, PerMinute = 100, PerHour = 1000 } },
+                        { "/Api/DashBoard/SendEmailAlert_OBFPPL", new RateLimits { PerSecond = 3, PerMinute = 100, PerHour = 1000 } },
+                        { "/Api/DashBoard/Get_System_Notification", new RateLimits { PerSecond = 3, PerMinute = 100, PerHour = 1000 } },
+                        { "/Api/DashBoard/Update_System_Notification", new RateLimits { PerSecond = 3, PerMinute = 100, PerHour = 1000 } },
+                        { "/Api/DashBoard/GetDashboardProgress", new RateLimits { PerSecond = 3, PerMinute = 100, PerHour = 1000 } },
                         //Manage_OBF
-                        { "/Api/Manage_OBF/CreateOBF", new RateLimits { PerSecond = 5, PerMinute = 100, PerHour = 1000 } },
-                        { "/Api/Manage_OBF/EditCustomerCodeandIo", new RateLimits { PerSecond = 5, PerMinute = 100, PerHour = 1000 } },
+                        { "/Api/Manage_OBF/CreateOBF", new RateLimits { PerSecond = 3, PerMinute = 100, PerHour = 1000 } },
+                        { "/Api/Manage_OBF/EditCustomerCodeandIo", new RateLimits { PerSecond = 3, PerMinute = 100, PerHour = 1000 } },
                         { "/Api/Manage_OBF/SaveServiceSolutionSector", new RateLimits { PerSecond = 1, PerMinute = 100, PerHour = 1000 } },
-                        { "/Api/Manage_OBF/SubmitOBF", new RateLimits { PerSecond = 5, PerMinute = 100, PerHour = 1000 } },
-                        { "/Api/Manage_OBF/GetMasterOBF", new RateLimits { PerSecond = 5, PerMinute = 100, PerHour = 1000 } },
-                        { "/Api/Manage_OBF/getmastersolutions", new RateLimits { PerSecond = 5, PerMinute = 100, PerHour = 1000 } },
-                        { "/Api/Manage_OBF/geteditobfdata", new RateLimits { PerSecond = 5, PerMinute = 100, PerHour = 1000 } },
-                        { "/Api/Manage_OBF/ApproveRejectObf", new RateLimits { PerSecond = 5, PerMinute = 100, PerHour = 1000 } },
-                        { "/Api/Manage_OBF/SaveAttachmentDetails", new RateLimits { PerSecond = 5, PerMinute = 100, PerHour = 1000 } },
+                        { "/Api/Manage_OBF/SubmitOBF", new RateLimits { PerSecond = 3, PerMinute = 100, PerHour = 1000 } },
+                        { "/Api/Manage_OBF/GetMasterOBF", new RateLimits { PerSecond = 3, PerMinute = 100, PerHour = 1000 } },
+                        { "/Api/Manage_OBF/getmastersolutions", new RateLimits { PerSecond = 3, PerMinute = 100, PerHour = 1000 } },
+                        { "/Api/Manage_OBF/geteditobfdata", new RateLimits { PerSecond = 3, PerMinute = 100, PerHour = 1000 } },
+                        { "/Api/Manage_OBF/ApproveRejectObf", new RateLimits { PerSecond = 3, PerMinute = 100, PerHour = 1000 } },
+                        { "/Api/Manage_OBF/SaveAttachmentDetails", new RateLimits { PerSecond = 3, PerMinute = 100, PerHour = 1000 } },
                         { "/Api/Manage_OBF/GetOBFSummaryDataVersionWise", new RateLimits { PerSecond = 5, PerMinute = 100, PerHour = 1000 } },
-                        { "/Api/Manage_OBF/GetAttachmentDocument", new RateLimits { PerSecond = 5, PerMinute = 100, PerHour = 1000 } }
+                        { "/Api/Manage_OBF/GetAttachmentDocument", new RateLimits { PerSecond = 3, PerMinute = 100, PerHour = 1000 } }
 
 
 

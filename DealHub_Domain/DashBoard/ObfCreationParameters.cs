@@ -11,15 +11,15 @@ namespace DealHub_Domain.DashBoard
     {
 
         [Required(ErrorMessage = "project name is mandetory")]
-        [RegularExpression(@"([a-zA-Z0-9@#$&;|,.?-_]+)", ErrorMessage = "not valid expression")]
+        [RegularExpression(@"([a-zA-Z0-9@#$&;|,.?-_ ]+)", ErrorMessage = "not valid expression")]
         public string _dh_project_name { get; set; }
 
         [Required(ErrorMessage = "opportunity id is mandetory")]
-        [RegularExpression(@"([a-zA-Z0-9@#$&;|,.?-_]+)", ErrorMessage = "not valid expression")]
+        [RegularExpression(@"([a-zA-Z0-9@#$&;|,.?-_ ]+)", ErrorMessage = "not valid expression")]
         public string _opportunity_id { get; set; }
 
         [Required(ErrorMessage = "project location is mandetory")]
-        [RegularExpression(@"([a-zA-Z0-9@#$&;|,.?-_]+)", ErrorMessage = "not valid expression")]
+        [RegularExpression(@"([a-zA-Z0-9@#$&;|,.?-_ ]+)", ErrorMessage = "not valid expression")]
         public string _dh_location { get; set; }
 
         [Required(ErrorMessage = "vertical  is mandetory")]
@@ -28,7 +28,7 @@ namespace DealHub_Domain.DashBoard
         [Required(ErrorMessage = "vertical head  is mandetory")]
         public int _verticalhead_id { get; set; }
 
-       // [RegularExpression(@"([a-zA-Z0-9@#$&;|,.?-_]+)", ErrorMessage = "not valid expression")] --  commented by Kirti, because it contains some special characters
+       // [RegularExpression(@"([a-zA-Z0-9@#$&;|,.?-_ ]+)", ErrorMessage = "not valid expression")] --  commented by Kirti, because it contains some special characters
         [Required(ErrorMessage = "project Description  is mandetory")]
         public string _dh_desc { get; set; }
 
@@ -57,18 +57,18 @@ namespace DealHub_Domain.DashBoard
 
         public decimal _irr_borrowed_fund { get; set; }
 
-        [RegularExpression(@"([a-zA-Z0-9@#$&;|,.?-_]+)", ErrorMessage = "not valid expression")]
+        [RegularExpression(@"([a-zA-Z0-9@#$&;|,.?-_ ]+)", ErrorMessage = "not valid expression")]
         public string _is_loi_po_uploaded { get; set; }
 
-        //[RegularExpression(@"([a-zA-Z0-9@#$&;|,.?-_]+)", ErrorMessage = "not valid expression")] ----  commented by Kirti, because it contains some special characters
+        //[RegularExpression(@"([a-zA-Z0-9@#$&;|,.?-_ ]+)", ErrorMessage = "not valid expression")] ----  commented by Kirti, because it contains some special characters
         [Required(ErrorMessage = "assumption and risks  is mandetory")]
         public string _assumptions_and_risks { get; set; }
 
 
-        [RegularExpression(@"([a-zA-Z0-9@#$&;|,.?-_]+)", ErrorMessage = "not valid expression")]
+        [RegularExpression(@"([a-zA-Z0-9@#$&;|,.?-_ ]+)", ErrorMessage = "not valid expression")]
         public string _active { get; set; }
 
-        [RegularExpression(@"([a-zA-Z0-9@#$&;|,.?-_]+)", ErrorMessage = "not valid expression")]
+        [RegularExpression(@"([a-zA-Z0-9@#$&;|,.?-_ ]+)", ErrorMessage = "not valid expression")]
         public string _status { get; set; }
 
         public int _is_saved { get; set; }
@@ -76,13 +76,13 @@ namespace DealHub_Domain.DashBoard
         public int _is_submitted { get; set; }
 
 
-        [RegularExpression(@"([a-zA-Z0-9@#$&;|,.?-_]+)", ErrorMessage = "not valid expression")]
+        [RegularExpression(@"([a-zA-Z0-9@#$&;|,.?-_ ]+)", ErrorMessage = "not valid expression")]
         public string _service_category { get; set; }
 
         [Required(ErrorMessage = "payment terms  is mandetory")]
         public int _payment_terms { get; set; }
 
-        [RegularExpression(@"([a-zA-Z0-9@#$&;|,.?-_]+)", ErrorMessage = "not valid expression")]
+        [RegularExpression(@"([a-zA-Z0-9@#$&;|,.?-_ ]+)", ErrorMessage = "not valid expression")]
         public string _mode { get; set; }
 
 
@@ -91,7 +91,7 @@ namespace DealHub_Domain.DashBoard
         public List<SaveServiceParameter> Services;
 
         public List<Customer_SAP_IO_Parameter> sapio { get; set; }
-        [RegularExpression(@"([a-zA-Z0-9@#$&;|,.?-_]+)", ErrorMessage = "not valid expression")]
+        [RegularExpression(@"([a-zA-Z0-9@#$&;|,.?-_ ]+)", ErrorMessage = "not valid expression")]
         public string _sap_customer_code { get; set; }
 
 
@@ -106,20 +106,20 @@ namespace DealHub_Domain.DashBoard
         public List<SubmitOBFParameters> _SubmitOBFParameters { get; set; }
 
         [Required(ErrorMessage = "customer  name  is mandetory")]
-        [RegularExpression(@"([a-zA-Z0-9@#$&;|,.?-_]+)", ErrorMessage = "not valid expression")]
+        [RegularExpression(@"([a-zA-Z0-9@#$&;|,.?-_ ]+)", ErrorMessage = "not valid expression")]
         
         public string _customer_name { get; set; }
 
-        [RegularExpression(@"([a-zA-Z0-9@#$&;|,.?-_]+)", ErrorMessage = "not valid expression")]
+        [RegularExpression(@"([a-zA-Z0-9@#$&;|,.?-_ ()]+)", ErrorMessage = "not valid expression")]
         public string _dh_comment { get; set; }
 
 
-        //[RegularExpression(@"([a-zA-Z0-9@#$&;|,.?-_]+)", ErrorMessage = "not valid expression")] --  commented by Kirti, because it contains some special characters
+        //[RegularExpression(@"([a-zA-Z0-9@#$&;|,.?-_ ]+)", ErrorMessage = "not valid expression")] --  commented by Kirti, because it contains some special characters
         [Required(ErrorMessage = "loi/po  is mandetory")]
         public string _loi_po_details { get; set; }
 
         [Required(ErrorMessage = "payment terms  is mandetory")]
-        //  [RegularExpression(@"([a-zA-Z0-9@#$&;|,.?-_]+)", ErrorMessage = "not valid expression")] --  commented by Kirti, because it contains some special characters
+        //  [RegularExpression(@"([a-zA-Z0-9@#$&;|,.?-_ ]+)", ErrorMessage = "not valid expression")] --  commented by Kirti, because it contains some special characters
         public string _payment_term_desc { get; set; }
 
 
@@ -144,7 +144,7 @@ namespace DealHub_Domain.DashBoard
         public int dh_header_id { get; set; }
 
         [Required(ErrorMessage = "user code  is mandetory")]
-        [RegularExpression(@"([a-zA-Z0-9@#$&;|,.?-_]+)", ErrorMessage = "not valid expression")]
+        [RegularExpression(@"([a-zA-Z0-9@#$&;|,.?-_ ]+)", ErrorMessage = "not valid expression")]
         public string user_code { get; set; }
     }
 
@@ -227,6 +227,7 @@ namespace DealHub_Domain.DashBoard
         public int _dh_phase_id { get; set; } // added  for ppl initiate part
 
         //public int _parent_dh_main_id { get; set; } // added  for ppl initiate part
+        public string _version_name { get; set; }
 
     }
 
@@ -324,7 +325,7 @@ namespace DealHub_Domain.DashBoard
        
         public int isapproved { get; set; }
 
-        [RegularExpression(@"([a-zA-Z0-9@#$&;|,.?-_]+)", ErrorMessage = "not valid expression")]
+        [RegularExpression(@"([a-zA-Z0-9@#$&;|,.?-_ ]+)", ErrorMessage = "not valid expression")]
         public string rejectcomment { get; set; }
 
         public int rejectionto { get; set; }
