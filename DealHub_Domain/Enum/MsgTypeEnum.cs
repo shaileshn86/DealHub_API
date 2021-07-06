@@ -13,5 +13,10 @@ namespace DealHub_Domain.Enum
         I // Information
     }
 
+    public class commaonerrormessage
+    {
+        public static string errormessage = "something went wrong";
+    }
+
    
 }
