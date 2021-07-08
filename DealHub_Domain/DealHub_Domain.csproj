@@ -61,6 +61,10 @@
     <Compile Include="Helpers\JWToken.cs" />
     <Compile Include="Helpers\MaxLengthTrim.cs" />
     <Compile Include="Helpers\ReponseMessage.cs" />
+    <Compile Include="Masters\MstBranchParameters.cs" />
+    <Compile Include="Masters\MstDomainParameters.cs" />
+    <Compile Include="Masters\MstFormParameters.cs" />
+    <Compile Include="Masters\MstFunctionParameters.cs" />
     <Compile Include="MenuBinding\MenuBindingDetailsParameter.cs" />
     <Compile Include="MenuBinding\MenuBindingParameter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

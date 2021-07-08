@@ -42,7 +42,7 @@ namespace DealHubAPI.Controllers
                     }
                     else
                     {
-                        result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                        result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: commaonerrormessage.errormessage);
                         return Request.CreateResponse(HttpStatusCode.BadRequest, result);
                     }
 
@@ -51,14 +51,14 @@ namespace DealHubAPI.Controllers
                 }
                 else
                 {
-                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: commaonerrormessage.errormessage);
                     return Request.CreateResponse(HttpStatusCode.BadRequest, result);
                 }
 
             }
             else
             {
-                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Field Validation Error");
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: commaonerrormessage.errormessage);
                 return Request.CreateResponse(HttpStatusCode.BadRequest, result);
 
             }
@@ -74,7 +74,7 @@ namespace DealHubAPI.Controllers
         {
             if (model == null)// Incase Post Object Is Null or Not Match and Object value is null
             {
-                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: commaonerrormessage.errormessage);
                 return Request.CreateResponse(HttpStatusCode.BadRequest, result);
             }
             if (ModelState.IsValid)
@@ -90,7 +90,7 @@ namespace DealHubAPI.Controllers
                     }
                     else
                     {
-                        result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                        result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: commaonerrormessage.errormessage);
                         return Request.CreateResponse(HttpStatusCode.BadRequest, result);
                     }
 
@@ -99,14 +99,14 @@ namespace DealHubAPI.Controllers
                 }
                 else
                 {
-                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: commaonerrormessage.errormessage);
                     return Request.CreateResponse(HttpStatusCode.BadRequest, result);
                 }
 
             }
             else
             {
-                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Field Validation Error");
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: commaonerrormessage.errormessage);
                 return Request.CreateResponse(HttpStatusCode.BadRequest, result);
 
             }
@@ -123,7 +123,7 @@ namespace DealHubAPI.Controllers
         {
             if (model == null)// Incase Post Object Is Null or Not Match and Object value is null
             {
-                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: commaonerrormessage.errormessage);
                 return Request.CreateResponse(HttpStatusCode.BadRequest, result);
             }
             if (ModelState.IsValid)
@@ -139,7 +139,7 @@ namespace DealHubAPI.Controllers
                     }
                     else
                     {
-                        result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                        result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: commaonerrormessage.errormessage);
                         return Request.CreateResponse(HttpStatusCode.BadRequest, result);
                     }
 
@@ -148,14 +148,14 @@ namespace DealHubAPI.Controllers
                 }
                 else
                 {
-                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: commaonerrormessage.errormessage);
                     return Request.CreateResponse(HttpStatusCode.BadRequest, result);
                 }
 
             }
             else
             {
-                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Field Validation Error");
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: commaonerrormessage.errormessage);
                 return Request.CreateResponse(HttpStatusCode.BadRequest, result);
 
             }
@@ -171,7 +171,7 @@ namespace DealHubAPI.Controllers
         {
             if (model == null)// Incase Post Object Is Null or Not Match and Object value is null
             {
-                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: commaonerrormessage.errormessage);
                 return Request.CreateResponse(HttpStatusCode.BadRequest, result);
             }
             if (ModelState.IsValid)
@@ -187,7 +187,7 @@ namespace DealHubAPI.Controllers
                     }
                     else
                     {
-                        result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                        result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: commaonerrormessage.errormessage);
                         return Request.CreateResponse(HttpStatusCode.BadRequest, result);
                     }
 
@@ -196,14 +196,14 @@ namespace DealHubAPI.Controllers
                 }
                 else
                 {
-                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: commaonerrormessage.errormessage);
                     return Request.CreateResponse(HttpStatusCode.BadRequest, result);
                 }
 
             }
             else
             {
-                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Field Validation Error");
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: commaonerrormessage.errormessage);
                 return Request.CreateResponse(HttpStatusCode.BadRequest, result);
 
             }
@@ -218,7 +218,7 @@ namespace DealHubAPI.Controllers
         {
             if (model == null)// Incase Post Object Is Null or Not Match and Object value is null
             {
-                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: commaonerrormessage.errormessage);
                 return Request.CreateResponse(HttpStatusCode.BadRequest, result);
             }
 
@@ -227,7 +227,7 @@ namespace DealHubAPI.Controllers
                 string json = ObfServices.GetMastersOBFCreation(model);
                 if (json == "" || json == "error")
                 {
-                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: commaonerrormessage.errormessage);
                     return Request.CreateResponse(HttpStatusCode.BadRequest, result);
                 }
                 else
@@ -237,7 +237,7 @@ namespace DealHubAPI.Controllers
             }
             else
             {
-                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Field Validation Error Occured");
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: commaonerrormessage.errormessage);
                 return Request.CreateResponse(HttpStatusCode.BadRequest, result);
 
             }
@@ -256,7 +256,7 @@ namespace DealHubAPI.Controllers
         {
             if (model == null)// Incase Post Object Is Null or Not Match and Object value is null
             {
-                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: commaonerrormessage.errormessage);
                 return Request.CreateResponse(HttpStatusCode.BadRequest, result);
             }
             if (ModelState.IsValid)
@@ -270,7 +270,7 @@ namespace DealHubAPI.Controllers
                     }
                     else
                     {
-                        result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                        result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: commaonerrormessage.errormessage);
                         return Request.CreateResponse(HttpStatusCode.BadRequest, result);
                     }
 
@@ -279,13 +279,13 @@ namespace DealHubAPI.Controllers
                 }
                 else
                 {
-                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: commaonerrormessage.errormessage);
                     return Request.CreateResponse(HttpStatusCode.BadRequest, result);
                 }
             }
             else
             {
-                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Field Validation Error");
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: commaonerrormessage.errormessage);
                 return Request.CreateResponse(HttpStatusCode.BadRequest, result);
             }
             
@@ -301,7 +301,7 @@ namespace DealHubAPI.Controllers
         {
             if (model == null)// Incase Post Object Is Null or Not Match and Object value is null
             {
-                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: commaonerrormessage.errormessage);
                 return Request.CreateResponse(HttpStatusCode.BadRequest, result);
             }
             if (ModelState.IsValid)
@@ -315,14 +315,14 @@ namespace DealHubAPI.Controllers
                 }
                 else
                 {
-                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: commaonerrormessage.errormessage);
                     return Request.CreateResponse(HttpStatusCode.BadRequest, result);
                 }
 
             }
             else
             {
-                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Field Validation Error");
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: commaonerrormessage.errormessage);
                 return Request.CreateResponse(HttpStatusCode.BadRequest, result);
             }
           
@@ -338,7 +338,7 @@ namespace DealHubAPI.Controllers
         {
             if (model == null)// Incase Post Object Is Null or Not Match and Object value is null
             {
-                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: commaonerrormessage.errormessage);
                 return Request.CreateResponse(HttpStatusCode.BadRequest, result);
             }
             if (ModelState.IsValid)
@@ -354,7 +354,7 @@ namespace DealHubAPI.Controllers
                     }
                     else
                     {
-                        result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                        result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: commaonerrormessage.errormessage);
                         return Request.CreateResponse(HttpStatusCode.BadRequest, result);
                     }
 
@@ -363,14 +363,14 @@ namespace DealHubAPI.Controllers
                 }
                 else
                 {
-                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: commaonerrormessage.errormessage);
                     return Request.CreateResponse(HttpStatusCode.BadRequest, result);
                 }
 
             }
             else
             {
-                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Field Validation Error");
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: commaonerrormessage.errormessage);
                 return Request.CreateResponse(HttpStatusCode.BadRequest, result);
             }
 
@@ -384,7 +384,7 @@ namespace DealHubAPI.Controllers
         {
             if (model == null)// Incase Post Object Is Null or Not Match and Object value is null
             {
-                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: commaonerrormessage.errormessage);
                 return Request.CreateResponse(HttpStatusCode.BadRequest, result);
             }
             if (ModelState.IsValid)
@@ -400,7 +400,7 @@ namespace DealHubAPI.Controllers
                     }
                     else
                     {
-                        result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                        result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: commaonerrormessage.errormessage);
                         return Request.CreateResponse(HttpStatusCode.BadRequest, result);
                     }
 
@@ -409,13 +409,13 @@ namespace DealHubAPI.Controllers
                 }
                 else
                 {
-                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: commaonerrormessage.errormessage);
                     return Request.CreateResponse(HttpStatusCode.BadRequest, result);
                 }
             }
             else
             {
-                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Field Validation Error");
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: commaonerrormessage.errormessage);
                 return Request.CreateResponse(HttpStatusCode.BadRequest, result);
             }
             return null;
@@ -428,7 +428,7 @@ namespace DealHubAPI.Controllers
         {
             if (model == null)// Incase Post Object Is Null or Not Match and Object value is null
             {
-                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: commaonerrormessage.errormessage);
                 return Request.CreateResponse(HttpStatusCode.BadRequest, result);
             }
 
@@ -437,7 +437,7 @@ namespace DealHubAPI.Controllers
                 string json = ObfServices.GetOBFSummaryDataVersionWise(model);
                 if (json == "" || json == "error")
                 {
-                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: commaonerrormessage.errormessage);
                     return Request.CreateResponse(HttpStatusCode.BadRequest, result);
                 }
                 else
@@ -447,7 +447,7 @@ namespace DealHubAPI.Controllers
             }
             else
             {
-                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Field Validation Error");
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: commaonerrormessage.errormessage);
                 return Request.CreateResponse(HttpStatusCode.BadRequest, result);
             }
 
@@ -464,7 +464,7 @@ namespace DealHubAPI.Controllers
         {
             if (model == null)// Incase Post Object Is Null or Not Match and Object value is null
             {
-                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: commaonerrormessage.errormessage);
                 return Request.CreateResponse(HttpStatusCode.BadRequest, result);
             }
             if (ModelState.IsValid)
@@ -472,7 +472,7 @@ namespace DealHubAPI.Controllers
                 string json = ObfServices.GetAttachmentDocument(model);
                 if (json == "" || json == "error")
                 {
-                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: commaonerrormessage.errormessage);
                     return Request.CreateResponse(HttpStatusCode.BadRequest, result);
                 }
                 else
@@ -482,7 +482,7 @@ namespace DealHubAPI.Controllers
             }
             else
             {
-                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Field Validation Error");
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: commaonerrormessage.errormessage);
                 return Request.CreateResponse(HttpStatusCode.BadRequest, result);
             }
           

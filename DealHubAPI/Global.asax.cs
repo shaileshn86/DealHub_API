@@ -6,6 +6,8 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using DealHubAPI.CommonFunctions;
+using System.Configuration;
 
 namespace DealHubAPI
 {
@@ -47,6 +49,40 @@ namespace DealHubAPI
             Response.Headers.Remove("X-AspNetMvc-Version");
             Response.Headers.Remove("X-Frame-Options");
             Response.AddHeader("X-Frame-Options", "AllowAll");
+        }
+
+        void Application_Error(object sender, EventArgs e)
+        {
+            // Code that runs when an unhandled error occurs
+            Exception exception = Server.GetLastError();
+            if (exception != null)
+            {
+                Exception ex = Server.GetLastError().GetBaseException();
+                //System.Diagnostics.EventLog.WriteEntry("DealHub ERROR : ",
+                //"MESSAGE: " + ex.Message +
+                //"\nSOURCE: " + ex.Source +
+                //"\nFORM: " + Request.Form.ToString() +
+                //"\nQUERYSTRING: " + Request.QueryString.ToString() +
+                //"\nTARGETSITE: " + ex.TargetSite +
+                //"\nSTACKTRACE: " + ex.StackTrace,
+                //System.Diagnostics.EventLogEntryType.Error);
+                ////Logger.Log(exception);
+                //Server.ClearError();
+                //Server.Transfer("~/ErrorPage.aspx");
+                //ILogger LogEvent = new WriteLogToFile();
+                string exceptionDetails = 
+                "DealHub ERROR : " +
+                "MESSAGE: " + ex.Message +
+                "\nSOURCE: " + ex.Source +
+                "\nFORM: " + Request.Form.ToString() +
+                "\nQUERYSTRING: " + Request.QueryString.ToString() +
+                "\nTARGETSITE: " + ex.TargetSite +
+                "\nSTACKTRACE: " + ex.StackTrace;
+
+
+                //LogEvent.LogEvent(ConfigurationManager.AppSettings["logfilepath"].ToString(), exceptionDetails, true);
+
+            }
         }
 
     }

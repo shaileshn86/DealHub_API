@@ -44,6 +44,9 @@
     <Compile Include="Implemantations\APIServices\AuthenticationServices.cs" />
     <Compile Include="Implemantations\APIServices\DashBoardServices.cs" />
     <Compile Include="Implemantations\APIServices\EmailSender.cs" />
+    <Compile Include="Implemantations\APIServices\MstBranchService.cs" />
+    <Compile Include="Implemantations\APIServices\MstDomainService.cs" />
+    <Compile Include="Implemantations\APIServices\MstFunctionService.cs" />
     <Compile Include="Implemantations\ErrorLog\ErrorlogsService.cs" />
     <Compile Include="Implemantations\APIServices\MenuBindingServices.cs" />
     <Compile Include="Implemantations\APIServices\ObfServices.cs" />

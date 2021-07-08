@@ -44,8 +44,13 @@ namespace DealHub_Service.Implemantations.APIServices
             return EmailSender_DAL.Email_Sending_Details(_dh_header_id,_is_shared);
         }
 
+        public static List<commanmessges> ShareEmail(ShareEmailParameters model)
+        {
+            return EmailSender_DAL.ShareEmail(model);
+        }
 
-       
+
+
 
 
     }
