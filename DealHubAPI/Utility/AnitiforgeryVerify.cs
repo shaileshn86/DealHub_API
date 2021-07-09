@@ -71,7 +71,7 @@ namespace DealHubAPI.Utility
                 //Request.Browser.Browser + Request.Browser.Version + Request.UserAgent;
 
 
-                if (_RequestIPAddress != _currentUseripAddress || _currentBrowserInfo != _RequestBrowserInfo || UserCode != UserId.ToString().ToLower())
+                if (_RequestIPAddress != _currentUseripAddress || _currentBrowserInfo != _RequestBrowserInfo || UserCode.ToString().ToLower() != UserId.ToString().ToLower())
                 {
 
 
