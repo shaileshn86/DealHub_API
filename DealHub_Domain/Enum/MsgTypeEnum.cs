@@ -16,6 +16,7 @@ namespace DealHub_Domain.Enum
     public class commaonerrormessage
     {
         public static string errormessage = "something went wrong";
+        public static string datanotfound = "Data not found!";
     }
 
    
