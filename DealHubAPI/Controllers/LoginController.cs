@@ -27,7 +27,7 @@ namespace DealHubAPI.Controllers
 {
     
     [RoutePrefix("Api/Auth")]
-    [EnableCors(origins: "*", headers: "*", methods: "*")]
+   
     public class LoginController : BaseApiController
     {
         public static List<UserKeyModel> LoginKey = new List<UserKeyModel>();

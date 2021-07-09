@@ -7,6 +7,8 @@ using Microsoft.Owin.Security.OAuth;
 using Newtonsoft.Json.Serialization;
 using System.Web.Http.Cors;
 using WebApiThrottle;
+using System.Configuration;
+
 namespace DealHubAPI
 {
     public static class WebApiConfig
@@ -14,8 +16,9 @@ namespace DealHubAPI
         public static void Register(HttpConfiguration config)
         {
             //config.EnableCors(new EnableCorsAttribute("*", "*", "*"));
-          //  config.EnableCors();
-            var cors = new System.Web.Http.Cors.EnableCorsAttribute("*", "*", "*");
+            //  config.EnableCors();
+            string allowfromorign = ConfigurationManager.AppSettings["allowfromorigin"];
+            var cors = new System.Web.Http.Cors.EnableCorsAttribute(allowfromorign, "*", "*");
             //config.EnableCors(cors);
             // Web API configuration and services
             // Configure Web API to use only bearer token authentication.
