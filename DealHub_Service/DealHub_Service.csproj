@@ -69,6 +69,7 @@
     <Compile Include="Implemantations\APIServices\DashBoardServices.cs" />
     <Compile Include="Implemantations\APIServices\EmailSender.cs" />
     <Compile Include="Implemantations\APIServices\MstBranchService.cs" />
+    <Compile Include="Implemantations\APIServices\MstCommentTypeService.cs" />
     <Compile Include="Implemantations\APIServices\MstDomainService.cs" />
     <Compile Include="Implemantations\APIServices\MstFormServices.cs" />
     <Compile Include="Implemantations\APIServices\MstFunctionService.cs" />

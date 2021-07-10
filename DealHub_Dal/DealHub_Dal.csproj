@@ -76,6 +76,7 @@
     <Compile Include="ErrorLog\WritetoLogFile.cs" />
     <Compile Include="Extensions\DataReaderExt.cs" />
     <Compile Include="Masters\MstBranch.cs" />
+    <Compile Include="Masters\MstCommentType.cs" />
     <Compile Include="Masters\MstDomain.cs" />
     <Compile Include="Masters\MstForms.cs" />
     <Compile Include="Masters\MstFunctions.cs" />
