@@ -87,6 +87,7 @@
     <Compile Include="Helpers\ReponseMessage.cs" />
     <Compile Include="Masters\MstBranchParameters.cs" />
     <Compile Include="Masters\MstCommentTypeParameters.cs" />
+    <Compile Include="Masters\MstDoaMatrixMessagesParameters.cs" />
     <Compile Include="Masters\MstDomainParameters.cs" />
     <Compile Include="Masters\MstFormParameters.cs" />
     <Compile Include="Masters\MstFunctionParameters.cs" />

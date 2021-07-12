@@ -293,7 +293,7 @@ namespace DealHubAPI.Controllers
                     if (ModelState.IsValid)
                     {
                         EmailSendingService.EmailSendTest();
-                        return Request.CreateResponse(HttpStatusCode.OK, "");
+                        return Request.CreateResponse(HttpStatusCode.OK, model.testmail);
                     }
                 }
                 return Request.CreateResponse(HttpStatusCode.NotAcceptable, "Invalid value in model");
