@@ -331,6 +331,44 @@ namespace DealHubAPI.Controllers
 
         }
 
+
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("getpreviousversion")]
+        public HttpResponseMessage getpreviousversion(editobfarguement model)
+        {
+            if (model == null)// Incase Post Object Is Null or Not Match and Object value is null
+            {
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: commaonerrormessage.errormessage);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+            }
+            if (ModelState.IsValid)
+            {
+                previousversion _editobf = ObfServices.getpreviousversion(model);
+                if (_editobf != null)
+                {
+
+                    return Request.CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(_editobf));
+
+                }
+                else
+                {
+                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: commaonerrormessage.errormessage);
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+                }
+
+            }
+            else
+            {
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: commaonerrormessage.errormessage);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+            }
+
+
+
+
+        }
+
         [HttpPost]
        
         [Route("ApproveRejectObf")]
