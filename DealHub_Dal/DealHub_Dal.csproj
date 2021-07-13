@@ -77,11 +77,15 @@
     <Compile Include="Extensions\DataReaderExt.cs" />
     <Compile Include="Masters\MstBranch.cs" />
     <Compile Include="Masters\MstCommentType.cs" />
+    <Compile Include="Masters\MstDoaMatrixMessages.cs" />
     <Compile Include="Masters\MstDomain.cs" />
     <Compile Include="Masters\MstForms.cs" />
     <Compile Include="Masters\MstFunctions.cs" />
+    <Compile Include="Masters\MstPrivilege.cs" />
     <Compile Include="Masters\MstSector.cs" />
     <Compile Include="Masters\MstSolutionCategory.cs" />
+    <Compile Include="Masters\MstSolutions.cs" />
+    <Compile Include="Masters\MstSubSector.cs" />
     <Compile Include="MenuBinding\MenuBinding.cs" />
     <Compile Include="OBF\EmailSender_DAL.cs" />
     <Compile Include="OBF\OBF_Creation.cs" />
