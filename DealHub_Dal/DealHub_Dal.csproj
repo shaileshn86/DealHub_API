@@ -58,6 +58,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Transactions" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -74,12 +75,20 @@
     <Compile Include="DashBoard\DashBoard.cs" />
     <Compile Include="ErrorLog\WritetoLogFile.cs" />
     <Compile Include="Extensions\DataReaderExt.cs" />
+    <Compile Include="Masters\MstBranch.cs" />
+    <Compile Include="Masters\MstCommentType.cs" />
+    <Compile Include="Masters\MstDomain.cs" />
+    <Compile Include="Masters\MstForms.cs" />
+    <Compile Include="Masters\MstFunctions.cs" />
+    <Compile Include="Masters\MstSector.cs" />
+    <Compile Include="Masters\MstSolutionCategory.cs" />
     <Compile Include="MenuBinding\MenuBinding.cs" />
     <Compile Include="OBF\EmailSender_DAL.cs" />
     <Compile Include="OBF\OBF_Creation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

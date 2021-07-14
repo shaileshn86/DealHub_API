@@ -25,7 +25,7 @@ namespace DealHubAPI.Controllers
         {
             if (model == null)// Incase Post Object Is Null or Not Match and Object value is null
             {
-                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: commaonerrormessage.errormessage);
                 return Request.CreateResponse(HttpStatusCode.BadRequest, result);
             }
             if (ModelState.IsValid)
@@ -40,7 +40,7 @@ namespace DealHubAPI.Controllers
                     }
                     else
                     {
-                        result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                        result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: commaonerrormessage.datanotfound);
                         return Request.CreateResponse(HttpStatusCode.BadRequest, result);
                     }
 
@@ -49,7 +49,7 @@ namespace DealHubAPI.Controllers
                 }
                 else
                 {
-                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: commaonerrormessage.errormessage);
                     return Request.CreateResponse(HttpStatusCode.BadRequest, result);
                 }
 
@@ -64,7 +64,7 @@ namespace DealHubAPI.Controllers
         {
             if (model == null)// Incase Post Object Is Null or Not Match and Object value is null
             {
-                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: commaonerrormessage.errormessage);
                 return Request.CreateResponse(HttpStatusCode.BadRequest, result);
             }
             if (ModelState.IsValid)
@@ -79,7 +79,7 @@ namespace DealHubAPI.Controllers
                     }
                     else
                     {
-                        result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                        result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: commaonerrormessage.datanotfound);
                         return Request.CreateResponse(HttpStatusCode.BadRequest, result);
                     }
 
@@ -88,7 +88,7 @@ namespace DealHubAPI.Controllers
                 }
                 else
                 {
-                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: commaonerrormessage.errormessage);
                     return Request.CreateResponse(HttpStatusCode.BadRequest, result);
                 }
 
@@ -112,37 +112,38 @@ namespace DealHubAPI.Controllers
             {
 
 
-            if (model == null)
-            {
-                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
-                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
-            }else 
-            if (model.dh_id == 0 )
-            {
-                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "DhId Must be required!");
-                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
-            }
-
-            if (ModelState.IsValid)
-            {
-                string json = DashBoardServices.GetOBFSummaryDetails(Convert.ToInt32(model.dh_id));
-
-                if (json == "" || json == "error")
+                if (model == null)
                 {
-                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: commaonerrormessage.errormessage);
                     return Request.CreateResponse(HttpStatusCode.BadRequest, result);
                 }
                 else
+                if (model.dh_id == 0)
                 {
-                    return Request.CreateResponse(HttpStatusCode.OK, json);
+                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "DhId Must be required!");
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, result);
                 }
-            }
-            else
-            {
-                string jsonOBJ = JsonConvert.SerializeObject(ModelState.AllErrors());
-                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: jsonOBJ);
-                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
-            }
+
+                if (ModelState.IsValid)
+                {
+                    string json = DashBoardServices.GetOBFSummaryDetails(Convert.ToInt32(model.dh_id));
+
+                    if (json == "" || json == "error")
+                    {
+                        result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: commaonerrormessage.datanotfound);
+                        return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+                    }
+                    else
+                    {
+                        return Request.CreateResponse(HttpStatusCode.OK, json);
+                    }
+                }
+                else
+                {
+                    string jsonOBJ = JsonConvert.SerializeObject(ModelState.AllErrors());
+                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: commaonerrormessage.errormessage);
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+                }
 
 
             }
@@ -150,8 +151,8 @@ namespace DealHubAPI.Controllers
             {
 
                 string jsonOBJ = JsonConvert.SerializeObject(model);
-               // LogExceptionToDB(ex, "Login", GetRequestURL(), jsonOBJ, "UserController", GetUserIp());
-                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: ex.Message);
+                // LogExceptionToDB(ex, "Login", GetRequestURL(), jsonOBJ, "UserController", GetUserIp());
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: commaonerrormessage.errormessage);
 
                 return Request.CreateResponse(HttpStatusCode.BadRequest, result);
             }
@@ -174,25 +175,27 @@ namespace DealHubAPI.Controllers
             {
                 if (model == null)
                 {
-                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: commaonerrormessage.errormessage);
                     return Request.CreateResponse(HttpStatusCode.BadRequest, result);
                 }
                 else
-            if (model.dh_id == 0 || model.dh_header_id==0 )
+            if (model.dh_id == 0 || model.dh_header_id == 0)
                 {
                     result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "dh_id or  dh_header_id Must be required!");
                     return Request.CreateResponse(HttpStatusCode.BadRequest, result);
                 }
 
-                
-                    List<timelinehistroy> _DashBoardDetailsParameters = DashBoardServices.GetDetailTimelineHistory(Convert.ToInt32(model.dh_id), Convert.ToInt32(model.dh_header_id));
-                if (_DashBoardDetailsParameters.Count > 0)
-                        {
-                    return Request.CreateResponse(HttpStatusCode.OK, _DashBoardDetailsParameters);
-                   
 
-                }else {
-                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Data not found!");
+                List<timelinehistroy> _DashBoardDetailsParameters = DashBoardServices.GetDetailTimelineHistory(Convert.ToInt32(model.dh_id), Convert.ToInt32(model.dh_header_id));
+                if (_DashBoardDetailsParameters.Count > 0)
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, _DashBoardDetailsParameters);
+
+
+                }
+                else
+                {
+                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: commaonerrormessage.datanotfound);
                     return Request.CreateResponse(HttpStatusCode.BadRequest, result);
                 }
 
@@ -205,7 +208,7 @@ namespace DealHubAPI.Controllers
                 //}
                 //else
                 //{
-                //    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                //    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: commaonerrormessage.errormessage);
                 //    return Request.CreateResponse(HttpStatusCode.BadRequest, result);
                 //}
 
@@ -214,7 +217,7 @@ namespace DealHubAPI.Controllers
                 //}
                 //else
                 //{
-                //    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                //    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: commaonerrormessage.errormessage);
                 //    return Request.CreateResponse(HttpStatusCode.BadRequest, result);
                 //}
 
@@ -223,13 +226,13 @@ namespace DealHubAPI.Controllers
             catch (Exception ex)
             {
 
-               
-                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: ex.Message);
+
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: commaonerrormessage.errormessage);
 
                 return Request.CreateResponse(HttpStatusCode.BadRequest, result);
             }
-          
-            
+
+
         }
 
         /// <summary>
@@ -239,7 +242,7 @@ namespace DealHubAPI.Controllers
         /// <returns></returns>
         // Updated By Ramajor
         [HttpPost]
-       // [AllowAnonymous]
+        // [AllowAnonymous]
         [Route("GetOBFSummaryDetails_version")]
         public HttpResponseMessage GetOBFSummaryDetails_version(CommonDetailsParameter model)
         {
@@ -247,7 +250,7 @@ namespace DealHubAPI.Controllers
             {
                 if (model == null)
                 {
-                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: commaonerrormessage.errormessage);
                     return Request.CreateResponse(HttpStatusCode.BadRequest, result);
                 }
                 else
@@ -257,10 +260,10 @@ namespace DealHubAPI.Controllers
                     return Request.CreateResponse(HttpStatusCode.BadRequest, result);
                 }
 
-                string json = DashBoardServices.GetOBFSummaryDetails_version(Convert.ToInt32( model.dh_id),Convert.ToInt32( model.dh_header_id));
+                string json = DashBoardServices.GetOBFSummaryDetails_version(Convert.ToInt32(model.dh_id), Convert.ToInt32(model.dh_header_id));
                 if (json == "")
                 {
-                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Data not found!");
+                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: commaonerrormessage.datanotfound);
                     return Request.CreateResponse(HttpStatusCode.BadRequest, result);
                 }
                 else
@@ -271,7 +274,7 @@ namespace DealHubAPI.Controllers
             catch (Exception ex)
             {
 
-                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: ex.Message);
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: commaonerrormessage.errormessage);
 
                 return Request.CreateResponse(HttpStatusCode.BadRequest, result);
             }
@@ -285,24 +288,24 @@ namespace DealHubAPI.Controllers
         {
             try
             {
-                if (model !=null)
+                if (model != null)
                 {
                     if (ModelState.IsValid)
                     {
                         EmailSendingService.EmailSendTest();
-                        return Request.CreateResponse(HttpStatusCode.OK, "");
+                        return Request.CreateResponse(HttpStatusCode.OK, model.testmail);
                     }
                 }
                 return Request.CreateResponse(HttpStatusCode.NotAcceptable, "Invalid value in model");
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.OK, "");
 
             }
 
-            
+
 
 
         }
@@ -323,11 +326,11 @@ namespace DealHubAPI.Controllers
 
                 if (model == null)
                 {
-                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: commaonerrormessage.errormessage);
                     return Request.CreateResponse(HttpStatusCode.BadRequest, result);
                 }
                 else
-              if (model._dh_header_id == 0 )
+              if (model._dh_header_id == 0)
                 {
                     result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "dh_header_id must be required!");
                     return Request.CreateResponse(HttpStatusCode.BadRequest, result);
@@ -343,7 +346,7 @@ namespace DealHubAPI.Controllers
                     }
                     else
                     {
-                        result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Data not found!");
+                        result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: commaonerrormessage.errormessage);
                         return Request.CreateResponse(HttpStatusCode.BadRequest, result);
                     }
 
@@ -352,10 +355,10 @@ namespace DealHubAPI.Controllers
                 }
                 else
                 {
-                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: commaonerrormessage.errormessage);
                     return Request.CreateResponse(HttpStatusCode.BadRequest, result);
                 }
-                
+
 
 
             }
@@ -378,14 +381,14 @@ namespace DealHubAPI.Controllers
         //[AllowAnonymous]
         [HttpPost]
         [Route("Get_System_Notification")]
-        public HttpResponseMessage Get_System_Notification(DashBoardParameters model )//string _user_code
+        public HttpResponseMessage Get_System_Notification(DashBoardParameters model)//string _user_code
         {
             try
             {
 
                 if (model == null)
                 {
-                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: commaonerrormessage.errormessage);
                     return Request.CreateResponse(HttpStatusCode.BadRequest, result);
                 }
                 if (string.IsNullOrEmpty(model._user_code))
@@ -395,21 +398,21 @@ namespace DealHubAPI.Controllers
                 }
 
                 string json = SystemNotificationService.Get_System_Notification(model._user_code);
-            if (json == "")
-            {
-                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
-                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
-            }
-            else
-            {
-                return Request.CreateResponse(HttpStatusCode.OK, json);
-            }
+                if (json == "")
+                {
+                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: commaonerrormessage.datanotfound);
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+                }
+                else
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, json);
+                }
 
             }
             catch (Exception ex)
             {
 
-                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: ex.Message);
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: commaonerrormessage.errormessage);
 
                 return Request.CreateResponse(HttpStatusCode.BadRequest, result);
             }
@@ -426,7 +429,7 @@ namespace DealHubAPI.Controllers
         {
             if (model == null)// Incase Post Object Is Null or Not Match and Object value is null
             {
-                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: commaonerrormessage.errormessage);
                 return Request.CreateResponse(HttpStatusCode.BadRequest, result);
             }
             if (ModelState.IsValid)
@@ -442,7 +445,7 @@ namespace DealHubAPI.Controllers
                     }
                     else
                     {
-                        result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                        result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: commaonerrormessage.errormessage);
                         return Request.CreateResponse(HttpStatusCode.BadRequest, result);
                     }
 
@@ -451,7 +454,7 @@ namespace DealHubAPI.Controllers
                 }
                 else
                 {
-                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: commaonerrormessage.errormessage);
                     return Request.CreateResponse(HttpStatusCode.BadRequest, result);
                 }
             }
@@ -464,24 +467,24 @@ namespace DealHubAPI.Controllers
         /// <returns></returns>
         // Updated By Ramajor
         [HttpPost]
-      //  [AllowAnonymous]
+        //  [AllowAnonymous]
         [Route("GetDashboardProgress")]
         public HttpResponseMessage GetDashboardProgress(CommonDetailsParameter model)//string dh_id
         {
             try
             {
 
-          
-            string json = DashBoardServices.GetDashboardProgress(Convert.ToInt32(model.dh_id));
-            if (json == ""  )
-            {
-                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Data Not Found!");
-                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
-            }
-            else
-            {
-                return Request.CreateResponse(HttpStatusCode.OK, json);
-            }
+
+                string json = DashBoardServices.GetDashboardProgress(Convert.ToInt32(model.dh_id));
+                if (json == "")
+                {
+                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: commaonerrormessage.datanotfound);
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+                }
+                else
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, json);
+                }
 
             }
             catch (Exception ex)
@@ -493,39 +496,41 @@ namespace DealHubAPI.Controllers
             }
         }
 
-        //[HttpGet]
-        //[Route("antiforgerytoken")]
-        //public HttpResponseMessage GetAntiForgeryToken()
-        //{
-        //    HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
 
-        //    System.Web.HttpCookie cookie = System.Web.HttpContext.Current.Request.Cookies["xsrf-token"];
+        [Route("ShareOBF")]
+        [AllowAnonymous]
+        public HttpResponseMessage ShareOBF(ShareEmailParameters model)
+        {
+            List<commanmessges> _commanmessges = EmailSendingService.ShareEmail(model);
 
-        //    string cookieToken;
-        //    string formToken;
-        //    System.Web.Helpers.AntiForgery.GetTokens(cookie == null ? "" : cookie.Value, out cookieToken, out formToken);
+            if (_commanmessges != null)
+            {
+                if (_commanmessges.Count != 0)
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(_commanmessges));
+                }
+                else
+                {
+                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: commaonerrormessage.errormessage);
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+                }
+            }
+            return null;
 
-        //    AntiForgeryTokenModel content = new AntiForgeryTokenModel
-        //    {
-        //        AntiForgeryToken = formToken
-        //    };
+            //    if (!string.IsNullOrEmpty(cookieToken))
+            //    {
+            //        response.Headers.AddCookies(new[]
+            //        {
+            //    new System.Net.Http.Headers.CookieHeaderValue("xsrf-token", cookieToken)
+            //    {
+            //        Expires = DateTimeOffset.Now.AddMinutes(10),
+            //        Path = "/"
+            //    }
+            //});
+            //    }
 
-        //    response.Content = new StringContent(
-        //             JsonConvert.SerializeObject(content), System.Text.Encoding.UTF8, "application/json");
-
-        //    if (!string.IsNullOrEmpty(cookieToken))
-        //    {
-        //        response.Headers.AddCookies(new[]
-        //        {
-        //    new System.Net.Http.Headers.CookieHeaderValue("xsrf-token", cookieToken)
-        //    {
-        //        Expires = DateTimeOffset.Now.AddMinutes(10),
-        //        Path = "/"
-        //    }
-        //});
-        //    }
-
-        //    return response;
-        //}
+            //    return response;
+            //}
+        }
     }
 }

@@ -2,6 +2,7 @@
 using DealHub_Domain.Entity.Logs;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,6 +18,10 @@ namespace DealHub_Service.Implemantations.ErrorLog
 
         }
 
-     
+        public static void writeloginfile(string error)
+        {
+            WritetoLogFile W = new WritetoLogFile();
+            W.LogEvent(ConfigurationManager.AppSettings["logfilepath"].ToString(), error, true);
+        }
     }
 }

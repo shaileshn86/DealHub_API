@@ -8,6 +8,10 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
 using System.ServiceModel.Channels;
+using System.Threading.Tasks;
+using System.Text;
+using DealHub_Domain.Entity.Logs;
+using DealHub_Service.Implemantations.ErrorLog;
 
 namespace DealHubAPI.Controllers
 {
@@ -64,6 +68,56 @@ namespace DealHubAPI.Controllers
         }
 
         [ApiExplorerSettings(IgnoreApi = true)]
+        public async Task<bool> LogExceptionToDB(Exception ex, string ActionName, string url, string Parameters, string PageName, string IpAddress)
+        {
+            return await System.Threading.Tasks.Task.Run(() =>
+            {
+                StringBuilder sb = new StringBuilder();
+                sb.AppendLine("Exception: " + ex.Message);
+                sb.AppendLine("Source: " + ex.Source);
+                sb.AppendLine("Stack Trace: ");
+                if (ex.StackTrace != null)
+                {
+                    sb.AppendLine(ex.StackTrace);
+                }
+                if (ex.InnerException != null)
+                {
+                    sb.AppendLine(", Inner Exception Type: ");
+                    sb.Append(ex.InnerException.GetType().ToString());
+                    sb.AppendLine(", Inner Exception: ");
+                    sb.Append(ex.InnerException.Message);                 
+                    sb.AppendLine(" ,Inner Source: ");
+                    sb.Append(ex.InnerException.Source);
+                    if (ex.InnerException.StackTrace != null)
+                    {
+                        sb.AppendLine(" , Inner Stack Trace: ");
+                        sb.Append(ex.InnerException.StackTrace);
+                    }
+
+                }
+                sb.AppendLine("Exception Type: ");
+                sb.Append(ex.GetType().ToString());
+
+
+
+                Errorlogs error = new Errorlogs();
+                error.ActionName = ActionName;
+                error.AppId = "envoiceapi";
+                error.CreatedBy = "MpoddEINVOICE";
+                error.Message = ex.Message.ToString();
+                error.SourceStackTrace = sb.ToString();
+                error.URL = url;
+                error.PageName = PageName;
+                error.Parameters = Parameters;
+                error.IpAddress = IpAddress;
+                ErrorService.Add(error);
+                return true;
+                return true;
+            }
+            );
+        }
+
+        [ApiExplorerSettings(IgnoreApi = true)]
         public bool ValidateFileType(string FilePath,string source)//HttpPostedFileBase file ,
         {
             bool IsValid = false;
@@ -76,9 +130,13 @@ namespace DealHubAPI.Controllers
             else { 
             listFileHeaderType.Add(new FileHeaderType { HexaSignature = "4C-6F-63-61", Filetype= ".CSV" });
             listFileHeaderType.Add(new FileHeaderType { HexaSignature = "50-4B-03-04", Filetype = ".XLSX,.DOCX,.PPTX" });
-            listFileHeaderType.Add(new FileHeaderType { HexaSignature = "D0-CF-11-E0", Filetype = ".XLS,.DOC,PPT (97-2003),Excel CSV" });
+            listFileHeaderType.Add(new FileHeaderType { HexaSignature = "D0-CF-11-E0", Filetype = ".XLS,.DOC,PPT (97-2003),Excel CSV,.msg" });
             listFileHeaderType.Add(new FileHeaderType { HexaSignature = "89-50-4E-47", Filetype = ".PNG" });
             listFileHeaderType.Add(new FileHeaderType { HexaSignature = "FF-D8-FF-E0", Filetype = ".JPEG,.JPG" });
+            listFileHeaderType.Add(new FileHeaderType { HexaSignature = "25-50-44-46", Filetype = ".PDF" });
+            listFileHeaderType.Add(new FileHeaderType { HexaSignature = "EF-BB-BF-2C", Filetype = ".CSV" }); 
+            listFileHeaderType.Add(new FileHeaderType { HexaSignature = "75-73-65-72", Filetype = ".CSV" });
+                //  listFileHeaderType.Add(new FileHeaderType { HexaSignature = "D0 CF 11 E0 A1 B1 1A E1", Filetype = ".msg" });
             }
 
 

@@ -2,19 +2,18 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Web;
 
-namespace DealHub_Dal.ErrorLog
+namespace DealHubAPI.CommonFunctions
 {
-    public class WritetoLogFile
+    public class WriteLogToFile: ILogger
     {
         private string sLogFormat;
         private string sErrorTime;
 
         private static object _lock = new object();
 
-        public WritetoLogFile()
+        public WriteLogToFile()
         {
             //this variable used to create log filename format "
             //for example filename : ErrorLogYYYYMMDD
@@ -42,13 +41,20 @@ namespace DealHub_Dal.ErrorLog
                 sw.Flush();
                 sw.Close();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-             
+
             }
             //sLogFormat used to create log files format :
             //yyyy-MM-dd HH:mm:ss -->  Log Message
-           
+
         }
+
     }
+
+    public interface ILogger
+    {
+        void LogEvent(string sPathName, string sErrMsg, bool IsNewPara);
+    }
+       
 }

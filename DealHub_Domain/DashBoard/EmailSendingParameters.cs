@@ -102,6 +102,14 @@ namespace DealHub_Domain.DashBoard
 
     }
 
+    public class ShareEmailParameters
+    {
+        public int _dh_header_id { get; set; }
+        public string _user_id { get; set; }
+
+        public string _ToEmailId { get; set; }
+    }
+
     public class EmailToCCParameters
     {
         public string email_id { get; set; }
