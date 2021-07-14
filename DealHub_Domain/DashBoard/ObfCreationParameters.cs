@@ -110,7 +110,7 @@ namespace DealHub_Domain.DashBoard
         
         public string _customer_name { get; set; }
 
-        [RegularExpression(@"([a-zA-Z0-9@#$&;|,.?-_ ()]+)", ErrorMessage = "not valid expression")]
+        [RegularExpression(@"([a-zA-Z0-9@#$&;|,.?-_ ()\s\n]+)", ErrorMessage = "not valid expression")]
         public string _dh_comment { get; set; }
 
 

@@ -94,7 +94,7 @@ namespace DealHubAPI
                         { "/Api/Auth/ResetPassword", new RateLimits { PerSecond =2, PerMinute = 100, PerHour = 1000 } },
                         { "/Api/Auth/ResetPasswordDashboard", new RateLimits { PerSecond =2, PerMinute = 100, PerHour = 1000 } },
                         { "/Api/Auth/sendemail", new RateLimits { PerSecond = 2, PerMinute = 100, PerHour = 1000 } },
-                        { "/Api/Auth/UploadImage", new RateLimits { PerSecond = 5, PerMinute = 100, PerHour = 1000 } },
+                        { "/Api/Auth/UploadImage", new RateLimits { PerSecond = 15, PerMinute = 100, PerHour = 1000 } },
                         { "/Api/Auth/GetClientKey", new RateLimits { PerSecond = 2, PerMinute = 100, PerHour = 1000 } },
 
                         //DashBoard
