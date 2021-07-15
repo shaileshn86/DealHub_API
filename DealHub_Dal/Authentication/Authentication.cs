@@ -256,7 +256,7 @@ namespace DealHub_Dal.Authentication
                 WritetoLogFile W = new WritetoLogFile();
                 W.LogEvent(ConfigurationManager.AppSettings["logfilepath"].ToString(), e.ToString(), true);
                 AuthenticationDetailParameters _AuthenticationDetailParameters = new AuthenticationDetailParameters();
-                string status = "failed with exception in code";
+                string status = "something went wrong";
                 _AuthenticationDetailParameters.status = status;
                 authuser.Add(_AuthenticationDetailParameters);
                 return authuser;

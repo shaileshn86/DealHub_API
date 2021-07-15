@@ -18,7 +18,7 @@ namespace DealHubAPI
             //config.EnableCors(new EnableCorsAttribute("*", "*", "*"));
             //  config.EnableCors();
             string allowfromorign = ConfigurationManager.AppSettings["allowfromorigin"];
-            var cors = new System.Web.Http.Cors.EnableCorsAttribute(allowfromorign, "*", "*");
+            var cors = new System.Web.Http.Cors.EnableCorsAttribute(allowfromorign, "*", "GET,POST");
             //config.EnableCors(cors);
             // Web API configuration and services
             // Configure Web API to use only bearer token authentication.
