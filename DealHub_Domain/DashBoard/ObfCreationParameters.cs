@@ -110,7 +110,7 @@ namespace DealHub_Domain.DashBoard
         
         public string _customer_name { get; set; }
 
-        [RegularExpression(@"([a-zA-Z0-9@#$&;|,.?-_ ()]+)", ErrorMessage = "not valid expression")]
+        [RegularExpression(@"([a-zA-Z0-9@#$&;|,.?-_ ()\s\n]+)", ErrorMessage = "not valid expression")]
         public string _dh_comment { get; set; }
 
 
@@ -231,6 +231,26 @@ namespace DealHub_Domain.DashBoard
 
     }
 
+    public class previousversion {
+        public decimal _total_revenue { get; set; }
+        public decimal _total_cost { get; set; }
+
+        public decimal _total_margin { get; set; }
+
+        public string _total_project_life { get; set; }
+
+        public decimal _irr_surplus_cash { get; set; }
+
+
+        public decimal _ebt { get; set; }
+
+        public decimal _capex { get; set; }
+
+        public decimal _irr_borrowed_fund { get; set; }
+        public int _payment_terms { get; set; }
+
+        public string _version_name { get; set; }
+    }
 
     public class SaveAttachmentParameter: CommonParamter
     {

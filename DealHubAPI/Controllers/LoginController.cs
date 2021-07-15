@@ -22,6 +22,7 @@ using System.IO;
 using DealHub_Domain.DashBoard;
 using DealHub_Dal.OBF;
 using DealHubAPI.CommonFunctions;
+using DealHub_Service.Implemantations.ErrorLog;
 
 namespace DealHubAPI.Controllers
 {
@@ -385,7 +386,9 @@ namespace DealHubAPI.Controllers
             {
                 foreach (string fileName in httpRequest.Files)
                 {
+                   
                     var postedFile = httpRequest.Files[fileName];
+                   // ErrorService.writeloginfile("Hit given to :" + postedFile.FileName);
                     // var postedFile = httpRequest.Files["Image"];
                     //Create custom filename
                     if (postedFile != null)
@@ -395,6 +398,7 @@ namespace DealHubAPI.Controllers
                         {
                             //throw new Exception("File Extension not allowed for upload");
                             msg = Request.CreateResponse(HttpStatusCode.NotAcceptable, "File not uploaded : File format not supported");
+                          //  ErrorService.writeloginfile("Invalid extension of file name " + postedFile.FileName);
                             return msg;
                         }
 
@@ -427,17 +431,20 @@ namespace DealHubAPI.Controllers
                                 if (File.Exists(filePath))
                                 {
                                     File.Delete(filePath);
+                                   // ErrorService.writeloginfile("Invalid extension of file name as per magic number " + postedFile.FileName);
                                     return Request.CreateResponse(HttpStatusCode.BadRequest, "File not uploaded : " + imageName+", because file format is not proper");
+
                                 }
                             }
                         }
                         filepathdetails += docpath.ToString() + ",";
-
+                        
 
                         msg = Request.CreateResponse(HttpStatusCode.OK, filepathdetails);
                     }
                     else
                     {
+                       // ErrorService.writeloginfile("Bad Request " + postedFile.FileName);
                         msg = Request.CreateResponse(HttpStatusCode.BadRequest, "File not uploaded : " + imageName);
                     }
                 }
@@ -445,6 +452,7 @@ namespace DealHubAPI.Controllers
             }
             catch (Exception ex)
             {
+               // ErrorService.writeloginfile("exception in load " + ex.ToString());
                 msg = Request.CreateResponse(HttpStatusCode.BadRequest, ex.Message.ToString());
             }
             return msg;

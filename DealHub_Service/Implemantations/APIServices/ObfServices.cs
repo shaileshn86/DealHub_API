@@ -35,6 +35,11 @@ namespace DealHub_Service.Implemantations.APIServices
             return OBF_Creation.getEditObf(model);
         }
 
+        public static previousversion getpreviousversion(editobfarguement model)
+        {
+            return OBF_Creation.getpreviousversion(model);
+        }
+
         public static List<SaveAttachementDetailsParameters> SaveServiceSolutionSector(SaveServiceSolutionParameters filter)
         {
             return OBF_Creation.SaveServiceSolutionSector(filter);

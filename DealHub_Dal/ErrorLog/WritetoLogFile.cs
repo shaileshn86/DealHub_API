@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DealHub_Dal.ErrorLog
 {
-    class WritetoLogFile
+    public class WritetoLogFile
     {
         private string sLogFormat;
         private string sErrorTime;

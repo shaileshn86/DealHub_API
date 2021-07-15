@@ -56,7 +56,7 @@ namespace DealHub_Domain.DashBoard
 
         public string Project_Type { get; set; }
 
-     
+       public int progresspercentage { get; set; }
 
 
 

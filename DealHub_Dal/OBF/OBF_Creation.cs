@@ -698,6 +698,57 @@ namespace DealHub_Dal.OBF
             }
         }
 
+        public static previousversion getpreviousversion(editobfarguement filter)
+        {
+            previousversion editobf = new previousversion();
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                {
+                    MySqlDataAdapter DA = new MySqlDataAdapter();
+                    MySqlCommand cmd = new MySqlCommand("sp_get_previous_ppl_obf", conn);
+                    cmd.Parameters.Add("_dh_id", MySqlDbType.UInt32).Value = filter.dh_id;
+                    cmd.Parameters.Add("_dh_header_id", MySqlDbType.UInt32).Value = filter.dh_header_id;
+                   // cmd.Parameters.Add("usercode", MySqlDbType.VarChar).Value = filter.user_code;
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    DA.SelectCommand = cmd;
+                    cmd.Connection = new MySqlConnection(connectionString);
+                    DataSet ds = new DataSet();
+                    DA.Fill(ds);
+
+                    DataSet rds = ds.GetTableName();
+
+
+                   
+                    if (rds.Tables["previousobfppl"] != null)
+                    {
+                        DataTable Dt_UploadDetails = rds.Tables["previousobfppl"].Copy();
+                        foreach (DataRow Row in Dt_UploadDetails.Rows)
+                        {
+                            
+                            editobf._total_revenue = Convert.ToDecimal(Row["total_revenue"].ToString());
+                            editobf._total_cost = Convert.ToDecimal(Row["total_cost"].ToString());
+                            editobf._total_margin = Convert.ToDecimal(Row["total_margin"].ToString());
+                            editobf._total_project_life = Row["total_project_life"].ToString();
+                            editobf._irr_surplus_cash = Convert.ToDecimal(Row["irr_surplus_cash"].ToString());
+                            editobf._ebt = Convert.ToDecimal(Row["ebt"].ToString());
+                            editobf._capex = Convert.ToDecimal(Row["capex"].ToString());
+                            editobf._irr_borrowed_fund = Convert.ToDecimal(Row["irr_borrowed_fund"].ToString());
+                            editobf._payment_terms = Convert.ToInt32(Row["payment_terms"].ToString());
+                            editobf._version_name = Row["version_name"].ToString();
+                        }
+                    }
+                    return editobf;
+
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
         public static string getprojecttypebyID(int domain_id)
         {
             string result = "";
