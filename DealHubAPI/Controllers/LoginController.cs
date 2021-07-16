@@ -277,7 +277,7 @@ namespace DealHubAPI.Controllers
                     string Authenticated = AuthenticationServices.ResetPasswordDashboard(model);
 
                     if (Authenticated != "success")
-                        throw new Exception("Current password does not match, Kindly check");
+                        throw new Exception(Authenticated);
                     else if (Authenticated == "success")
                         return Request.CreateResponse(HttpStatusCode.OK, "Password updated successfully");
                     else
@@ -586,28 +586,37 @@ namespace DealHubAPI.Controllers
         [Route("GetClientKey")]
         public HttpResponseMessage GetClientKey()
         {
-            //  string aa = DealHubAPI.Utility.AnitiforgeryVerify.RequestKey("123");
-            //  string aa2 = DealHubAPI.Utility.AnitiforgeryVerify.VerifyRequestKey("123", aa);
-            LoginKey.RemoveAll(s => (DateTime.Now.Subtract(Convert.ToDateTime(s.StampDate.Value)).Minutes > 5));
-            
-             
-            Random rand = new Random();
-            int randomNumber = rand.Next(1000, 9999);
-            int randomNumber2 = rand.Next(1000, 9999);
-            //string key = "$!$030!m0l0l" + randomNumber.ToString()+ randomNumber2.ToString();
-            string key = Guid.NewGuid().ToString().Replace("-","!").Substring(0,12) + randomNumber.ToString() + randomNumber2.ToString();
-            var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(key);
-            string currentsecretkey = System.Convert.ToBase64String(plainTextBytes);
-
-            //var userkey= LoginKey.Where(u=>u.KeyID)
-            UserKeyModel userkey = new UserKeyModel() { ClientID = Guid.NewGuid().ToString(),Secretkey = currentsecretkey , StampDate =null };
-            UserKeyModel userMankey = new UserKeyModel() { ClientID = userkey.ClientID, Secretkey = userkey.Secretkey, StampDate = DateTime.Now };
-
-           // LoginKey.Add(userkey);
-            LoginKey.Add(userMankey);
+            try
+            {
+               
+                //  string aa = DealHubAPI.Utility.AnitiforgeryVerify.RequestKey("123");
+                //  string aa2 = DealHubAPI.Utility.AnitiforgeryVerify.VerifyRequestKey("123", aa);
+                LoginKey.RemoveAll(s => (DateTime.Now.Subtract(Convert.ToDateTime(s.StampDate.Value)).Minutes > 5));
 
 
-            return Request.CreateResponse(HttpStatusCode.OK, userkey);
+                Random rand = new Random();
+                int randomNumber = rand.Next(1000, 9999);
+                int randomNumber2 = rand.Next(1000, 9999);
+                //string key = "$!$030!m0l0l" + randomNumber.ToString()+ randomNumber2.ToString();
+                string key = Guid.NewGuid().ToString().Replace("-", "!").Substring(0, 12) + randomNumber.ToString() + randomNumber2.ToString();
+                var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(key);
+                string currentsecretkey = System.Convert.ToBase64String(plainTextBytes);
+
+                //var userkey= LoginKey.Where(u=>u.KeyID)
+                UserKeyModel userkey = new UserKeyModel() { ClientID = Guid.NewGuid().ToString(), Secretkey = currentsecretkey, StampDate = null };
+                UserKeyModel userMankey = new UserKeyModel() { ClientID = userkey.ClientID, Secretkey = userkey.Secretkey, StampDate = DateTime.Now };
+
+                // LoginKey.Add(userkey);
+                LoginKey.Add(userMankey);
+
+
+                return Request.CreateResponse(HttpStatusCode.OK, userkey);
+            }
+            catch (Exception ex)
+            {
+                ErrorService.writeloginfile("exception in clientkey:  " + ex.ToString());
+                return Request.CreateResponse(HttpStatusCode.BadRequest,ex.Message.ToString());
+            }
         }
         
        // [HttpPost]
