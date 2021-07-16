@@ -11,6 +11,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web;
 using System.Web.Http;
+using System.Text;
 
 namespace DealHubAPI.Controllers
 {
@@ -23,6 +24,10 @@ namespace DealHubAPI.Controllers
         [Route("CreateOBF")]
         public HttpResponseMessage CreateOBF(ObfCreationParameters model)
         {
+            try
+            {
+
+           
             if (model == null)// Incase Post Object Is Null or Not Match and Object value is null
             {
                 result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
@@ -58,11 +63,34 @@ namespace DealHubAPI.Controllers
             }
             else
             {
-                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: commaonerrormessage.errormessage);
+
+                    //string jsonOBJstring = JsonConvert.SerializeObject(ModelState.AllErrors());
+                    //List<errormessages> jsonOBJ = JsonConvert.DeserializeObject<List<errormessages>>(jsonOBJstring);
+                    //StringBuilder errormessages = new StringBuilder();
+                    //foreach (errormessages obj in jsonOBJ)
+                    //{
+                    //    if (errormessages.ToString() == "")
+                    //    {
+                    //        errormessages.Append(obj.Message);
+                    //    }
+                    //    else
+                    //    {
+                    //        errormessages.Append("\n");
+                    //        errormessages.Append(obj.Message);
+                    //    }
+
+                    //}
+
+
+                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: ModelState.ReturnErrors());
                 return Request.CreateResponse(HttpStatusCode.BadRequest, result);
 
             }
-
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
             return null;
         }
 
@@ -106,7 +134,7 @@ namespace DealHubAPI.Controllers
             }
             else
             {
-                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: commaonerrormessage.errormessage);
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: ModelState.ReturnErrors());
                 return Request.CreateResponse(HttpStatusCode.BadRequest, result);
 
             }
@@ -155,7 +183,7 @@ namespace DealHubAPI.Controllers
             }
             else
             {
-                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: commaonerrormessage.errormessage);
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: ModelState.ReturnErrors());
                 return Request.CreateResponse(HttpStatusCode.BadRequest, result);
 
             }
@@ -203,7 +231,7 @@ namespace DealHubAPI.Controllers
             }
             else
             {
-                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: commaonerrormessage.errormessage);
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: ModelState.ReturnErrors());
                 return Request.CreateResponse(HttpStatusCode.BadRequest, result);
 
             }
@@ -237,7 +265,7 @@ namespace DealHubAPI.Controllers
             }
             else
             {
-                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: commaonerrormessage.errormessage);
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: ModelState.ReturnErrors());
                 return Request.CreateResponse(HttpStatusCode.BadRequest, result);
 
             }

@@ -19,5 +19,11 @@ namespace DealHub_Domain.Enum
         public static string datanotfound = "Data not found!";
     }
 
+    public class errormessages
+    {
+        public string key { get; set; }
+        public string Message { get; set; }
+    }
+
    
 }

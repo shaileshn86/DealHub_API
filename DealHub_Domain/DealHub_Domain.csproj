@@ -91,8 +91,12 @@
     <Compile Include="Masters\MstDomainParameters.cs" />
     <Compile Include="Masters\MstFormParameters.cs" />
     <Compile Include="Masters\MstFunctionParameters.cs" />
+    <Compile Include="Masters\MstPrivilegeParameters.cs" />
     <Compile Include="Masters\MstSectorParameter.cs" />
+    <Compile Include="Masters\MstSolutionParameter.cs" />
     <Compile Include="Masters\MstSolutionCategoryParameters.cs" />
+    <Compile Include="Masters\MstSubSectorsParameters.cs" />
+    <Compile Include="Masters\MstVerticalsParameters.cs" />
     <Compile Include="MenuBinding\MenuBindingDetailsParameter.cs" />
     <Compile Include="MenuBinding\MenuBindingParameter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
