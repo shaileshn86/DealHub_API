@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Net;
+using System.Text;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.ModelBinding;
@@ -81,6 +82,46 @@ namespace DealHubAPI.Utility
 
             //result[n].Key = result[n].Key.Replace("model.Record.", "");
             return resultlist;
+
+
+        }
+
+
+        public static string ReturnErrors(this ModelStateDictionary modelState)
+        {
+            List<ValidationError> result = new List<ValidationError>();
+
+            StringBuilder errormessages = new StringBuilder();
+
+            var erroneousFields = modelState.Where(ms => ms.Value.Errors.Any()).Select(x => new { x.Key, x.Value.Errors });
+
+            foreach (var erroneousField in erroneousFields)
+            {
+                var fieldKey = erroneousField.Key;
+                var fieldErrors = erroneousField.Errors.Select(error => new ValidationError(fieldKey, error.ErrorMessage + (error.Exception != null ? error.Exception.Message : "")));
+
+                
+
+                result.AddRange(fieldErrors);
+            }
+
+
+            for (int n = 0; n < result.Count; n++)
+            {
+                // result[n].Key = result[n].Key.Substring(result[n].Key.LastIndexOf(".") + 1);
+                if (errormessages.ToString() == "")
+                {
+                    errormessages.Append(result[n].Message);
+                }
+                else
+                {
+                    errormessages.Append("\n");
+                    errormessages.Append(result[n].Message);
+                }
+            }
+            //return result;
+
+            return errormessages.ToString();
 
 
         }

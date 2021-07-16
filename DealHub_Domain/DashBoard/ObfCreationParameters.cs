@@ -9,24 +9,18 @@ namespace DealHub_Domain.DashBoard
 {
    public class ObfCreationParameters: CommonParamter
     {
-        string commonmessge
-        {
-            get
-            {
-                return " contains invalid characters one of < > ( ) ' \" / \\ *; = { } ` (back tick) % + ^! -";
-            }
-        }
+      
         [Required(ErrorMessage = "project name is mandatory")]
         
-        [RegularExpression(@"([a-zA-Z0-9@#$&;|,.?-_ \s\n]+)", ErrorMessage = "Project name Special characters are not allowed < > ( ) ' \" / \\ *; = { } ` (back tick) % + ^! -")]
+        [RegularExpression(@"([a-zA-Z0-9@#$&;|,.?-_ \s\n]+)", ErrorMessage = "Project name Special characters are not allowed ,allowed chars @#$&;|,.?-_")]
         public string _dh_project_name { get; set; }
 
         [Required(ErrorMessage = "opportunity id is mandatory")]
-        [RegularExpression(@"([a-zA-Z0-9@#$&;|,.?-_ \s\n]+)", ErrorMessage = "opportunity id Special characters are not allowed < > ( ) ' \" / \\ *; = { } ` (back tick) % + ^! -")]
+        [RegularExpression(@"([a-zA-Z0-9@#$&;|,.?-_ \s\n]+)", ErrorMessage = "opportunity id Special characters are not allowed ,allowed chars @#$&;|,.?-_")]
         public string _opportunity_id { get; set; }
 
         [Required(ErrorMessage = "project location is mandatory")]
-        [RegularExpression(@"([a-zA-Z0-9@#$&;|,.?-_ \s\n]+)", ErrorMessage = "project location Special characters are not allowed < > ( ) ' \" / \\ *; = { } ` (back tick) % + ^! -")]
+        [RegularExpression(@"([a-zA-Z0-9@#$&;|,.?-_ \s\n]+)", ErrorMessage = "project location Special characters are not allowed ,allowed chars @#$&;|,.?-_")]
         public string _dh_location { get; set; }
 
         [Required(ErrorMessage = "vertical  is mandatory")]
@@ -64,7 +58,7 @@ namespace DealHub_Domain.DashBoard
 
         public decimal _irr_borrowed_fund { get; set; }
 
-        [RegularExpression(@"([a-zA-Z0-9@#$&;|,.?-_ \s\n]+)", ErrorMessage = "LOI PO Uploaded Special characters are not allowed < > ( ) ' \" / \\ *; = { } ` (back tick) % + ^! -")]
+        [RegularExpression(@"([a-zA-Z0-9@#$&;|,.?-_ \s\n]+)", ErrorMessage = "LOI PO Uploaded Special characters are not allowed ,allowed chars @#$&;|,.?-_")]
         public string _is_loi_po_uploaded { get; set; }
 
         //[RegularExpression(@"([a-zA-Z0-9@#$&;|,.?-_ \s\n]+)", ErrorMessage = "not valid expression")] ----  commented by Kirti, because it contains some special characters
@@ -72,10 +66,10 @@ namespace DealHub_Domain.DashBoard
         public string _assumptions_and_risks { get; set; }
 
 
-        [RegularExpression(@"([a-zA-Z0-9@#$&;|,.?-_ \s\n]+)", ErrorMessage = "Active Special characters are not allowed < > ( ) ' \" / \\ *; = { } ` (back tick) % + ^! -")]
+        [RegularExpression(@"([a-zA-Z0-9@#$&;|,.?-_ \s\n]+)", ErrorMessage = "Active Special characters are not allowed ,allowed chars @#$&;|,.?-_")]
         public string _active { get; set; }
 
-        [RegularExpression(@"([a-zA-Z0-9@#$&;|,.?-_ \s\n]+)", ErrorMessage = "Status Special characters are not allowed < > ( ) ' \" / \\ *; = { } ` (back tick) % + ^! -")]
+        [RegularExpression(@"([a-zA-Z0-9@#$&;|,.?-_ \s\n]+)", ErrorMessage = "Status Special characters are not allowed ,allowed chars @#$&;|,.?-_")]
         public string _status { get; set; }
 
         public int _is_saved { get; set; }
@@ -83,13 +77,13 @@ namespace DealHub_Domain.DashBoard
         public int _is_submitted { get; set; }
 
 
-        [RegularExpression(@"([a-zA-Z0-9@#$&;|,.?-_ \s\n]+)", ErrorMessage = "LOI PO Uploaded Special characters are not allowed < > ( ) ' \" / \\ *; = { } ` (back tick) % + ^! -")]
+        [RegularExpression(@"([a-zA-Z0-9@#$&;|,.?-_ \s\n]+)", ErrorMessage = "LOI PO Uploaded Special characters are not allowed ,allowed chars @#$&;|,.?-_")]
         public string _service_category { get; set; }
 
         [Required(ErrorMessage = "payment terms  is mandatory")]
         public int _payment_terms { get; set; }
 
-        [RegularExpression(@"([a-zA-Z0-9@#$&;|,.?-_ \s\n]+)", ErrorMessage = "Mode Uploaded Special characters are not allowed < > ( ) ' \" / \\ *; = { } ` (back tick) % + ^! -")]
+        [RegularExpression(@"([a-zA-Z0-9@#$&;|,.?-_ \s\n]+)", ErrorMessage = "Mode Uploaded Special characters are not allowed ,allowed chars @#$&;|,.?-_")]
         public string _mode { get; set; }
 
 
@@ -98,7 +92,7 @@ namespace DealHub_Domain.DashBoard
         public List<SaveServiceParameter> Services;
 
         public List<Customer_SAP_IO_Parameter> sapio { get; set; }
-        [RegularExpression(@"([a-zA-Z0-9@#$&;|,.?-_ \s\n]+)", ErrorMessage = "Sap Customer Code Special characters are not allowed < > ( ) ' \" / \\ *; = { } ` (back tick) % + ^! -")]
+        [RegularExpression(@"([a-zA-Z0-9@#$&;|,.?-_ \s\n]+)", ErrorMessage = "Sap Customer Code Special characters are not allowed ,allowed chars @#$&;|,.?-_")]
         public string _sap_customer_code { get; set; }
 
 
@@ -113,11 +107,11 @@ namespace DealHub_Domain.DashBoard
         public List<SubmitOBFParameters> _SubmitOBFParameters { get; set; }
 
         [Required(ErrorMessage = "customer  name  is mandatory")]
-        [RegularExpression(@"([a-zA-Z0-9@#$&;|,.?-_ \s\n]+)", ErrorMessage = "Customer Name Special characters are not allowed < > ( ) ' \" / \\ *; = { } ` (back tick) % + ^! -")]
+        [RegularExpression(@"([a-zA-Z0-9@#$&;|,.?-_ \s\n]+)", ErrorMessage = "Customer Name Special characters are not allowed ,allowed chars @#$&;|,.?-_")]
         
         public string _customer_name { get; set; }
 
-        [RegularExpression(@"([a-zA-Z0-9@#$&;|,.?-_ ()\s\n]+)", ErrorMessage = "Comments Special characters are not allowed < > ( ) ' \" / \\ *; = { } ` (back tick) % + ^! -")]
+        [RegularExpression(@"([a-zA-Z0-9@#$&;|,.?-_ ()\s\n]+)", ErrorMessage = "Comments Special characters are not allowed ,allowed chars @#$&;|,.?-_")]
         public string _dh_comment { get; set; }
 
 
@@ -352,7 +346,7 @@ namespace DealHub_Domain.DashBoard
        
         public int isapproved { get; set; }
 
-        [RegularExpression(@"([a-zA-Z0-9@#$&;|,.?-_ \s\n]+)", ErrorMessage = "Comments Special characters are not allowed < > ( ) ' \" / \\ *; = { } ` (back tick) % + ^! -")]
+        [RegularExpression(@"([a-zA-Z0-9@#$&;|,.?-_ \s\n]+)", ErrorMessage = "Comments Special characters are not allowed ,allowed chars @#$&;|,.?-_")]
         public string rejectcomment { get; set; }
 
         public int rejectionto { get; set; }
