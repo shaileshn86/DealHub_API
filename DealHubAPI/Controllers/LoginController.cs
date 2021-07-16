@@ -344,6 +344,21 @@ namespace DealHubAPI.Controllers
 
             try
             {
+                string _SecretKey = VerifyClientIDkey(model);
+                if (_SecretKey == "401")
+                {
+                    result = new ReponseMessage(MsgNo: HttpStatusCode.Unauthorized.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Invalid client!");
+                    return Request.CreateResponse(HttpStatusCode.Unauthorized, result);
+
+                }
+                // string password = AuthenticationServices.DecryptStringAES(model._SecretKey, model._password);
+                string password = AuthenticationServices.DecryptStringAES(_SecretKey, model._password);
+                password = AuthenticationServices.ReturnMD5Hash(password);
+                model._password = password;
+                string usercode = AuthenticationServices.DecryptStringAES(_SecretKey, model._user_code);
+                string[] usercodearr = usercode.Split('*'); 
+                //usercode = AuthenticationServices.ReturnMD5Hash(usercode);
+                model._user_code = usercodearr[0];
                 var ToEmailId = AuthenticationServices.sendmail(model._user_code);
                 if (ToEmailId == "No Result UnAuthorized")
                     throw new Exception("No email id found");
@@ -355,7 +370,7 @@ namespace DealHubAPI.Controllers
                 To.email_id = ToEmailId;
                 EP.SendTo.Add(To);
                 EP.subject = "Reset Password";
-                EP.body = "Reset Password Link http://localhost:4200/ResetPassword";
+                EP.body = "Reset Password Link :" + usercodearr[1];
                 EmailSender ES = new EmailSender();
                 ES.sendEmail(EP);
                 return Request.CreateResponse(HttpStatusCode.OK, "Mail send");

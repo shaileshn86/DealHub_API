@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DealHub_Service.Implemantations.ErrorLog;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -54,8 +55,7 @@ namespace DealHubAPI.Utility
             }
             else
             {
-                _currentUseripAddress =
-                HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"].Split(",".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).FirstOrDefault();
+                _currentUseripAddress = HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"].Split(",".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).FirstOrDefault();
             }
 
             System.Net.IPAddress result;
@@ -70,11 +70,11 @@ namespace DealHubAPI.Utility
                 string _currentBrowserInfo = HttpContext.Current.Request.Browser.Browser.ToString() + HttpContext.Current.Request.Browser.Version.ToString() + _UserAgent.ToString();
                 //Request.Browser.Browser + Request.Browser.Version + Request.UserAgent;
 
-
+               // ErrorService.writeloginfile("Antiforgery verification : IP Address:" + _currentUseripAddress + ", Browser:" + _currentBrowserInfo + ", UserCode :" + UserCode + ", Antifrogerykey :" + _requestkey);
                 if (_RequestIPAddress != _currentUseripAddress || _currentBrowserInfo != _RequestBrowserInfo || UserCode.ToString().ToLower() != UserId.ToString().ToLower())
                 {
 
-
+                    ErrorService.writeloginfile("Antiforgery verification : IP Address:" + _currentUseripAddress+", Browser:"+ _currentBrowserInfo +", UserCode :"+ UserCode+", Antifrogerykey :"+ _requestkey);
 
                     return false;
 
@@ -175,9 +175,10 @@ namespace DealHubAPI.Utility
 
             string _sessionValue = UserCode + "^" + DateTime.Now.Ticks + "^"   + _browserInfo + "^" + System.Guid.NewGuid();
            string _encryptedString= EncryptString(secretkey, _sessionValue);
-          //  byte[] _encodeAsBytes = System.Text.ASCIIEncoding.ASCII.GetBytes(_sessionValue);
-          //  string _encryptedString = System.Convert.ToBase64String(_encodeAsBytes);
-           return _encryptedString;
+            ErrorService.writeloginfile("Login Antifrogery : Session value:" + _sessionValue + ", AntifrogeryKey:" + _encryptedString);
+            //  byte[] _encodeAsBytes = System.Text.ASCIIEncoding.ASCII.GetBytes(_sessionValue);
+            //  string _encryptedString = System.Convert.ToBase64String(_encodeAsBytes);
+            return _encryptedString;
 
         }
 
