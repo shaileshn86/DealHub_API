@@ -211,37 +211,51 @@ namespace DealHubAPI.Controllers
         [Route("ResetPassword")]
         public HttpResponseMessage ResetPassword(AuthenticationParameters model)
         {
-            if (model == null)// Incase Post Object Is Null or Not Match and Object value is null
+            try
             {
-                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
-                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
-            }
-            if (ModelState.IsValid)
-            {
-                string _SecretKey = VerifyClientIDkey(model);
-                if (_SecretKey == "401")
+                if (model == null)// Incase Post Object Is Null or Not Match and Object value is null
                 {
-                    result = new ReponseMessage(MsgNo: HttpStatusCode.Unauthorized.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Invalid client!");
-                    return Request.CreateResponse(HttpStatusCode.Unauthorized, result);
+                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+                }
+                if (ModelState.IsValid)
+                {
+                    string _SecretKey = VerifyClientIDkey(model);
+                    if (_SecretKey == "401")
+                    {
+                        result = new ReponseMessage(MsgNo: HttpStatusCode.Unauthorized.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Invalid client!");
+                        return Request.CreateResponse(HttpStatusCode.Unauthorized, result);
+
+                    }
+                    // string password = AuthenticationServices.DecryptStringAES(model._SecretKey, model._password);
+                    string password = AuthenticationServices.DecryptStringAES(_SecretKey, model._password);
+                    password = AuthenticationServices.ReturnMD5Hash(password);
+                    model._password = password;
+
+                    string Authenticated = AuthenticationServices.ResetPassword(model);
+
+                   // return Request.CreateResponse(HttpStatusCode.OK, Authenticated);
+                    if (Authenticated != "success")
+                        throw new Exception(Authenticated);
+                    else if (Authenticated == "success")
+                        return Request.CreateResponse(HttpStatusCode.OK, "Password updated successfully");
+                    else
+                        return Request.CreateResponse(HttpStatusCode.OK, Authenticated);
 
                 }
-                // string password = AuthenticationServices.DecryptStringAES(model._SecretKey, model._password);
-                string password = AuthenticationServices.DecryptStringAES(_SecretKey, model._password);
-                password = AuthenticationServices.ReturnMD5Hash(password);
-                model._password = password;
+                else
+                {
 
-                string Authenticated = AuthenticationServices.ResetPassword(model);
-
-                return Request.CreateResponse(HttpStatusCode.OK, Authenticated);
-
+                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "", Validation: ModelState.AllErrors());
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+                }
+                return null;
             }
-            else
+            catch (Exception ex)
             {
-
-                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "", Validation: ModelState.AllErrors());
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: ex.Message, Validation: ModelState.AllErrors());
                 return Request.CreateResponse(HttpStatusCode.BadRequest, result);
             }
-            return null;
         }
 
         [HttpPost]
@@ -352,9 +366,9 @@ namespace DealHubAPI.Controllers
 
                 }
                 // string password = AuthenticationServices.DecryptStringAES(model._SecretKey, model._password);
-                string password = AuthenticationServices.DecryptStringAES(_SecretKey, model._password);
-                password = AuthenticationServices.ReturnMD5Hash(password);
-                model._password = password;
+                //string password = AuthenticationServices.DecryptStringAES(_SecretKey, model._password);
+                //password = AuthenticationServices.ReturnMD5Hash(password);
+                //model._password = password;
                 string usercode = AuthenticationServices.DecryptStringAES(_SecretKey, model._user_code);
                 string[] usercodearr = usercode.Split('*'); 
                 //usercode = AuthenticationServices.ReturnMD5Hash(usercode);
