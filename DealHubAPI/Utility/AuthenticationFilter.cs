@@ -37,7 +37,7 @@ namespace DealHubAPI.Utility
                 string AntiforgeryKey = RequestId.First();
 
                 bool Isverify = DealHubAPI.Utility.AnitiforgeryVerify.VerifyRequestKey(user_code, AntiforgeryKey);
-                if (Isverify == false)
+                if (Isverify==false)
                 {
                     return false;
                 }
