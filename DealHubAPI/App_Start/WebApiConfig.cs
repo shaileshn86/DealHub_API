@@ -65,7 +65,7 @@ namespace DealHubAPI
 
             int persecond = 2;
             int permin = 20;
-            int perhour = perhour;
+            int perhour = 1000;
             config.MessageHandlers.Add(new ThrottlingHandler()
             {
                 // Generic rate limit applied to ALL APIs

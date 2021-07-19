@@ -39,9 +39,9 @@ namespace DealHub_Service.Implemantations.APIServices
         }
 
 
-        public static List<commanmessges> Email_Sending_Details(int _dh_header_id, int _is_shared)
+        public static List<commanmessges> Email_Sending_Details(ApproveRejectOBFParameter filter)
         {
-            return EmailSender_DAL.Email_Sending_Details(_dh_header_id,_is_shared);
+            return EmailSender_DAL.Email_Sending_Details(filter);
         }
 
         public static List<commanmessges> ShareEmail(ShareEmailParameters model)

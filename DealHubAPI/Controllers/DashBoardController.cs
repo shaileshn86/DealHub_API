@@ -338,7 +338,7 @@ namespace DealHubAPI.Controllers
         [HttpPost]
         // [AllowAnonymous]
         [Route("SendEmailAlert_OBFPPL")]
-        public HttpResponseMessage SendEmailAlert_OBFPPL(EntityMainParameter model)//int _dh_header_id, int _is_shared
+        public HttpResponseMessage SendEmailAlert_OBFPPL(ApproveRejectOBFParameter model)//int _dh_header_id, int _is_shared
         {
             try
             {
@@ -355,7 +355,7 @@ namespace DealHubAPI.Controllers
                     return Request.CreateResponse(HttpStatusCode.BadRequest, result);
                 }
 
-                List<commanmessges> _commanmessges = EmailSendingService.Email_Sending_Details(model._dh_header_id, model._is_shared);
+                List<commanmessges> _commanmessges = EmailSendingService.Email_Sending_Details(model);
 
                 if (_commanmessges != null)
                 {
