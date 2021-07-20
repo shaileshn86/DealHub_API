@@ -567,6 +567,8 @@ namespace DealHubAPI.Controllers
             model._total_revenue = model._total_revenue.ToString().Length <= 4 ? 0 : Convert.ToDecimal(model._total_revenue.ToString().Substring(0, (model._total_revenue.ToString().Length - 4))) - subsvalue;
             model._payment_terms = model._payment_terms.ToString().Length <= 4 ? 0 : Convert.ToInt32(model._payment_terms.ToString().Substring(0, (model._payment_terms.ToString().Length - 4))) - subsvalue;
             model._vertical_id = model._vertical_id.ToString().Length <= 4 ? 0 : Convert.ToInt32(model._vertical_id.ToString().Substring(0, (model._vertical_id.ToString().Length - 4))) - subsvalue;
+            model._projecttype = model._projecttype.ToString().Length <= 4 ? 0 : Convert.ToInt32(model._projecttype.ToString().Substring(0, (model._projecttype.ToString().Length - 4))) - subsvalue;
+            model._total_cost = model._total_cost.ToString().Length <= 4 ? 0 : Convert.ToDecimal(model._total_cost.ToString().Substring(0, (model._total_cost.ToString().Length - 4))) - subsvalue;
         }
     }
     
