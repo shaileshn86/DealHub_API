@@ -92,6 +92,7 @@
     <Compile Include="Masters\MstFormParameters.cs" />
     <Compile Include="Masters\MstFunctionParameters.cs" />
     <Compile Include="Masters\MstPrivilegeParameters.cs" />
+    <Compile Include="Masters\MstRoleParameters.cs" />
     <Compile Include="Masters\MstSectorParameter.cs" />
     <Compile Include="Masters\MstSolutionParameter.cs" />
     <Compile Include="Masters\MstSolutionCategoryParameters.cs" />

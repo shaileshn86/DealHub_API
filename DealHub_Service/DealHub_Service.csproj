@@ -75,6 +75,7 @@
     <Compile Include="Implemantations\APIServices\MstFormServices.cs" />
     <Compile Include="Implemantations\APIServices\MstFunctionService.cs" />
     <Compile Include="Implemantations\APIServices\MstPrivilegeService.cs" />
+    <Compile Include="Implemantations\APIServices\MstRoleService.cs" />
     <Compile Include="Implemantations\APIServices\MstSectorService.cs" />
     <Compile Include="Implemantations\APIServices\MstSolutionCategoryService.cs" />
     <Compile Include="Implemantations\APIServices\MstSolutionsService.cs" />
