@@ -15,7 +15,7 @@ namespace DealHub_Dal.OBF
 {
    public class EmailSender_DAL : BaseDAL
     {
-        public static List<commanmessges> Email_Sending_Details(int _dh_header_id,int _is_shared)
+        public static List<commanmessges> Email_Sending_Details(ApproveRejectOBFParameter filter)
         {
             List<commanmessges> _commanmessges = new List<commanmessges>();
             try
@@ -23,10 +23,12 @@ namespace DealHub_Dal.OBF
                 using (MySqlConnection conn = new MySqlConnection(connectionString))
                 {
                     MySqlDataAdapter DA = new MySqlDataAdapter();
-                    MySqlCommand cmd = new MySqlCommand("sp_getEmail_Sending_Details", conn);
+                    MySqlCommand cmd = new MySqlCommand("sp_getEmail_Sending_Details_Actionwise", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.Add("@_dh_header_id", MySqlDbType.UInt32).Value = _dh_header_id;
-                    cmd.Parameters.Add("@_is_shared", MySqlDbType.UInt32).Value = _is_shared;
+                    cmd.Parameters.Add("@dhheaderid", MySqlDbType.UInt32).Value = filter._dh_header_id;
+                    cmd.Parameters.Add("@_user_id", MySqlDbType.String).Value = filter._created_by;
+                    cmd.Parameters.Add("@isapproved", MySqlDbType.UInt32).Value = filter.isapproved;
+                    cmd.Parameters.Add("@is_on_hold", MySqlDbType.UInt32).Value = filter.is_on_hold;
                     DA.SelectCommand = cmd;
                     cmd.Connection = new MySqlConnection(connectionString);
                     DataSet ds = new DataSet();

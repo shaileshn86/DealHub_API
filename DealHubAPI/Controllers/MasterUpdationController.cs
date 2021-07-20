@@ -957,5 +957,83 @@ namespace DealHubAPI.Controllers
             }
 
         }
+
+        [HttpPost]
+        [Route("GetMstRole")]
+        public HttpResponseMessage GetMstRole(Mstcommonparameters model)
+        {
+            if (model == null)// Incase Post Object Is Null or Not Match and Object value is null
+            {
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+            }
+
+            if (ModelState.IsValid)
+            {
+                string json = MstRoleService.GetMstRole(model);
+                if (json == "" || json == "error")
+                {
+                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+                }
+                else
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, json);
+                }
+            }
+            else
+            {
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Field Validation Error Occured");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+
+            }
+
+        }
+
+        [HttpPost]
+        [Route("Update_Mst_Roles")]
+        public HttpResponseMessage Update_Mst_Roles(MstRoleParameters model)
+        {
+            if (model == null)// Incase Post Object Is Null or Not Match and Object value is null
+            {
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+            }
+
+            if (ModelState.IsValid)
+            {
+                List<MstRoleDetailParameters> _commanmessges = MstRoleService.Update_Mst_Roles(model);
+
+                if (_commanmessges != null)
+                {
+                    if (_commanmessges.Count != 0)
+                    {
+
+                        return Request.CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(_commanmessges));
+                    }
+                    else
+                    {
+                        result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                        return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+                    }
+
+
+
+                }
+                else
+                {
+                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+                }
+            }
+            else
+            {
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Field Validation Error Occured");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+
+            }
+
+        }
+
     }
 }

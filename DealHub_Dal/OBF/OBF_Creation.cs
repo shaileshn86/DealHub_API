@@ -346,7 +346,13 @@ namespace DealHub_Dal.OBF
 
                     try
                     {
-                        EmailSender_DAL.Email_Sending_Details(filter._dh_header_id, 0);
+                        ApproveRejectOBFParameter o = new ApproveRejectOBFParameter();
+                        o._dh_header_id = filter._dh_header_id;
+                        o._created_by = filter._created_by;
+                        o.isapproved = 1;
+                        o.is_on_hold = 0;
+
+                        EmailSender_DAL.Email_Sending_Details(o);
                     }
                     catch (Exception ex)
                     {
@@ -910,7 +916,7 @@ namespace DealHub_Dal.OBF
 
                 try
                 {
-                    EmailSender_DAL.Email_Sending_Details(filters._dh_header_id, 0);
+                    EmailSender_DAL.Email_Sending_Details(filters);
                 }
                 catch(Exception ex)
                 {
