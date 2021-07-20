@@ -65,6 +65,7 @@ namespace DealHub_Dal.DashBoard
                             _DashBoardDetailsParameters.is_submitted = dr.IsNull<int>("is_submitted");
                             _DashBoardDetailsParameters.Project_Type = dr.IsNull<string>("project_type");
                             _DashBoardDetailsParameters.progresspercentage = dr.IsNull<int>("progresspercentage");
+                            _DashBoardDetailsParameters.IsFinalAggUpload = dr.IsNull<int>("IsFinalAggUpload");
                             DashBoardData.Add(_DashBoardDetailsParameters);
 
                         }
