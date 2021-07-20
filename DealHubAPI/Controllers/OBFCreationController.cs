@@ -557,14 +557,18 @@ namespace DealHubAPI.Controllers
 
         protected void getactualobfparams(ObfCreationParameters model)
         {
-            model._dh_id = model._dh_id.ToString().Length <= 4 ?0: Convert.ToInt32(model._dh_id.ToString().Substring(0, (model._dh_id.ToString().Length - 4)));
-            model._dh_header_id = model._dh_header_id.ToString().Length <= 4 ? 0 : Convert.ToInt32(model._dh_header_id.ToString().Substring(0, (model._dh_header_id.ToString().Length - 4)));
-            model._total_margin = model._total_margin.ToString().Length <= 4 ? 0 : Convert.ToDecimal(model._total_margin.ToString().Substring(0, (model._total_margin.ToString().Length - 4)));
-            model._capex = model._capex.ToString().Length <= 4 ? 0 : Convert.ToDecimal(model._capex.ToString().Substring(0, (model._capex.ToString().Length - 4)));
-            model._sap_customer_code =   model._sap_customer_code.ToString().Substring(0,(model._sap_customer_code.Length - 4));
-            model._total_revenue = model._total_revenue.ToString().Length <= 4 ? 0 : Convert.ToDecimal(model._total_revenue.ToString().Substring(0, (model._total_revenue.ToString().Length - 4)));
-            model._payment_terms = model._payment_terms.ToString().Length <= 4 ? 0 : Convert.ToInt32(model._payment_terms.ToString().Substring(0, (model._payment_terms.ToString().Length - 4)));
-            model._vertical_id = model._vertical_id.ToString().Length <= 4 ? 0 : Convert.ToInt32(model._vertical_id.ToString().Substring(0, (model._vertical_id.ToString().Length - 4)));
+            //int subsvalue = model._dh_id.ToString().Length <= 4 ? 0 : Convert.ToInt32(model._dh_id.ToString().Substring(0, (model._dh_id.ToString().Length - 4)));
+            int subsvalue = model._dh_id.ToString().Length <= 4 ? 0 : Convert.ToInt32(model._dh_id.ToString().Substring(4));
+            model._dh_id = model._dh_id.ToString().Length <= 4 ?0: Convert.ToInt32(model._dh_id.ToString().Substring(0, (model._dh_id.ToString().Length - 4))) - subsvalue;
+            model._dh_header_id = model._dh_header_id.ToString().Length <= 4 ? 0 : Convert.ToInt32(model._dh_header_id.ToString().Substring(0, (model._dh_header_id.ToString().Length - 4))) - subsvalue;
+            model._total_margin = model._total_margin.ToString().Length <= 4 ? 0 : Convert.ToDecimal(model._total_margin.ToString().Substring(0, (model._total_margin.ToString().Length - 4))) - subsvalue;
+            model._capex = model._capex.ToString().Length <= 4 ? 0 : Convert.ToDecimal(model._capex.ToString().Substring(0, (model._capex.ToString().Length - 4))) - subsvalue;
+            model._sap_customer_code = Convert.ToString(Convert.ToInt32(model._sap_customer_code.ToString().Substring(0,(model._sap_customer_code.Length - 4))) - subsvalue);
+            model._total_revenue = model._total_revenue.ToString().Length <= 4 ? 0 : Convert.ToDecimal(model._total_revenue.ToString().Substring(0, (model._total_revenue.ToString().Length - 4))) - subsvalue;
+            model._payment_terms = model._payment_terms.ToString().Length <= 4 ? 0 : Convert.ToInt32(model._payment_terms.ToString().Substring(0, (model._payment_terms.ToString().Length - 4))) - subsvalue;
+            model._vertical_id = model._vertical_id.ToString().Length <= 4 ? 0 : Convert.ToInt32(model._vertical_id.ToString().Substring(0, (model._vertical_id.ToString().Length - 4))) - subsvalue;
+            model._projecttype = model._projecttype.ToString().Length <= 4 ? 0 : Convert.ToInt32(model._projecttype.ToString().Substring(0, (model._projecttype.ToString().Length - 4))) - subsvalue;
+            model._total_cost = model._total_cost.ToString().Length <= 4 ? 0 : Convert.ToDecimal(model._total_cost.ToString().Substring(0, (model._total_cost.ToString().Length - 4))) - subsvalue;
         }
     }
     
