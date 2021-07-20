@@ -29,6 +29,7 @@ namespace DealHubAPI.Controllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, result);
             }
             if (ModelState.IsValid)
+
             {
                 List<DashBoardDetailsParameters> _DashBoardDetailsParameters = DashBoardServices.GetDashBoardData(model);
 
@@ -52,6 +53,12 @@ namespace DealHubAPI.Controllers
                     result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: commaonerrormessage.errormessage);
                     return Request.CreateResponse(HttpStatusCode.BadRequest, result);
                 }
+
+            }
+            else
+            {
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: ModelState.ReturnErrors());
+                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
 
             }
 
@@ -91,6 +98,12 @@ namespace DealHubAPI.Controllers
                     result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: commaonerrormessage.errormessage);
                     return Request.CreateResponse(HttpStatusCode.BadRequest, result);
                 }
+
+            }
+            else
+            {
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: ModelState.ReturnErrors());
+                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
 
             }
 
@@ -141,7 +154,7 @@ namespace DealHubAPI.Controllers
                 else
                 {
                     string jsonOBJ = JsonConvert.SerializeObject(ModelState.AllErrors());
-                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: commaonerrormessage.errormessage);
+                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: ModelState.ReturnErrors());
                     return Request.CreateResponse(HttpStatusCode.BadRequest, result);
                 }
 
@@ -294,6 +307,12 @@ namespace DealHubAPI.Controllers
                     {
                         EmailSendingService.EmailSendTest();
                         return Request.CreateResponse(HttpStatusCode.OK, model.testmail);
+                    }
+                    else
+                    {
+                        result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: ModelState.ReturnErrors());
+                        return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+
                     }
                 }
                 return Request.CreateResponse(HttpStatusCode.NotAcceptable, "Invalid value in model");
@@ -457,6 +476,12 @@ namespace DealHubAPI.Controllers
                     result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: commaonerrormessage.errormessage);
                     return Request.CreateResponse(HttpStatusCode.BadRequest, result);
                 }
+            }
+            else
+            {
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: ModelState.ReturnErrors());
+                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+
             }
             return null;
         }

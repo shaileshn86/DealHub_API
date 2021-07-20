@@ -135,7 +135,10 @@ namespace DealHubAPI.Controllers
             listFileHeaderType.Add(new FileHeaderType { HexaSignature = "FF-D8-FF-E0", Filetype = ".JPEG,.JPG" });
             listFileHeaderType.Add(new FileHeaderType { HexaSignature = "25-50-44-46", Filetype = ".PDF" });
             listFileHeaderType.Add(new FileHeaderType { HexaSignature = "EF-BB-BF-2C", Filetype = ".CSV" }); 
-            listFileHeaderType.Add(new FileHeaderType { HexaSignature = "75-73-65-72", Filetype = ".CSV" });
+            listFileHeaderType.Add(new FileHeaderType { HexaSignature = "75-73-65-72", Filetype = ".CSV" }); 
+            listFileHeaderType.Add(new FileHeaderType { HexaSignature = "EF-BB-BF-75", Filetype = ".CSV" });
+            listFileHeaderType.Add(new FileHeaderType { HexaSignature = "EF-BB-BF-0D", Filetype = ".CSV" });
+                
                 //  listFileHeaderType.Add(new FileHeaderType { HexaSignature = "D0 CF 11 E0 A1 B1 1A E1", Filetype = ".msg" });
             }
 

@@ -18,7 +18,7 @@ namespace DealHubAPI
             //config.EnableCors(new EnableCorsAttribute("*", "*", "*"));
             //  config.EnableCors();
             string allowfromorign = ConfigurationManager.AppSettings["allowfromorigin"];
-            var cors = new System.Web.Http.Cors.EnableCorsAttribute(allowfromorign, "*", "*");
+            var cors = new System.Web.Http.Cors.EnableCorsAttribute(allowfromorign, "*", "GET,POST");
             //config.EnableCors(cors);
             // Web API configuration and services
             // Configure Web API to use only bearer token authentication.
@@ -87,15 +87,15 @@ namespace DealHubAPI
                         { 
                         //Fine tune throttling per specific API here
                         // Login
-                        { "/Api/Auth/Login", new RateLimits { PerSecond = 2, PerMinute = 100, PerHour = 1000 } },
-                        { "/Api/Auth/GetMenuDetails", new RateLimits { PerSecond = 2, PerMinute = 100, PerHour = 1000 } },
-                        { "/Api/Auth/DeleteToken", new RateLimits { PerSecond = 2, PerMinute = 100, PerHour = 1000 } },
-                        { "/Api/Auth/RemindMe", new RateLimits { PerSecond = 2, PerMinute = 100, PerHour = 1000 } },
-                        { "/Api/Auth/ResetPassword", new RateLimits { PerSecond =2, PerMinute = 100, PerHour = 1000 } },
-                        { "/Api/Auth/ResetPasswordDashboard", new RateLimits { PerSecond =2, PerMinute = 100, PerHour = 1000 } },
-                        { "/Api/Auth/sendemail", new RateLimits { PerSecond = 2, PerMinute = 100, PerHour = 1000 } },
+                        { "/Api/Auth/Login", new RateLimits { PerSecond = 10, PerMinute = 100, PerHour = 1000 } },
+                        { "/Api/Auth/GetMenuDetails", new RateLimits { PerSecond = 10, PerMinute = 100, PerHour = 1000 } },
+                        { "/Api/Auth/DeleteToken", new RateLimits { PerSecond = 10, PerMinute = 100, PerHour = 1000 } },
+                        { "/Api/Auth/RemindMe", new RateLimits { PerSecond = 10, PerMinute = 100, PerHour = 1000 } },
+                        { "/Api/Auth/ResetPassword", new RateLimits { PerSecond =10, PerMinute = 100, PerHour = 1000 } },
+                        { "/Api/Auth/ResetPasswordDashboard", new RateLimits { PerSecond =10, PerMinute = 100, PerHour = 1000 } },
+                        { "/Api/Auth/sendemail", new RateLimits { PerSecond = 10, PerMinute = 100, PerHour = 1000 } },
                         { "/Api/Auth/UploadImage", new RateLimits { PerSecond = 15, PerMinute = 100, PerHour = 1000 } },
-                        { "/Api/Auth/GetClientKey", new RateLimits { PerSecond = 2, PerMinute = 100, PerHour = 1000 } },
+                        { "/Api/Auth/GetClientKey", new RateLimits { PerSecond = 10, PerMinute = 100, PerHour = 1000 } },
 
                         //DashBoard
                         { "/Api/DashBoard/GetDashBoardData", new RateLimits { PerSecond = 3, PerMinute = 100, PerHour = 1000 } },
