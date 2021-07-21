@@ -110,7 +110,7 @@ namespace DealHub_Dal.Masters
                     {
                         MySqlCommand cmd = new MySqlCommand("sp_update_map_privilege_role", conn);
                         cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Parameters.Add("_vertical_id", MySqlDbType.UInt32).Value = model._id;
+                        cmd.Parameters.Add("_Role_Id", MySqlDbType.UInt32).Value = model._id;
                         cmd.Parameters.Add("_Previlege_Id", MySqlDbType.UInt32).Value = Convert.ToUInt32(mappedprivilage[k]);
                         cmd.Parameters.Add("_user_id", MySqlDbType.String).Value = model._user_id;
                         conn.Open();
