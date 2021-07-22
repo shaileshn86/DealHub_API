@@ -1,0 +1,211 @@
+﻿using DealHub_Dal.Extensions;
+using DealHub_Domain.DashBoard;
+using DealHub_Domain.Masters;
+using MySql.Data.MySqlClient;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace DealHub_Dal.Masters
+{
+    public class MstUsers:BaseDAL
+    {
+        public static string GetMstUsers(Mstcommonparameters model)
+        {
+            try
+            {
+
+                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                {
+                    MySqlDataAdapter DA = new MySqlDataAdapter();
+                    MySqlCommand cmd = new MySqlCommand("sp_get_mst_users", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add("_user_id", MySqlDbType.String).Value = model._user_id;
+                    DA.SelectCommand = cmd;
+                    cmd.Connection = new MySqlConnection(connectionString);
+                    DataSet ds = new DataSet();
+                    DA.Fill(ds);
+
+                    DataSet rds = ds.GetTableName();
+
+                    return JsonConvert.SerializeObject(rds, Formatting.Indented); ;
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return "error";
+            }
+
+        }
+
+        public static List<MstUserDetailParameters> Update_Mst_Users(MstUsersParameters model)
+        {
+            List<MstUserDetailParameters> _commanmessges = new List<MstUserDetailParameters>();
+            try
+            {
+                int _mapped_User_Id = model._id;
+                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                {
+                    MySqlCommand cmd = new MySqlCommand("sp_update_mst_users", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add("_id", MySqlDbType.UInt32).Value = model._id;
+                    cmd.Parameters.Add("_user_code", MySqlDbType.String).Value = model._user_code;
+                    cmd.Parameters.Add("_first_name", MySqlDbType.String).Value = model._first_name;
+                    cmd.Parameters.Add("_last_name", MySqlDbType.String).Value = model._last_name;
+                    cmd.Parameters.Add("_password", MySqlDbType.String).Value = model._password;
+                    cmd.Parameters.Add("_mobile_no", MySqlDbType.String).Value = model._mobile_no;
+                    cmd.Parameters.Add("_email_id", MySqlDbType.String).Value = model._email_id;
+                    cmd.Parameters.Add("_role_id", MySqlDbType.UInt32).Value = model._role_id;
+                    cmd.Parameters.Add("_is_cassh_user", MySqlDbType.UInt32).Value = model._is_cassh_user;
+                    cmd.Parameters.Add("_active", MySqlDbType.String).Value = model._active;
+                    cmd.Parameters.Add("_islocked", MySqlDbType.UInt32).Value = model._islocked;
+                    cmd.Parameters.Add("_user_id", MySqlDbType.String).Value = model._user_id;
+                    conn.Open();
+                    using (IDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            MstUserDetailParameters _Details = new MstUserDetailParameters();
+                            _Details.status = dr.IsNull<string>("status");
+                            _Details.message = dr.IsNull<string>("message");
+                            _Details._updateduser_id = dr.IsNull<ulong>("user_id");
+                            _mapped_User_Id = Convert.ToInt32(_Details._updateduser_id);
+                            model._id = _mapped_User_Id;
+                            _commanmessges.Add(_Details);
+                        }
+                    }
+
+                    UpdateMapVerticalSector(model);
+                    UpdateMapUsersBranch(model);
+                }
+
+
+
+                return _commanmessges;
+            }
+            catch (Exception ex)
+            {
+                _commanmessges = new List<MstUserDetailParameters>();
+
+                MstUserDetailParameters _Details = new MstUserDetailParameters();
+                _Details.status = "Failed";
+                _Details.message = "Error in saving parameters";
+                _commanmessges.Add(_Details);
+
+                return _commanmessges;
+            }
+        }
+
+
+        public static List<MstUserDetailParameters> UpdateMapVerticalSector(MstUsersParameters model)
+        {
+            List<MstUserDetailParameters> _commanmessges = new List<MstUserDetailParameters>();
+            try
+            {
+                string[] mappedverticals = model._mappedverticals.Split(',');
+                for (int k = 0; k < mappedverticals.Length; k++)
+                {
+
+                    using (MySqlConnection conn = new MySqlConnection(connectionString))
+                    {
+                        MySqlCommand cmd = new MySqlCommand("sp_update_map_vertical_sector", conn);
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("_mapped_User_Id", MySqlDbType.UInt32).Value = model._id;
+                        cmd.Parameters.Add("_Vertical_Id", MySqlDbType.UInt32).Value = Convert.ToUInt32(mappedverticals[k]);
+                        cmd.Parameters.Add("_user_id", MySqlDbType.String).Value = model._user_id;
+                        conn.Open();
+                        using (IDataReader dr = cmd.ExecuteReader())
+                        {
+                            while (dr.Read())
+                            {
+                                MstUserDetailParameters _Details = new MstUserDetailParameters();
+                                _Details.status = dr.IsNull<string>("status");
+                                _Details.message = dr.IsNull<string>("message");
+                                // _Details._vertical_id = dr.IsNull<ulong>("_vertical_id");
+
+                                _commanmessges.Add(_Details);
+                            }
+                        }
+                    }
+
+                }
+
+
+
+
+                return _commanmessges;
+            }
+            catch (Exception ex)
+            {
+                _commanmessges = new List<MstUserDetailParameters>();
+
+                MstUserDetailParameters _Details = new MstUserDetailParameters();
+                _Details.status = "Failed";
+                _Details.message = "Error in saving parameters";
+                _commanmessges.Add(_Details);
+
+                return _commanmessges;
+            }
+        }
+
+
+        public static List<MstUserDetailParameters> UpdateMapUsersBranch(MstUsersParameters model)
+        {
+            List<MstUserDetailParameters> _commanmessges = new List<MstUserDetailParameters>();
+            try
+            {
+                string[] mappedbranches = model._mappedbranches.Split(',');
+                for (int k = 0; k < mappedbranches.Length; k++)
+                {
+
+                    using (MySqlConnection conn = new MySqlConnection(connectionString))
+                    {
+                        MySqlCommand cmd = new MySqlCommand("sp_update_map_users_branch", conn);
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("_mapped_User_Id", MySqlDbType.UInt32).Value = model._id;
+                        cmd.Parameters.Add("_Branch_Id", MySqlDbType.UInt32).Value = Convert.ToUInt32(mappedbranches[k]);
+                        cmd.Parameters.Add("_user_id", MySqlDbType.String).Value = model._user_id;
+                        conn.Open();
+                        using (IDataReader dr = cmd.ExecuteReader())
+                        {
+                            while (dr.Read())
+                            {
+                                MstUserDetailParameters _Details = new MstUserDetailParameters();
+                                _Details.status = dr.IsNull<string>("status");
+                                _Details.message = dr.IsNull<string>("message");
+                                // _Details._vertical_id = dr.IsNull<ulong>("_vertical_id");
+
+                                _commanmessges.Add(_Details);
+                            }
+                        }
+                    }
+
+                }
+
+
+
+
+                return _commanmessges;
+            }
+            catch (Exception ex)
+            {
+                _commanmessges = new List<MstUserDetailParameters>();
+
+                MstUserDetailParameters _Details = new MstUserDetailParameters();
+                _Details.status = "Failed";
+                _Details.message = "Error in saving parameters";
+                _commanmessges.Add(_Details);
+
+                return _commanmessges;
+            }
+        }
+
+
+    }
+}

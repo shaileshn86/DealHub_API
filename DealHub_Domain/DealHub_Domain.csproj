@@ -97,6 +97,7 @@
     <Compile Include="Masters\MstSolutionParameter.cs" />
     <Compile Include="Masters\MstSolutionCategoryParameters.cs" />
     <Compile Include="Masters\MstSubSectorsParameters.cs" />
+    <Compile Include="Masters\MstUsersParameters.cs" />
     <Compile Include="Masters\MstVerticalsParameters.cs" />
     <Compile Include="MenuBinding\MenuBindingDetailsParameter.cs" />
     <Compile Include="MenuBinding\MenuBindingParameter.cs" />
