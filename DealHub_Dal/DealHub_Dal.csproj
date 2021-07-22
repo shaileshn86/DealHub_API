@@ -82,6 +82,7 @@
     <Compile Include="Masters\MstForms.cs" />
     <Compile Include="Masters\MstFunctions.cs" />
     <Compile Include="Masters\MstPrivilege.cs" />
+    <Compile Include="Masters\MstRole.cs" />
     <Compile Include="Masters\MstSector.cs" />
     <Compile Include="Masters\MstSolutionCategory.cs" />
     <Compile Include="Masters\MstSolutions.cs" />

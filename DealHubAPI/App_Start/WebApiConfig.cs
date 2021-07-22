@@ -66,6 +66,11 @@ namespace DealHubAPI
             int persecond = 2;
             int permin = 20;
             int perhour = 1000;
+
+            int persecondupload = 10;
+            int perminupload = 200;
+            int perhourupload = 1000;
+
             config.MessageHandlers.Add(new ThrottlingHandler()
             {
                 // Generic rate limit applied to ALL APIs
@@ -99,7 +104,7 @@ namespace DealHubAPI
                         { "/Api/Auth/ResetPassword", new RateLimits { PerSecond =persecond, PerMinute = permin, PerHour = perhour } },
                         { "/Api/Auth/ResetPasswordDashboard", new RateLimits { PerSecond =persecond, PerMinute = permin, PerHour = perhour } },
                         { "/Api/Auth/sendemail", new RateLimits { PerSecond = persecond, PerMinute = permin, PerHour = perhour } },
-                        { "/Api/Auth/UploadImage", new RateLimits { PerSecond = persecond, PerMinute = permin, PerHour = perhour } },
+                        { "/Api/Auth/UploadImage", new RateLimits { PerSecond = persecondupload, PerMinute = perminupload, PerHour = perhourupload } },
                         { "/Api/Auth/GetClientKey", new RateLimits { PerSecond = persecond, PerMinute = permin, PerHour = perhour } },
 
                         //DashBoard

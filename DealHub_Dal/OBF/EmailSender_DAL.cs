@@ -25,7 +25,7 @@ namespace DealHub_Dal.OBF
                     MySqlDataAdapter DA = new MySqlDataAdapter();
                     MySqlCommand cmd = new MySqlCommand("sp_getEmail_Sending_Details_Actionwise", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.Add("@_dh_header_id", MySqlDbType.UInt32).Value = filter._dh_header_id;
+                    cmd.Parameters.Add("@dhheaderid", MySqlDbType.UInt32).Value = filter._dh_header_id;
                     cmd.Parameters.Add("@_user_id", MySqlDbType.String).Value = filter._created_by;
                     cmd.Parameters.Add("@isapproved", MySqlDbType.UInt32).Value = filter.isapproved;
                     cmd.Parameters.Add("@is_on_hold", MySqlDbType.UInt32).Value = filter.is_on_hold;
