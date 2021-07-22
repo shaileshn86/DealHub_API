@@ -183,7 +183,7 @@ namespace DealHub_Dal.OBF
                     MySqlCommand cmd = new MySqlCommand("sp_getshareobfdetails", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.Add("@_dh_header_id", MySqlDbType.UInt32).Value = model._dh_header_id;
-                    cmd.Parameters.Add("@_user_id", MySqlDbType.UInt32).Value = model._user_id;
+                    cmd.Parameters.Add("@_user_id", MySqlDbType.VarChar).Value = model._user_id;
                     DA.SelectCommand = cmd;
                     cmd.Connection = new MySqlConnection(connectionString);
                     DataSet ds = new DataSet();
