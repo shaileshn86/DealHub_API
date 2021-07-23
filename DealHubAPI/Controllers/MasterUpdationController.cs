@@ -1035,5 +1035,82 @@ namespace DealHubAPI.Controllers
 
         }
 
+
+        [HttpPost]
+        [Route("GetMstUsers")]
+        public HttpResponseMessage GetMstUsers(Mstcommonparameters model)
+        {
+            if (model == null)// Incase Post Object Is Null or Not Match and Object value is null
+            {
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+            }
+
+            if (ModelState.IsValid)
+            {
+                string json = MstUserService.GetMstUsers(model);
+                if (json == "" || json == "error")
+                {
+                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+                }
+                else
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, json);
+                }
+            }
+            else
+            {
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Field Validation Error Occured");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+
+            }
+
+        }
+
+        [HttpPost]
+        [Route("Update_Mst_Users")]
+        public HttpResponseMessage Update_Mst_Users(MstUsersParameters model)
+        {
+            if (model == null)// Incase Post Object Is Null or Not Match and Object value is null
+            {
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+            }
+
+            if (ModelState.IsValid)
+            {
+                List<MstUserDetailParameters> _commanmessges = MstUserService.Update_Mst_Users(model);
+
+                if (_commanmessges != null)
+                {
+                    if (_commanmessges.Count != 0)
+                    {
+
+                        return Request.CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(_commanmessges));
+                    }
+                    else
+                    {
+                        result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                        return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+                    }
+
+
+
+                }
+                else
+                {
+                    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Object is null");
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+                }
+            }
+            else
+            {
+                result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: "Field Validation Error Occured");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+
+            }
+
+        }
     }
 }
