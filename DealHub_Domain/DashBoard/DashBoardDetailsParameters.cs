@@ -19,6 +19,8 @@ namespace DealHub_Domain.DashBoard
         public string Code { get; set; }
         public string Opp_Id { get; set; }
         public DateTime Created_On { get; set; }
+        public DateTime onhold_datetime { get; set; }
+        
         public uint Created_By { get; set; }
        
 
