@@ -81,7 +81,7 @@ namespace DealHub_Dal.Masters
                         }
                     }
 
-                    UpdateMapVerticalSector(model);
+                    UpdateMapUsersVertical(model);
                     UpdateMapUsersBranch(model);
                 }
 
@@ -103,7 +103,7 @@ namespace DealHub_Dal.Masters
         }
 
 
-        public static List<MstUserDetailParameters> UpdateMapVerticalSector(MstUsersParameters model)
+        public static List<MstUserDetailParameters> UpdateMapUsersVertical(MstUsersParameters model)
         {
             List<MstUserDetailParameters> _commanmessges = new List<MstUserDetailParameters>();
             try
@@ -114,7 +114,7 @@ namespace DealHub_Dal.Masters
 
                     using (MySqlConnection conn = new MySqlConnection(connectionString))
                     {
-                        MySqlCommand cmd = new MySqlCommand("sp_update_map_vertical_sector", conn);
+                        MySqlCommand cmd = new MySqlCommand("sp_update_map_users_vertical", conn);
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.Add("_mapped_User_Id", MySqlDbType.UInt32).Value = model._id;
                         cmd.Parameters.Add("_Vertical_Id", MySqlDbType.UInt32).Value = Convert.ToUInt32(mappedverticals[k]);

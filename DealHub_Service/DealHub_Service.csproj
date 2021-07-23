@@ -80,6 +80,7 @@
     <Compile Include="Implemantations\APIServices\MstSolutionCategoryService.cs" />
     <Compile Include="Implemantations\APIServices\MstSolutionsService.cs" />
     <Compile Include="Implemantations\APIServices\MstSubSectorService.cs" />
+    <Compile Include="Implemantations\APIServices\MstUserService.cs" />
     <Compile Include="Implemantations\APIServices\MstVerticalsServices.cs" />
     <Compile Include="Implemantations\ErrorLog\ErrorlogsService.cs" />
     <Compile Include="Implemantations\APIServices\MenuBindingServices.cs" />
