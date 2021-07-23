@@ -24,9 +24,9 @@ namespace DealHub_Dal.OBF
                     MySqlCommand cmd = new MySqlCommand("sp_manage_dh_header", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.Add("@_dh_id", MySqlDbType.UInt32).Value = filter._dh_id;
-                    cmd.Parameters.Add("@_dh_project_name", MySqlDbType.String).Value = filter._dh_project_name;
-                    cmd.Parameters.Add("@_opportunity_id", MySqlDbType.String).Value = filter._opportunity_id;
-                    cmd.Parameters.Add("@_dh_location", MySqlDbType.String).Value = filter._dh_location;
+                    cmd.Parameters.Add("@_dh_project_name", MySqlDbType.String).Value = filter._dh_project_name.ToUpper();
+                    cmd.Parameters.Add("@_opportunity_id", MySqlDbType.String).Value = filter._opportunity_id.ToUpper();
+                    cmd.Parameters.Add("@_dh_location", MySqlDbType.String).Value = filter._dh_location.ToUpper();
                     cmd.Parameters.Add("@_vertical_id", MySqlDbType.UInt32).Value = filter._vertical_id;
                     cmd.Parameters.Add("@_verticalhead_id", MySqlDbType.UInt32).Value = filter._verticalhead_id;
                     cmd.Parameters.Add("@_dh_desc", MySqlDbType.String).Value = filter._dh_desc;
@@ -53,7 +53,7 @@ namespace DealHub_Dal.OBF
                     cmd.Parameters.Add("@_service_category", MySqlDbType.String).Value = filter._service_category;
                     cmd.Parameters.Add("@_payment_terms", MySqlDbType.UInt32).Value = filter._payment_terms;
                     cmd.Parameters.Add("@_mode", MySqlDbType.String).Value = filter._mode;
-                    cmd.Parameters.Add("@_customer_name", MySqlDbType.String).Value = filter._customer_name;
+                    cmd.Parameters.Add("@_customer_name", MySqlDbType.String).Value = filter._customer_name.ToUpper();
 
                     cmd.Parameters.Add("@_loi_po_details", MySqlDbType.String).Value = filter._loi_po_details;
                     cmd.Parameters.Add("@_payment_term_desc", MySqlDbType.String).Value = filter._payment_term_desc;
