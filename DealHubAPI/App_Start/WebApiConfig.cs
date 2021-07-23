@@ -68,6 +68,7 @@ namespace DealHubAPI
             int perhour = 1000;
 
             int persecondupload = 10;
+            int commonpersecond = 5;
             int perminupload = 200;
             int perhourupload = 1000;
 
@@ -102,7 +103,7 @@ namespace DealHubAPI
                         { "/Api/Auth/DeleteToken", new RateLimits { PerSecond = persecond, PerMinute = permin, PerHour = perhour } },
                         { "/Api/Auth/RemindMe", new RateLimits { PerSecond = persecond, PerMinute = permin, PerHour = perhour } },
                         { "/Api/Auth/ResetPassword", new RateLimits { PerSecond =persecond, PerMinute = permin, PerHour = perhour } },
-                        { "/Api/Auth/ResetPasswordDashboard", new RateLimits { PerSecond =persecond, PerMinute = permin, PerHour = perhour } },
+                        { "/Api/Auth/ResetPasswordDashboard", new RateLimits { PerSecond = commonpersecond, PerMinute = permin, PerHour = perhour } },
                         { "/Api/Auth/sendemail", new RateLimits { PerSecond = persecond, PerMinute = permin, PerHour = perhour } },
                         { "/Api/Auth/UploadImage", new RateLimits { PerSecond = persecondupload, PerMinute = perminupload, PerHour = perhourupload } },
                         { "/Api/Auth/GetClientKey", new RateLimits { PerSecond = persecond, PerMinute = permin, PerHour = perhour } },
