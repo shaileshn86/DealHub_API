@@ -59,6 +59,8 @@ namespace DealHub_Domain.DashBoard
        public int progresspercentage { get; set; }
 
       public int IsFinalAggUpload { get; set; }
+      public int is_on_hold { get; set; }
+      public string onholdcomment { get; set; }
         
 
     }

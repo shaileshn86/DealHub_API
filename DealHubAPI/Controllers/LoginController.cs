@@ -637,7 +637,10 @@ namespace DealHubAPI.Controllers
 
                 // LoginKey.Add(userkey);
                 LoginKey.Add(userMankey);
-
+                if (userkey == null)
+                {
+                    throw new Exception("user key not generated");
+                }
 
                 return Request.CreateResponse(HttpStatusCode.OK, userkey);
             }
