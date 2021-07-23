@@ -66,6 +66,8 @@ namespace DealHub_Dal.DashBoard
                             _DashBoardDetailsParameters.Project_Type = dr.IsNull<string>("project_type");
                             _DashBoardDetailsParameters.progresspercentage = dr.IsNull<int>("progresspercentage");
                             _DashBoardDetailsParameters.IsFinalAggUpload = dr.IsNull<int>("IsFinalAggUpload");
+                            _DashBoardDetailsParameters.is_on_hold = dr.IsNull<int>("is_on_hold");
+                            _DashBoardDetailsParameters.onholdcomment = dr.IsNull<string>("onholdcomment");
                             DashBoardData.Add(_DashBoardDetailsParameters);
 
                         }
