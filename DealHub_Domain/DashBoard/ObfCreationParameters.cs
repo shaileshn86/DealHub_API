@@ -346,7 +346,7 @@ namespace DealHub_Domain.DashBoard
        
         public int isapproved { get; set; }
 
-        [RegularExpression(@"([a-zA-Z0-9@#$&;|,.?-_ \s\n]+)", ErrorMessage = " Special characters are not allowed in Comments")]
+        [RegularExpression(@"([a-zA-Z0-9@#$&;|,.?\-_()%  \s\n]+)", ErrorMessage = " Special characters are not allowed in Comments")]
         public string rejectcomment { get; set; }
 
         public int rejectionto { get; set; }
