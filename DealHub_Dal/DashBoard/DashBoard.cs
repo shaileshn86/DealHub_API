@@ -68,6 +68,10 @@ namespace DealHub_Dal.DashBoard
                             _DashBoardDetailsParameters.IsFinalAggUpload = dr.IsNull<int>("IsFinalAggUpload");
                             _DashBoardDetailsParameters.is_on_hold = dr.IsNull<int>("is_on_hold");
                             _DashBoardDetailsParameters.onholdcomment = dr.IsNull<string>("onholdcomment");
+                            _DashBoardDetailsParameters.onhold_datetime = dr.IsNull<DateTime>("onhold_datetime");
+                            _DashBoardDetailsParameters.onhold_datetime = dr.IsNull<DateTime>("onhold_datetime");
+                            _DashBoardDetailsParameters.onhold_commentedby = dr.IsNull<string>("onhold_commentedby");
+                            
                             DashBoardData.Add(_DashBoardDetailsParameters);
 
                         }
