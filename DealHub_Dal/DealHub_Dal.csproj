@@ -87,6 +87,7 @@
     <Compile Include="Masters\MstSolutionCategory.cs" />
     <Compile Include="Masters\MstSolutions.cs" />
     <Compile Include="Masters\MstSubSector.cs" />
+    <Compile Include="Masters\MstUsers.cs" />
     <Compile Include="Masters\MstVerticals.cs" />
     <Compile Include="MenuBinding\MenuBinding.cs" />
     <Compile Include="OBF\EmailSender_DAL.cs" />
