@@ -106,7 +106,7 @@ namespace DealHubAPI
                         { "/Api/Auth/ResetPasswordDashboard", new RateLimits { PerSecond = commonpersecond, PerMinute = permin, PerHour = perhour } },
                         { "/Api/Auth/sendemail", new RateLimits { PerSecond = persecond, PerMinute = permin, PerHour = perhour } },
                         { "/Api/Auth/UploadImage", new RateLimits { PerSecond = persecondupload, PerMinute = perminupload, PerHour = perhourupload } },
-                        { "/Api/Auth/GetClientKey", new RateLimits { PerSecond = persecond, PerMinute = permin, PerHour = perhour } },
+                        { "/Api/Auth/GetClientKey", new RateLimits { PerSecond = commonpersecond, PerMinute = permin, PerHour = perhour } },
 
                         //DashBoard
                         { "/Api/DashBoard/GetDashBoardData", new RateLimits { PerSecond = persecond, PerMinute = permin, PerHour = perhour } },
