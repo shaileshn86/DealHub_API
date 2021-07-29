@@ -35,16 +35,16 @@ namespace DealHubAPI.Controllers
 
                 if (_DashBoardDetailsParameters != null)
                 {
-                    if (_DashBoardDetailsParameters.Count != 0)
-                    {
-                        return Request.CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(_DashBoardDetailsParameters));
-                    }
-                    else
-                    {
-                        result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: commaonerrormessage.datanotfound);
-                        return Request.CreateResponse(HttpStatusCode.BadRequest, result);
-                    }
-
+                    //if (_DashBoardDetailsParameters.Count != 0)
+                    //{
+                    //    return Request.CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(_DashBoardDetailsParameters));
+                    //}
+                    //else
+                    //{
+                    //    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: commaonerrormessage.datanotfound);
+                    //    return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+                    //}
+                    return Request.CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(_DashBoardDetailsParameters));
 
 
                 }
