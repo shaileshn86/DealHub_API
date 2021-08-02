@@ -68,6 +68,11 @@ namespace DealHub_Dal.Authentication
                 string status = "failed with exception in code";
                 _AuthenticationDetailParameters.status = status;
                 authuser.Add(_AuthenticationDetailParameters);
+
+                string errordetails = "error in authenticate user  at " + DateTime.Now.ToString();
+                errordetails = errordetails + "\n" + e.ToString();
+                writelogauthentication(errordetails);
+
                 return authuser;
 
             }
@@ -97,6 +102,9 @@ namespace DealHub_Dal.Authentication
             }
             catch (Exception ex)
             {
+                string errordetails = "error in delete token  at " + DateTime.Now.ToString();
+                errordetails = errordetails + "\n" + ex.ToString();
+                writelogauthentication(errordetails);
                 deleteResult.result = "Failure";
                 return deleteResult;
             }
@@ -253,8 +261,11 @@ namespace DealHub_Dal.Authentication
             }
             catch (Exception e)
             {
-                WritetoLogFile W = new WritetoLogFile();
-                W.LogEvent(ConfigurationManager.AppSettings["logfilepath"].ToString(), e.ToString(), true);
+
+                string errordetails = "error in authenticate user with attempts  at " + DateTime.Now.ToString();
+                errordetails = errordetails + "\n" + e.ToString();
+                writelogauthentication(errordetails);
+
                 AuthenticationDetailParameters _AuthenticationDetailParameters = new AuthenticationDetailParameters();
                 string status = "something went wrong";
                 _AuthenticationDetailParameters.status = status;
@@ -283,6 +294,9 @@ namespace DealHub_Dal.Authentication
             }
             catch (Exception e)
             {
+                string errordetails = "error in save token  at " + DateTime.Now.ToString();
+                errordetails = errordetails + "\n" + e.ToString();
+                writelogauthentication(errordetails);
                 return -1;
             }
         }
@@ -312,6 +326,9 @@ namespace DealHub_Dal.Authentication
             }
             catch (Exception e)
             {
+                string errordetails = "error in get token  at " + DateTime.Now.ToString();
+                errordetails = errordetails + "\n" + e.ToString();
+                writelogauthentication(errordetails);
                 return "System Error";
             }
         }
@@ -340,6 +357,9 @@ namespace DealHub_Dal.Authentication
             }
             catch (Exception e)
             {
+                string errordetails = "error in reset password  at " + DateTime.Now.ToString();
+                errordetails = errordetails + "\n" + e.ToString();
+                writelogauthentication(errordetails);
                 return "System Error";
             }
         }
@@ -370,6 +390,9 @@ namespace DealHub_Dal.Authentication
             }
             catch (Exception e)
             {
+                string errordetails = "error in reset password dashboard  at " + DateTime.Now.ToString();
+                errordetails = errordetails + "\n" + e.ToString();
+                writelogauthentication(errordetails);
                 return "System Error";
             }
         }
@@ -405,8 +428,18 @@ namespace DealHub_Dal.Authentication
             }
             catch (Exception ex)
             {
+                string errordetails = "error in send mail  at " + DateTime.Now.ToString();
+                errordetails = errordetails + "\n" + ex.ToString();
+                writelogauthentication(errordetails);
                 return "System Error";
             }
+        }
+
+
+        public static void writelogauthentication(string errordetails)
+        {
+            WritetoLogFile W = new WritetoLogFile();
+            W.LogEvent(ConfigurationManager.AppSettings["logfilepath"].ToString(), errordetails, true);
         }
 
 

@@ -23,7 +23,7 @@ namespace DealHub_Domain.DashBoard
 
     public class testforregularexpression
     {
-        [RegularExpression(@"([a-zA-Z0-9@#$&;|,.?-_ \s\n]+)", ErrorMessage = "not valid expression")]
+        [RegularExpression(@"([a-zA-Z0-9@#$&;|,.\-_ \s\n]+)", ErrorMessage = "not valid expression")]
         public string testmail { get; set; }
     }
 }

@@ -8,6 +8,8 @@ using MySql.Data.MySqlClient;
 using System.Data;
 using DealHub_Dal.Extensions;
 using Newtonsoft.Json;
+using DealHub_Dal.ErrorLog;
+using System.Configuration;
 
 namespace DealHub_Dal.OBF
 {
@@ -178,6 +180,9 @@ namespace DealHub_Dal.OBF
             }
             catch (Exception e)
             {
+                string errordetails = "error in obfcreation " + DateTime.Now.ToString();
+                errordetails = errordetails + "\n" + e.ToString();
+                writelogobfcreation(errordetails);
                 ObfCreationDetailsParameters _ObfCreationDetailsParameters = new ObfCreationDetailsParameters();
 
                 //_DashBoardDetailsParameters.obf_id = dr.IsNull<uint>("obf_id");
@@ -237,6 +242,9 @@ namespace DealHub_Dal.OBF
             }
             catch (Exception e)
             {
+                string errordetails = "error in editcustomercodeandio " + DateTime.Now.ToString();
+                errordetails = errordetails + "\n" + e.ToString();
+                writelogobfcreation(errordetails);
                 ObfCreationDetailsParameters _ObfCreationDetailsParameters = new ObfCreationDetailsParameters();
 
                 //_DashBoardDetailsParameters.obf_id = dr.IsNull<uint>("obf_id");
@@ -294,6 +302,11 @@ namespace DealHub_Dal.OBF
             }
             catch(Exception ex)
             {
+                string errordetails = "error in SaveServiceSolutionSector " + DateTime.Now.ToString();
+                errordetails = errordetails + "\n" + ex.ToString();
+                writelogobfcreation(errordetails);
+
+
                 _SaveAttachementDetailsParameters = new List<SaveAttachementDetailsParameters>();
 
                 SaveAttachementDetailsParameters _Details = new SaveAttachementDetailsParameters();
@@ -377,6 +390,10 @@ namespace DealHub_Dal.OBF
             }
             catch (Exception ex)
             {
+                string errordetails = "error in submit dh headers " + DateTime.Now.ToString();
+                errordetails = errordetails + "\n" + ex.ToString();
+                writelogobfcreation(errordetails);
+
                 _SaveAttachementDetailsParameters = new List<SaveAttachementDetailsParameters>();
 
                 SaveAttachementDetailsParameters _Details = new SaveAttachementDetailsParameters();
@@ -422,6 +439,9 @@ namespace DealHub_Dal.OBF
             }
             catch(Exception ex)
             {
+                string errordetails = "error in save sector sub sector " + DateTime.Now.ToString();
+                errordetails = errordetails + "\n" + ex.ToString();
+                writelogobfcreation(errordetails);
                 _SaveAttachementDetailsParameters = new List<SaveAttachementDetailsParameters>();
 
                 SaveAttachementDetailsParameters _Details = new SaveAttachementDetailsParameters();
@@ -475,6 +495,9 @@ namespace DealHub_Dal.OBF
             }
             catch(Exception ex)
             {
+                string errordetails = "error in save services " + DateTime.Now.ToString();
+                errordetails = errordetails + "\n" + ex.ToString();
+                writelogobfcreation(errordetails);
                 _SaveAttachementDetailsParameters = new List<SaveAttachementDetailsParameters>();
 
                 SaveAttachementDetailsParameters _Details = new SaveAttachementDetailsParameters();
@@ -523,6 +546,9 @@ namespace DealHub_Dal.OBF
             }
             catch(Exception ex)
             {
+                string errordetails = "error in save attachment " + DateTime.Now.ToString();
+                errordetails = errordetails + "\n" + ex.ToString();
+                writelogobfcreation(errordetails);
                 _SaveAttachementDetailsParameters = new List<SaveAttachementDetailsParameters>();
 
                 SaveAttachementDetailsParameters _Details = new SaveAttachementDetailsParameters();
@@ -559,6 +585,9 @@ namespace DealHub_Dal.OBF
             }
             catch(Exception ex)
             {
+                string errordetails = "error in getmasterobfcreation " + DateTime.Now.ToString();
+                errordetails = errordetails + "\n" + ex.ToString();
+                writelogobfcreation(errordetails);
                 return "error";
             }
 
@@ -700,6 +729,9 @@ namespace DealHub_Dal.OBF
             }
             catch (Exception ex)
             {
+                string errordetails = "error in geteditobf " + DateTime.Now.ToString();
+                errordetails = errordetails + "\n" + ex.ToString();
+                writelogobfcreation(errordetails);
                 return null;
             }
         }
@@ -751,6 +783,9 @@ namespace DealHub_Dal.OBF
             }
             catch (Exception ex)
             {
+                string errordetails = "error in getpreviousversion " + DateTime.Now.ToString();
+                errordetails = errordetails + "\n" + ex.ToString();
+                writelogobfcreation(errordetails);
                 return null;
             }
         }
@@ -790,6 +825,9 @@ namespace DealHub_Dal.OBF
             }
             catch (Exception ex)
             {
+                string errordetails = "error in getprojecttypebyid " + DateTime.Now.ToString();
+                errordetails = errordetails + "\n" + ex.ToString();
+                writelogobfcreation(errordetails);
                 result = "N/A";
                 return result;
             }
@@ -878,6 +916,9 @@ namespace DealHub_Dal.OBF
             }
             catch(Exception ex)
             {
+                string errordetails = "error in getmastersolution " + DateTime.Now.ToString();
+                errordetails = errordetails + "\n" + ex.ToString();
+                writelogobfcreation(errordetails);
                 return null;
             }
         }
@@ -927,6 +968,10 @@ namespace DealHub_Dal.OBF
             }
             catch (Exception ex)
             {
+                string errordetails = "error in Approve Reject Obf " + DateTime.Now.ToString();
+                errordetails = errordetails + "\n" + ex.ToString();
+                writelogobfcreation(errordetails);
+
                 _commanmessges = new List<commanmessges>();
 
                 commanmessges _Details = new commanmessges();
@@ -978,6 +1023,10 @@ namespace DealHub_Dal.OBF
             }
             catch (Exception ex)
             {
+                string errordetails = "error in Save Customer SAP IO Number " + DateTime.Now.ToString();
+                errordetails = errordetails + "\n" + ex.ToString();
+                writelogobfcreation(errordetails);
+
                 _SaveAttachementDetailsParameters = new List<SaveAttachementDetailsParameters>();
 
                 SaveAttachementDetailsParameters _Details = new SaveAttachementDetailsParameters();
@@ -1020,6 +1069,9 @@ namespace DealHub_Dal.OBF
             }
             catch(Exception ex)
             {
+                string errordetails = "error in Save comment " + DateTime.Now.ToString();
+                errordetails = errordetails + "\n" + ex.ToString();
+                writelogobfcreation(errordetails);
                 _SaveAttachementDetailsParameters = new List<SaveAttachementDetailsParameters>();
 
                 SaveAttachementDetailsParameters _Details = new SaveAttachementDetailsParameters();
@@ -1099,6 +1151,10 @@ namespace DealHub_Dal.OBF
             }
             catch (Exception ex)
             {
+                string errordetails = "error in Save Attachment obf summary  at " + DateTime.Now.ToString();
+                errordetails = errordetails + "\n" + ex.ToString();
+                writelogobfcreation(errordetails);
+
                 _SaveAttachementDetailsParameters = new List<SaveAttachementDetailsParameters>();
 
                 SaveAttachementDetailsParameters _Details = new SaveAttachementDetailsParameters();
@@ -1136,6 +1192,9 @@ namespace DealHub_Dal.OBF
             }
             catch (Exception ex)
             {
+                string errordetails = "error in Get OBf Summary Data Version wise  at " + DateTime.Now.ToString();
+                errordetails = errordetails + "\n" + ex.ToString();
+                writelogobfcreation(errordetails);
                 return "error";
             }
 
@@ -1166,10 +1225,19 @@ namespace DealHub_Dal.OBF
             }
             catch (Exception ex)
             {
+                string errordetails = "error in GetAttachmentDocument  at " + DateTime.Now.ToString();
+                errordetails = errordetails + "\n" + ex.ToString();
+                writelogobfcreation(errordetails);
                 return "error";
             }
 
         }
-        
+
+        public static void writelogobfcreation(string errordetails)
+        {
+            WritetoLogFile W = new WritetoLogFile();
+            W.LogEvent(ConfigurationManager.AppSettings["logfilepath"].ToString(), errordetails, true);
+        }
+
     }
 }

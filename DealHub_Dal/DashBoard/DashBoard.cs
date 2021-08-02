@@ -8,6 +8,8 @@ using MySql.Data.MySqlClient;
 using System.Data;
 using DealHub_Dal.Extensions;
 using Newtonsoft.Json;
+using DealHub_Dal.ErrorLog;
+using System.Configuration;
 
 namespace DealHub_Dal.DashBoard
 {
@@ -81,6 +83,9 @@ namespace DealHub_Dal.DashBoard
             }
             catch (Exception e)
             {
+                string errordetails = "error in get dashboard data at " + DateTime.Now.ToString();
+                errordetails = errordetails + "\n" + e.ToString();
+                writelogdashboard(errordetails);
                 return null;
 
             }
@@ -144,6 +149,9 @@ namespace DealHub_Dal.DashBoard
             }
             catch (Exception e)
             {
+                string errordetails = "error in get dashboard data count at " + DateTime.Now.ToString();
+                errordetails = errordetails + "\n" + e.ToString();
+                writelogdashboard(errordetails);
                 return null;
 
             }
@@ -174,6 +182,9 @@ namespace DealHub_Dal.DashBoard
             }
             catch (Exception ex)
             {
+                string errordetails = "error in get obf summary  at " + DateTime.Now.ToString();
+                errordetails = errordetails + "\n" + ex.ToString();
+                writelogdashboard(errordetails);
                 return "error";
             }
 
@@ -216,8 +227,11 @@ namespace DealHub_Dal.DashBoard
                 }
 
             }
-            catch 
+            catch (Exception ex)
             {
+                string errordetails = "error in get time line history  at " + DateTime.Now.ToString();
+                errordetails = errordetails + "\n" + ex.ToString();
+                writelogdashboard(errordetails);
                 throw;
             }
 
@@ -248,8 +262,11 @@ namespace DealHub_Dal.DashBoard
 
             }
             
-            catch 
+            catch (Exception ex)
             {
+                string errordetails = "error in get obf summary  at " + DateTime.Now.ToString();
+                errordetails = errordetails + "\n" + ex.ToString();
+                writelogdashboard(errordetails);
                 throw;
             }
 
@@ -280,12 +297,21 @@ namespace DealHub_Dal.DashBoard
                 }
 
             }
-            catch //(Exception ex)
+            catch (Exception ex)
             {
+                string errordetails = "error in get dash board Data progress  at " + DateTime.Now.ToString();
+                errordetails = errordetails + "\n" + ex.ToString();
+                writelogdashboard(errordetails);
                 throw;
                // return "error";
             }
 
+        }
+
+        public static void writelogdashboard(string errordetails)
+        {
+            WritetoLogFile W = new WritetoLogFile();
+            W.LogEvent(ConfigurationManager.AppSettings["logfilepath"].ToString(), errordetails, true);
         }
     }
 }
