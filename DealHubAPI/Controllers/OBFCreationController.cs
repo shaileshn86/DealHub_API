@@ -334,6 +334,7 @@ namespace DealHubAPI.Controllers
             }
             if (ModelState.IsValid)
             {
+                getactualeditobfparams(model);
                 EditObfParameters _editobf = ObfServices.get_edit_obf(model);
                 if (_editobf != null)
                 {
@@ -570,6 +571,13 @@ namespace DealHubAPI.Controllers
             model._vertical_id = model._vertical_id.ToString().Length <= 4 ? 0 : Convert.ToInt32(model._vertical_id.ToString().Substring(0, (model._vertical_id.ToString().Length - 4))) - subsvalue;
             model._projecttype = model._projecttype.ToString().Length <= 4 ? 0 : Convert.ToInt32(model._projecttype.ToString().Substring(0, (model._projecttype.ToString().Length - 4))) - subsvalue;
             model._total_cost = model._total_cost.ToString().Length <= 4 ? 0 : Convert.ToDecimal(model._total_cost.ToString().Substring(0, (model._total_cost.ToString().Length - 4))) - subsvalue;
+        }
+
+        protected void getactualeditobfparams(editobfarguement model)
+        {
+            int subsvalue = model.dh_id.ToString().Length <= 4 ? 0 : Convert.ToInt32(model.dh_id.ToString().Substring(4));
+            model.dh_id = model.dh_id.ToString().Length <= 4 ? 0 : Convert.ToInt32(model.dh_id.ToString().Substring(0, (model.dh_id.ToString().Length - 4))) - subsvalue;
+            model.dh_header_id = model.dh_header_id.ToString().Length <= 4 ? 0 : Convert.ToInt32(model.dh_header_id.ToString().Substring(0, (model.dh_header_id.ToString().Length - 4))) - subsvalue;
         }
     }
     
