@@ -131,9 +131,11 @@ namespace DealHub_Dal.DashBoard
 
                             Decimal _pendingppl = _DashBoardDetailsCountParameters._submitted_ppl - (_DashBoardDetailsCountParameters._approved_ppl + _DashBoardDetailsCountParameters._rejected_ppl );
 
-                            _DashBoardDetailsCountParameters._pendingobf = _pendingobf;
-                            _DashBoardDetailsCountParameters._pendingppl = _pendingppl;
-                            _DashBoardDetailsCountParameters._TotalPending = _pendingobf + _pendingppl;
+                            
+
+                            _DashBoardDetailsCountParameters._pendingobf = (_pendingobf< 0 ? 0 : _pendingobf);
+                            _DashBoardDetailsCountParameters._pendingppl = (_pendingppl <0 ?0 :_pendingppl) ;
+                            _DashBoardDetailsCountParameters._TotalPending = ((_pendingobf + _pendingppl) < 0 ? 0: (_pendingobf + _pendingppl)) ;
 
 
                             _DashBoardDetailsCountParameters._totalapprovedppl = dr.IsNull<long>("_totalapprovedppl");
