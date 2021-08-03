@@ -35,6 +35,18 @@ namespace DealHub_Domain.Masters
         public string _password { get; set; }
     }
 
+
+    public class MstUpdateUsersParameters : Mstcommonparameters
+    {
+        public int _id { get; set; }
+
+        public int _is_cassh_user { get; set; }
+
+        public string _active { get; set; }
+
+        public int _islocked { get; set; }
+    }
+
     public class MappedUserDetailParameters:Mstcommonparameters
     {
         public int _mapped_User_Id { get; set; }
