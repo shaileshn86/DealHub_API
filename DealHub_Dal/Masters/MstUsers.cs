@@ -133,8 +133,7 @@ namespace DealHub_Dal.Masters
                         }
                     }
 
-                    UpdateMapUsersVertical(model);
-                    UpdateMapUsersBranch(model);
+                   
                 }
 
 
