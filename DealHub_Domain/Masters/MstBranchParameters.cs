@@ -10,6 +10,8 @@ namespace DealHub_Domain.Masters
     {
         public int _branch_id { get; set; }
         public string _branchname { get; set; }
-        
+
+        public string _active { get; set; }
+
     }
 }
