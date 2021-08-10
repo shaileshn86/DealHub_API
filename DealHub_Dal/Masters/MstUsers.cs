@@ -74,8 +74,11 @@ namespace DealHub_Dal.Masters
                             MstUserDetailParameters _Details = new MstUserDetailParameters();
                             _Details.status = dr.IsNull<string>("status");
                             _Details.message = dr.IsNull<string>("message");
-                            _Details._updateduser_id = dr.IsNull<ulong>("user_id");
-                            _mapped_User_Id = Convert.ToInt32(_Details._updateduser_id);
+                            var updatedid = dr["user_id"];
+                           
+                             
+                            _mapped_User_Id = Convert.ToInt32(updatedid);
+                            _Details._updateduser_id =(ulong)_mapped_User_Id;
                             model._id = _mapped_User_Id;
                             _commanmessges.Add(_Details);
                         }
@@ -102,6 +105,59 @@ namespace DealHub_Dal.Masters
             }
         }
 
+
+        public static List<MstUserDetailParameters> Update_Mst_Users_Dashboard(MstUpdateUsersParameters model)
+        {
+            List<MstUserDetailParameters> _commanmessges = new List<MstUserDetailParameters>();
+            try
+            {
+                int _mapped_User_Id = model._id;
+                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                {
+                    MySqlCommand cmd = new MySqlCommand("sp_update_mst_users_dashboard", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add("_id", MySqlDbType.UInt32).Value = model._id;
+                    cmd.Parameters.Add("_is_cassh_user", MySqlDbType.UInt32).Value = model._is_cassh_user;
+                    cmd.Parameters.Add("_active", MySqlDbType.String).Value = model._active;
+                    cmd.Parameters.Add("_islocked", MySqlDbType.UInt32).Value = model._islocked;
+                    cmd.Parameters.Add("_user_id", MySqlDbType.String).Value = model._user_id;
+                    conn.Open();
+                    using (IDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            MstUserDetailParameters _Details = new MstUserDetailParameters();
+                            _Details.status = dr.IsNull<string>("status");
+                            _Details.message = dr.IsNull<string>("message");
+                            //  _Details._updateduser_id = dr.IsNull<ulong>("user_id");
+                            var updatedid = dr["user_id"];
+                            _mapped_User_Id = Convert.ToInt32(updatedid);
+                            _Details._updateduser_id = (ulong)_mapped_User_Id;
+                           // _mapped_User_Id = Convert.ToInt32(_Details._updateduser_id);
+                            model._id = _mapped_User_Id;
+                            _commanmessges.Add(_Details);
+                        }
+                    }
+
+                   
+                }
+
+
+
+                return _commanmessges;
+            }
+            catch (Exception ex)
+            {
+                _commanmessges = new List<MstUserDetailParameters>();
+
+                MstUserDetailParameters _Details = new MstUserDetailParameters();
+                _Details.status = "Failed";
+                _Details.message = "Error in saving parameters";
+                _commanmessges.Add(_Details);
+
+                return _commanmessges;
+            }
+        }
 
         public static List<MstUserDetailParameters> UpdateMapUsersVertical(MstUsersParameters model)
         {

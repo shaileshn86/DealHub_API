@@ -20,5 +20,10 @@ namespace DealHub_Service.Implemantations.APIServices
         {
             return MstUsers.Update_Mst_Users(model);
         }
+
+        public static List<MstUserDetailParameters> Update_Mst_Users_Dashboard(MstUpdateUsersParameters model)
+        {
+            return MstUsers.Update_Mst_Users_Dashboard(model);
+        }
     }
 }
