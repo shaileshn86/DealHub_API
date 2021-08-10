@@ -55,7 +55,7 @@ namespace DealHub_Dal.Masters
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.Add("_branch_id", MySqlDbType.UInt32).Value = model._branch_id;
                     cmd.Parameters.Add("_branchname", MySqlDbType.String).Value = model._branchname;
-                   
+                    cmd.Parameters.Add("_Active", MySqlDbType.String).Value = model._active;
                     cmd.Parameters.Add("_user_id", MySqlDbType.String).Value = model._user_id;
                     conn.Open();
                     using (IDataReader dr = cmd.ExecuteReader())

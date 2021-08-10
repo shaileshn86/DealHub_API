@@ -55,6 +55,7 @@ namespace DealHub_Dal.Masters
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.Add("_DOA_Matrix_Id", MySqlDbType.UInt32).Value = model._DOA_Matrix_Id;
                     cmd.Parameters.Add("_Message", MySqlDbType.String).Value = model._Message;
+                    cmd.Parameters.Add("_MessageFor", MySqlDbType.String).Value = model._MessageFor;
                     cmd.Parameters.Add("_Prefix", MySqlDbType.String).Value = model._Prefix;
                     
                     cmd.Parameters.Add("_user_id", MySqlDbType.String).Value = model._user_id;
