@@ -56,6 +56,7 @@ namespace DealHubAPI.Controllers
         [HttpPost]
         [Route("Update_Mst_Domains")]
         public HttpResponseMessage Update_Mst_Domains(MstDomainParameters model)
+
         {
             if (model == null)// Incase Post Object Is Null or Not Match and Object value is null
             {
@@ -133,7 +134,7 @@ namespace DealHubAPI.Controllers
 
         [HttpPost]
         [Route("UpdateMstFunctions")]
-        public HttpResponseMessage Update_Mst_Domains(MstFunctionParameters model)
+        public HttpResponseMessage UpdateMstFunctions(MstFunctionParameters model)
         {
             if (model == null)// Incase Post Object Is Null or Not Match and Object value is null
             {
@@ -211,7 +212,7 @@ namespace DealHubAPI.Controllers
 
         [HttpPost]
         [Route("Update_Mst_Branch")]
-        public HttpResponseMessage Update_Mst_Domains(MstBranchParameters model)
+        public HttpResponseMessage Update_Mst_Branch(MstBranchParameters model)
         {
             if (model == null)// Incase Post Object Is Null or Not Match and Object value is null
             {
@@ -681,7 +682,7 @@ namespace DealHubAPI.Controllers
 
         [HttpPost]
         [Route("Update_Mst_Privilege")]
-        public HttpResponseMessage Update_Mst_Doa_Matrix_Messages(MstPrivilegeParameters model)
+        public HttpResponseMessage Update_Mst_Privilege(MstPrivilegeParameters model)
         {
             if (model == null)// Incase Post Object Is Null or Not Match and Object value is null
             {
