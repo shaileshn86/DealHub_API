@@ -69,8 +69,14 @@ namespace DealHub_Dal.Masters
                             MstVerticalsDetailParameters _Details = new MstVerticalsDetailParameters();
                             _Details.status = dr.IsNull<string>("status");
                             _Details.message = dr.IsNull<string>("message");
-                            _Details._vertical_id = dr.IsNull<long>("_vertical_id");
+                          //  _Details._vertical_id = dr.IsNull<long>("_vertical_id");
+                            var updatedid = dr["_vertical_id"];
+
+
+                            verticalid = Convert.ToInt32(updatedid);
+                            _Details._vertical_id = (ulong)verticalid;
                             verticalid = Convert.ToInt32( _Details._vertical_id);
+
                              model._vertical_id = verticalid;
                             _commanmessges.Add(_Details);
                         }

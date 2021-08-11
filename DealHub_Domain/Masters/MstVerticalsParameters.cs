@@ -21,7 +21,7 @@ namespace DealHub_Domain.Masters
 
     public class MstVerticalsDetailParameters : commanmessges
     {
-        public long _vertical_id { get; set; }
+        public ulong _vertical_id { get; set; }
        
     }
 
