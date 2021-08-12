@@ -180,6 +180,7 @@ namespace DealHub_Dal.Authentication
                                                 _AuthenticationDetailParameters.privilege_name = ds1.Tables[0].Rows[0]["privilege_name"].ToString();
                                                 _AuthenticationDetailParameters.role_name = ds1.Tables[0].Rows[0]["role_name"].ToString();
                                                 _AuthenticationDetailParameters.UserName = ds1.Tables[0].Rows[0]["user_name"].ToString();
+                                                _AuthenticationDetailParameters.ispasswordchanged = Convert.ToUInt32(ds1.Tables[0].Rows[0]["ispasswordchanged"].ToString());
 
                                             }
                                             authuser.Add(_AuthenticationDetailParameters);
