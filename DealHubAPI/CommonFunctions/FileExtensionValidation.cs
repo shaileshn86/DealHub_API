@@ -44,7 +44,10 @@ namespace DealHubAPI.CommonFunctions
         }
     }
 
-    
+    public class CommonKeyClass
+    {
+        public static string Key = "0c24f9de!b855915";
+    }
 
     public interface IFileExtensionValidation
     {

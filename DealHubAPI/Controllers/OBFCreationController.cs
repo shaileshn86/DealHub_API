@@ -35,7 +35,10 @@ namespace DealHubAPI.Controllers
             }
             if (ModelState.IsValid)
             {
-                getactualobfparams(model);
+                    string userid = AuthenticationServices.DecryptStringAES(CommonFunctions.CommonKeyClass.Key, model._created_by);
+
+                    model._created_by = userid;
+                    getactualobfparams(model);
                 List<ObfCreationDetailsParameters> _ObfCreationDetailsParameters = ObfServices.ObfCreation(model);
 
                 if (_ObfCreationDetailsParameters != null)
@@ -107,6 +110,9 @@ namespace DealHubAPI.Controllers
             }
             if (ModelState.IsValid)
             {
+                string userid = AuthenticationServices.DecryptStringAES(CommonFunctions.CommonKeyClass.Key, model._created_by);
+
+                model._created_by = userid;
                 List<ObfCreationDetailsParameters> _ObfCreationDetailsParameters = ObfServices.editcustomercodeandio(model);
 
                 if (_ObfCreationDetailsParameters != null)
@@ -252,6 +258,9 @@ namespace DealHubAPI.Controllers
 
             if (ModelState.IsValid)
             {
+                string userid = AuthenticationServices.DecryptStringAES(CommonFunctions.CommonKeyClass.Key, model.userid);
+                
+                model.userid = userid;
                 string json = ObfServices.GetMastersOBFCreation(model);
                 if (json == "" || json == "error")
                 {
@@ -289,6 +298,9 @@ namespace DealHubAPI.Controllers
             }
             if (ModelState.IsValid)
             {
+                string userid = AuthenticationServices.DecryptStringAES(CommonFunctions.CommonKeyClass.Key, model.userid);
+
+                model.userid = userid;
                 List<SolutionCategory> _SolutionCategory = ObfServices.get_master_solutions(model);
                 if (_SolutionCategory != null)
                 {
