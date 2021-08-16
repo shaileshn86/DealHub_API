@@ -1086,7 +1086,10 @@ namespace DealHubAPI.Controllers
                 {
                     if (_commanmessges.Count != 0)
                     {
-
+                        if (_commanmessges[0].status != "success")
+                        {
+                            return Request.CreateResponse(HttpStatusCode.BadRequest, JsonConvert.SerializeObject(_commanmessges));
+                        }
                         return Request.CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(_commanmessges));
                     }
                     else
