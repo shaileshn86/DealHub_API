@@ -31,6 +31,11 @@ namespace DealHubAPI.Controllers
             if (ModelState.IsValid)
 
             {
+
+                string userid = AuthenticationServices.DecryptStringAES(CommonFunctions.CommonKeyClass.Key, model._user_code);
+
+                model._user_code = userid;
+
                 List<DashBoardDetailsParameters> _DashBoardDetailsParameters = DashBoardServices.GetDashBoardData(model);
 
                 if (_DashBoardDetailsParameters != null)
@@ -76,6 +81,11 @@ namespace DealHubAPI.Controllers
             }
             if (ModelState.IsValid)
             {
+
+                string userid = AuthenticationServices.DecryptStringAES(CommonFunctions.CommonKeyClass.Key, model._user_code);
+
+                model._user_code = userid;
+
                 List<DashBoardDetailsCountParameters> _DashBoardDetailsCountParameters = DashBoardServices.GetDashBoardDataCount(model);
 
                 if (_DashBoardDetailsCountParameters != null)
@@ -417,6 +427,7 @@ namespace DealHubAPI.Controllers
                 }
 
                 string json = SystemNotificationService.Get_System_Notification(model._user_code);
+
                 if (json == "")
                 {
                     result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: commaonerrormessage.datanotfound);
