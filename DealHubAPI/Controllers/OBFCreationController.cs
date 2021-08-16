@@ -422,6 +422,11 @@ namespace DealHubAPI.Controllers
             }
             if (ModelState.IsValid)
             {
+
+                string userid = AuthenticationServices.DecryptStringAES(CommonFunctions.CommonKeyClass.Key, model._created_by);
+
+                model._created_by = userid;
+
                 List<commanmessges> _commanmessges = ObfServices.ApproveRejectObf(model);
 
                 if (_commanmessges != null)
