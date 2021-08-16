@@ -24,6 +24,7 @@ namespace DealHub_Domain.Authentication
 
         public uint ispasswordchanged { get; set; }
 
+
     }
 
     public class DeleteTokenResponse
