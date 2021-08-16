@@ -20,7 +20,7 @@ namespace DealHub_Domain.Authentication
         public string role_name { get; set; }
         public string UserCode { get; set; }
 
-        public uint UserId { get; set; }
+        public string UserId { get; set; }
         public string AntiforgeryKey { get; set; }
         public User()
         {
