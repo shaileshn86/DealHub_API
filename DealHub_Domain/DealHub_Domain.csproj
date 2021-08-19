@@ -101,6 +101,7 @@
     <Compile Include="Masters\MstVerticalsParameters.cs" />
     <Compile Include="MenuBinding\MenuBindingDetailsParameter.cs" />
     <Compile Include="MenuBinding\MenuBindingParameter.cs" />
+    <Compile Include="Migration\MigrationParameters.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
