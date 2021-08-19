@@ -10,5 +10,6 @@ namespace DealHub_Domain.Masters
     {
         public int _privilege_Id { get; set; }
         public string _privilege_name { get; set; }
+        public string _active { get; set; }
     }
 }

@@ -26,6 +26,11 @@ namespace DealHub_Service.Implemantations.APIServices
             return ASEEncryptDecrypt.DecryptStringAES(Secretkey, pwd);
         }
 
+        public static string EncryptStringAES(string Secretkey, string pwd)
+        {
+            return ASEEncryptDecrypt.EncryptStringAESAlpha(Secretkey, pwd);
+        }
+
         public static string ReturnMD5Hash(string input)
         {
             MD5 md5 = new MD5CryptoServiceProvider();

@@ -56,6 +56,7 @@ namespace DealHubAPI.Controllers
         [HttpPost]
         [Route("Update_Mst_Domains")]
         public HttpResponseMessage Update_Mst_Domains(MstDomainParameters model)
+
         {
             if (model == null)// Incase Post Object Is Null or Not Match and Object value is null
             {
@@ -65,6 +66,11 @@ namespace DealHubAPI.Controllers
 
             if (ModelState.IsValid)
             {
+
+                string userid = AuthenticationServices.DecryptStringAES(CommonFunctions.CommonKeyClass.Key, model._user_id);
+
+                model._user_id = userid;
+
                 List<commanmessges> _commanmessges = MstDomainService.Update_Mst_Domains(model);
 
                 if (_commanmessges != null)
@@ -133,7 +139,7 @@ namespace DealHubAPI.Controllers
 
         [HttpPost]
         [Route("UpdateMstFunctions")]
-        public HttpResponseMessage Update_Mst_Domains(MstFunctionParameters model)
+        public HttpResponseMessage UpdateMstFunctions(MstFunctionParameters model)
         {
             if (model == null)// Incase Post Object Is Null or Not Match and Object value is null
             {
@@ -143,6 +149,11 @@ namespace DealHubAPI.Controllers
 
             if (ModelState.IsValid)
             {
+
+                string userid = AuthenticationServices.DecryptStringAES(CommonFunctions.CommonKeyClass.Key, model._user_id);
+
+                model._user_id = userid;
+
                 List<commanmessges> _commanmessges = MstFunctionService.UpdateMstFunctions(model);
 
                 if (_commanmessges != null)
@@ -211,7 +222,7 @@ namespace DealHubAPI.Controllers
 
         [HttpPost]
         [Route("Update_Mst_Branch")]
-        public HttpResponseMessage Update_Mst_Domains(MstBranchParameters model)
+        public HttpResponseMessage Update_Mst_Branch(MstBranchParameters model)
         {
             if (model == null)// Incase Post Object Is Null or Not Match and Object value is null
             {
@@ -221,6 +232,13 @@ namespace DealHubAPI.Controllers
 
             if (ModelState.IsValid)
             {
+
+
+                string userid = AuthenticationServices.DecryptStringAES(CommonFunctions.CommonKeyClass.Key, model._user_id);
+
+                model._user_id = userid;
+
+
                 List<commanmessges> _commanmessges = MstBranchService.Update_Mst_Branch(model);
 
                 if (_commanmessges != null)
@@ -299,6 +317,11 @@ namespace DealHubAPI.Controllers
 
             if (ModelState.IsValid)
             {
+
+                string userid = AuthenticationServices.DecryptStringAES(CommonFunctions.CommonKeyClass.Key, model._user_id);
+
+                model._user_id = userid;
+
                 List<commanmessges> _commanmessges = MstFormServices.Update_Mst_Forms(model);
 
                 if (_commanmessges != null)
@@ -378,6 +401,10 @@ namespace DealHubAPI.Controllers
 
             if (ModelState.IsValid)
             {
+                string userid = AuthenticationServices.DecryptStringAES(CommonFunctions.CommonKeyClass.Key, model._user_id);
+
+                model._user_id = userid;
+
                 List<commanmessges> _commanmessges = MstSectorService.UpdateMstSector(model);
 
                 if (_commanmessges != null)
@@ -456,6 +483,10 @@ namespace DealHubAPI.Controllers
 
             if (ModelState.IsValid)
             {
+                string userid = AuthenticationServices.DecryptStringAES(CommonFunctions.CommonKeyClass.Key, model._user_id);
+
+                model._user_id = userid;
+
                 List<commanmessges> _commanmessges = MstSolutionCategoryService.UpdateMstSolutionCategory(model);
 
                 if (_commanmessges != null)
@@ -534,6 +565,10 @@ namespace DealHubAPI.Controllers
 
             if (ModelState.IsValid)
             {
+                string userid = AuthenticationServices.DecryptStringAES(CommonFunctions.CommonKeyClass.Key, model._user_id);
+
+                model._user_id = userid;
+
                 List<commanmessges> _commanmessges = MstCommentTypeService.Update_Mst_CommentType(model);
 
                 if (_commanmessges != null)
@@ -612,6 +647,10 @@ namespace DealHubAPI.Controllers
 
             if (ModelState.IsValid)
             {
+                string userid = AuthenticationServices.DecryptStringAES(CommonFunctions.CommonKeyClass.Key, model._user_id);
+
+                model._user_id = userid;
+
                 List<commanmessges> _commanmessges = MstDoaMatrixMessagesService.Update_Mst_Doa_Matrix_Messages(model);
 
                 if (_commanmessges != null)
@@ -681,7 +720,7 @@ namespace DealHubAPI.Controllers
 
         [HttpPost]
         [Route("Update_Mst_Privilege")]
-        public HttpResponseMessage Update_Mst_Doa_Matrix_Messages(MstPrivilegeParameters model)
+        public HttpResponseMessage Update_Mst_Privilege(MstPrivilegeParameters model)
         {
             if (model == null)// Incase Post Object Is Null or Not Match and Object value is null
             {
@@ -691,6 +730,10 @@ namespace DealHubAPI.Controllers
 
             if (ModelState.IsValid)
             {
+                string userid = AuthenticationServices.DecryptStringAES(CommonFunctions.CommonKeyClass.Key, model._user_id);
+
+                model._user_id = userid;
+
                 List<commanmessges> _commanmessges = MstPrivilegeService.Update_Mst_Privilege(model);
 
                 if (_commanmessges != null)
@@ -770,6 +813,10 @@ namespace DealHubAPI.Controllers
 
             if (ModelState.IsValid)
             {
+                string userid = AuthenticationServices.DecryptStringAES(CommonFunctions.CommonKeyClass.Key, model._user_id);
+
+                model._user_id = userid;
+
                 List<commanmessges> _commanmessges = MstSubSectorService.Update_Mst_Subsector(model);
 
                 if (_commanmessges != null)
@@ -847,6 +894,10 @@ namespace DealHubAPI.Controllers
 
             if (ModelState.IsValid)
             {
+                string userid = AuthenticationServices.DecryptStringAES(CommonFunctions.CommonKeyClass.Key, model._user_id);
+
+                model._user_id = userid;
+
                 List<commanmessges> _commanmessges = MstSolutionsService.Update_Mst_solution(model);
 
                 if (_commanmessges != null)
@@ -925,6 +976,11 @@ namespace DealHubAPI.Controllers
 
             if (ModelState.IsValid)
             {
+
+                string userid = AuthenticationServices.DecryptStringAES(CommonFunctions.CommonKeyClass.Key, model._user_id);
+
+                model._user_id = userid;
+
                 List<MstVerticalsDetailParameters> _commanmessges = MstVerticalsServices.Update_Mst_Verticals(model);
 
                 if (_commanmessges != null)
@@ -1002,6 +1058,10 @@ namespace DealHubAPI.Controllers
 
             if (ModelState.IsValid)
             {
+
+                string userid = AuthenticationServices.DecryptStringAES(CommonFunctions.CommonKeyClass.Key, model._user_id);
+
+                model._user_id = userid;
                 List<MstRoleDetailParameters> _commanmessges = MstRoleService.Update_Mst_Roles(model);
 
                 if (_commanmessges != null)
@@ -1080,6 +1140,10 @@ namespace DealHubAPI.Controllers
 
             if (ModelState.IsValid)
             {
+
+                string userid = AuthenticationServices.DecryptStringAES(CommonFunctions.CommonKeyClass.Key, model._user_id);
+
+                model._user_id = userid;
                 List<MstUserDetailParameters> _commanmessges = MstUserService.Update_Mst_Users(model);
 
                 if (_commanmessges != null)
@@ -1129,6 +1193,10 @@ namespace DealHubAPI.Controllers
 
             if (ModelState.IsValid)
             {
+
+                string userid = AuthenticationServices.DecryptStringAES(CommonFunctions.CommonKeyClass.Key, model._user_id);
+
+                model._user_id = userid;
                 List<MstUserDetailParameters> _commanmessges = MstUserService.Update_Mst_Users_Dashboard(model);
 
                 if (_commanmessges != null)

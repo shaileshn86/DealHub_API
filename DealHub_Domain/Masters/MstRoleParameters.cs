@@ -23,7 +23,7 @@ namespace DealHub_Domain.Masters
 
     public class MstRoleDetailParameters : commanmessges
     {
-        public ulong _role_id { get; set; }
+        public long _role_id { get; set; }
 
     }
 }

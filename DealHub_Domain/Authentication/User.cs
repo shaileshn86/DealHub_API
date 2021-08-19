@@ -11,6 +11,7 @@ namespace DealHub_Domain.Authentication
         public string UserName { get; set; }
         public string Api_Key { get; set; }
 
+        public uint ispasswordchanged { get; set; }
         public string privilege_name { get; set; }
 
         public string CompanyName { get; set; }
@@ -19,7 +20,7 @@ namespace DealHub_Domain.Authentication
         public string role_name { get; set; }
         public string UserCode { get; set; }
 
-        public uint UserId { get; set; }
+        public string UserId { get; set; }
         public string AntiforgeryKey { get; set; }
         public User()
         {

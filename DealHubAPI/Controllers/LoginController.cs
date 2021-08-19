@@ -73,11 +73,16 @@ namespace DealHubAPI.Controllers
                        LoginResponse login = new LoginResponse();
                         string key = Utility.SecretkeyGenerator.CreateToken(auth.user_code,auth.password);
                         login.user.Api_Key = key;
-                        login.user.UserCode = auth.user_code;
-                        login.user.privilege_name = auth.privilege_name;
-                        login.user.role_name = auth.role_name;
+                        //login.user.UserCode = auth.user_code;
+                        login.user.UserCode = AuthenticationServices.EncryptStringAES(CommonFunctions.CommonKeyClass.Key, auth.user_code); 
+                        // login.user.privilege_name = auth.privilege_name;
+                        login.user.privilege_name  = AuthenticationServices.EncryptStringAES(CommonFunctions.CommonKeyClass.Key, auth.privilege_name);
+                        //login.user.role_name = auth.role_name;
+                        login.user.role_name = AuthenticationServices.EncryptStringAES(CommonFunctions.CommonKeyClass.Key, auth.role_name);
                         login.user.UserName = auth.UserName;
-                        login.user.UserId = auth.user_id;
+                        // login.user.UserId = auth.user_id;
+                        login.user.UserId = AuthenticationServices.EncryptStringAES(CommonFunctions.CommonKeyClass.Key, auth.user_id.ToString());
+                        login.user.ispasswordchanged = auth.ispasswordchanged;
                         login.user.AntiforgeryKey = AnitiforgeryVerify.RequestKey(auth.user_code);
                         model._token = key;
                         int tokeupdated = AuthenticationServices.UpdateToken(model);
@@ -232,6 +237,10 @@ namespace DealHubAPI.Controllers
                     password = AuthenticationServices.ReturnMD5Hash(password);
                     model._password = password;
 
+                    string usercode = AuthenticationServices.DecryptStringAES(_SecretKey, model._user_code);
+                    //currentpassword = AuthenticationServices.ReturnMD5Hash(currentpassword);
+                    model._user_code = usercode;
+
                     string Authenticated = AuthenticationServices.ResetPassword(model);
 
                    // return Request.CreateResponse(HttpStatusCode.OK, Authenticated);
@@ -287,6 +296,10 @@ namespace DealHubAPI.Controllers
                     string currentpassword = AuthenticationServices.DecryptStringAES(_SecretKey, model._CurrentPassword);
                     currentpassword = AuthenticationServices.ReturnMD5Hash(currentpassword);
                     model._CurrentPassword = currentpassword;
+
+                    string usercode = AuthenticationServices.DecryptStringAES(_SecretKey, model._user_code);
+                    //currentpassword = AuthenticationServices.ReturnMD5Hash(currentpassword);
+                    model._user_code = usercode;
 
                     string Authenticated = AuthenticationServices.ResetPasswordDashboard(model);
 

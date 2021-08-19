@@ -10,6 +10,8 @@ namespace DealHub_Domain.Masters
     {
         public int _DOA_Matrix_Id { get; set; }
         public string _Message { get; set; }
+
+        public string _MessageFor { get; set; }
         public string _Prefix {get; set; }
     }
 }

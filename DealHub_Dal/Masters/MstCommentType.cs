@@ -54,7 +54,7 @@ namespace DealHub_Dal.Masters
                     MySqlCommand cmd = new MySqlCommand("sp_update_mst_commenttype", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.Add("_comment_type_id", MySqlDbType.UInt32).Value = model._comment_type_id;
-                    cmd.Parameters.Add("_comment_types", MySqlDbType.String).Value = model._comment_type;
+                    cmd.Parameters.Add("_comment_type", MySqlDbType.String).Value = model._comment_type;
 
                     cmd.Parameters.Add("_user_id", MySqlDbType.String).Value = model._user_id;
                     conn.Open();

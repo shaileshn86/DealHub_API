@@ -32,6 +32,7 @@ namespace DealHubAPI.Utility
 
                 var userloginid = filterContext.Request.Headers.SingleOrDefault(x => x.Key == "_user_login").Value;
                 string user_code = userloginid.First();
+                user_code = AuthenticationServices.DecryptStringAES(CommonFunctions.CommonKeyClass.Key, user_code);
                 //added 
                 var RequestId = filterContext.Request.Headers.SingleOrDefault(x => x.Key == "_RequestId").Value;
                 string AntiforgeryKey = RequestId.First();

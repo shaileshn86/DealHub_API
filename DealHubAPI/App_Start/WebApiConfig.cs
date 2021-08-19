@@ -65,6 +65,8 @@ namespace DealHubAPI
 
             int persecond = 2;
             int permin = 20;
+            //int persecond = 5;
+            //int permin = 50;
             int perhour = 1000;
 
             int persecondupload = 10;

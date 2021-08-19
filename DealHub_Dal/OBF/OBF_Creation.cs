@@ -1115,6 +1115,8 @@ namespace DealHub_Dal.OBF
                         }
                         if (filter._fname != "Remove all Details" && filter._fpath != "Remove all Details")
                         {
+
+
                             MySqlCommand cmd = new MySqlCommand("sp_save_dh_attachments", conn);
                             cmd.CommandType = CommandType.StoredProcedure;
                             cmd.Parameters.Add("@_dh_id", MySqlDbType.UInt32).Value = filter._dh_id;

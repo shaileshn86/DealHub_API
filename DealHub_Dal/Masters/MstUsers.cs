@@ -74,8 +74,11 @@ namespace DealHub_Dal.Masters
                             MstUserDetailParameters _Details = new MstUserDetailParameters();
                             _Details.status = dr.IsNull<string>("status");
                             _Details.message = dr.IsNull<string>("message");
-                            _Details._updateduser_id = dr.IsNull<ulong>("user_id");
-                            _mapped_User_Id = Convert.ToInt32(_Details._updateduser_id);
+                            var updatedid = dr["user_id"];
+                           
+                             
+                            _mapped_User_Id = Convert.ToInt32(updatedid);
+                            _Details._updateduser_id =(ulong)_mapped_User_Id;
                             model._id = _mapped_User_Id;
                             _commanmessges.Add(_Details);
                         }
@@ -126,8 +129,11 @@ namespace DealHub_Dal.Masters
                             MstUserDetailParameters _Details = new MstUserDetailParameters();
                             _Details.status = dr.IsNull<string>("status");
                             _Details.message = dr.IsNull<string>("message");
-                            _Details._updateduser_id = dr.IsNull<ulong>("user_id");
-                            _mapped_User_Id = Convert.ToInt32(_Details._updateduser_id);
+                            //  _Details._updateduser_id = dr.IsNull<ulong>("user_id");
+                            var updatedid = dr["user_id"];
+                            _mapped_User_Id = Convert.ToInt32(updatedid);
+                            _Details._updateduser_id = (ulong)_mapped_User_Id;
+                           // _mapped_User_Id = Convert.ToInt32(_Details._updateduser_id);
                             model._id = _mapped_User_Id;
                             _commanmessges.Add(_Details);
                         }
