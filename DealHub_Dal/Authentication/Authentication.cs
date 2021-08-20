@@ -169,7 +169,7 @@ namespace DealHub_Dal.Authentication
                                             {
 
                                                 _AuthenticationDetailParameters.user_code = "";
-
+                                                _AuthenticationDetailParameters.status = status;
 
                                             }
                                             else
