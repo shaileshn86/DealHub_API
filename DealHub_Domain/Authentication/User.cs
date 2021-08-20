@@ -24,8 +24,8 @@ namespace DealHub_Domain.Authentication
         public string AntiforgeryKey { get; set; }
         public User()
         {
-            CN = "MAHINDRA LOGISTICS LTD";
-            CC = "MLL";
+            CN = "";
+            CC = "";
             //CompanyName = "MAHINDRA LOGISTICS LTD";
             //CompanyCode = "MLL";
             
