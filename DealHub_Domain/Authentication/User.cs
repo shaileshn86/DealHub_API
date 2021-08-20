@@ -8,24 +8,24 @@ namespace DealHub_Domain.Authentication
 {
     public class User
     {
-        public string UserName { get; set; }
+        public string UN { get; set; }
         public string Api_Key { get; set; }
 
         public uint ispasswordchanged { get; set; }
-        public string privilege_name { get; set; }
+        public string PN { get; set; }
 
-        public string CompanyName { get; set; }
-        public string CompanyCode { get; set; }
+        public string CN { get; set; }
+        public string CC { get; set; }
 
-        public string role_name { get; set; }
-        public string UserCode { get; set; }
+        public string RN { get; set; }
+        public string UC { get; set; }
 
-        public string UserId { get; set; }
+        public string UI { get; set; }
         public string AntiforgeryKey { get; set; }
         public User()
         {
-            CompanyName = "MAHINDRA LOGISTICS LTD";
-            CompanyCode = "MLL";
+            CN = "MAHINDRA LOGISTICS LTD";
+            CC = "MLL";
 
         }
     }
