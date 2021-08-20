@@ -82,18 +82,20 @@ namespace DealHubAPI.Controllers
                         string key = Utility.SecretkeyGenerator.CreateToken(auth.user_code,auth.password);
                         login.user.Api_Key = key+ "*$"+ randomnum;
                         //login.user.UserCode = auth.user_code;
-                        //login.user.UserCode = AuthenticationServices.EncryptStringAES(CommonFunctions.CommonKeyClass.Key, auth.user_code); 
-                        login.user.UserCode = AuthenticationServices.EncryptStringAES(Keynew, auth.user_code);
+                        //login.user.UC = AuthenticationServices.EncryptStringAES(CommonFunctions.CommonKeyClass.Key, auth.user_code); 
                         // login.user.privilege_name = auth.privilege_name;
-                        login.user.privilege_name  = AuthenticationServices.EncryptStringAES(Keynew, auth.privilege_name);
                         //login.user.role_name = auth.role_name;
-                        login.user.role_name = AuthenticationServices.EncryptStringAES(Keynew, auth.role_name);
-                        login.user.UserName = auth.UserName;
                         // login.user.UserId = auth.user_id;
-                        login.user.UserId = AuthenticationServices.EncryptStringAES(Keynew, auth.user_id.ToString());
+                        login.user.UC = AuthenticationServices.EncryptStringAES(Keynew, auth.user_code);
+                        login.user.PN = AuthenticationServices.EncryptStringAES(Keynew, auth.privilege_name);
+                        login.user.RN = AuthenticationServices.EncryptStringAES(Keynew, auth.role_name);
+                        login.user.UN = auth.UserName;
+                        login.user.UI = AuthenticationServices.EncryptStringAES(Keynew, auth.user_id.ToString());
                         login.user.ispasswordchanged = auth.ispasswordchanged;
                         login.user.AntiforgeryKey = AnitiforgeryVerify.RequestKey(auth.user_code);
                         model._token = key;
+                      
+
                         int tokeupdated = AuthenticationServices.UpdateToken(model);
                         //  result = new ReponseMessage(KeyName: "api_key", Code: key, MsgNo: HttpStatusCode.OK.ToCode(), MsgType: MsgTypeEnum.S.ToString(), Message: "Success");
                         //Provided username and password is incorrect
