@@ -654,7 +654,7 @@ namespace DealHubAPI.Controllers
                 {
                     throw new Exception("user key not generated");
                 }
-
+                ErrorService.writeloginfile("userkey  " + userkey);
                 return Request.CreateResponse(HttpStatusCode.OK, userkey);
             }
             catch (Exception ex)
