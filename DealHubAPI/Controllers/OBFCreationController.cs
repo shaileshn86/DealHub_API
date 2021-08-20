@@ -269,7 +269,13 @@ namespace DealHubAPI.Controllers
                 }
                 else
                 {
-                    return Request.CreateResponse(HttpStatusCode.OK, json);
+                    Random rnd = new Random();
+                    int randomnum = rnd.Next(110000, 999999);
+                    string Keynew = "0c24f9de!b";
+                    Keynew = Keynew + randomnum;
+                    var data = AuthenticationServices.EncryptStringAES(Keynew, json);
+                    data = data + "*$" + randomnum;
+                    return Request.CreateResponse(HttpStatusCode.OK, data);
                 }
             }
             else
@@ -306,7 +312,13 @@ namespace DealHubAPI.Controllers
                 {
                     if (_SolutionCategory.Count != 0)
                     {
-                        return Request.CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(_SolutionCategory));
+                        Random rnd = new Random();
+                        int randomnum = rnd.Next(110000, 999999);
+                        string Keynew = "0c24f9de!b";
+                        Keynew = Keynew + randomnum;
+                        var data = AuthenticationServices.EncryptStringAES(Keynew, JsonConvert.SerializeObject(_SolutionCategory));
+                        data = data + "*$" + randomnum;
+                        return Request.CreateResponse(HttpStatusCode.OK, data);
                     }
                     else
                     {
