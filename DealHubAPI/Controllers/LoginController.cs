@@ -57,6 +57,10 @@ namespace DealHubAPI.Controllers
                 string password = AuthenticationServices.DecryptStringAES(_SecretKey, model._password);
                 password = AuthenticationServices.ReturnMD5Hash(password);
                 model._password = password;
+
+                string usercode = AuthenticationServices.DecryptStringAES(_SecretKey, model._user_code);
+                //password = AuthenticationServices.ReturnMD5Hash(password);
+                model._user_code = usercode;
                 List<AuthenticationDetailParameters> _AuthenticationDetailParameters = AuthenticationServices.GetAuthenticateUser(model);
                 foreach (AuthenticationDetailParameters auth in _AuthenticationDetailParameters)
                 {
@@ -71,17 +75,22 @@ namespace DealHubAPI.Controllers
                     else
                     {
                        LoginResponse login = new LoginResponse();
+                        Random rnd = new Random();
+                        int randomnum = rnd.Next(110000, 999999);
+                        string Keynew = "0c24f9de!b";
+                        Keynew = Keynew + randomnum;
                         string key = Utility.SecretkeyGenerator.CreateToken(auth.user_code,auth.password);
-                        login.user.Api_Key = key;
+                        login.user.Api_Key = key+ "*$"+ randomnum;
                         //login.user.UserCode = auth.user_code;
-                        login.user.UserCode = AuthenticationServices.EncryptStringAES(CommonFunctions.CommonKeyClass.Key, auth.user_code); 
+                        //login.user.UserCode = AuthenticationServices.EncryptStringAES(CommonFunctions.CommonKeyClass.Key, auth.user_code); 
+                        login.user.UserCode = AuthenticationServices.EncryptStringAES(Keynew, auth.user_code);
                         // login.user.privilege_name = auth.privilege_name;
-                        login.user.privilege_name  = AuthenticationServices.EncryptStringAES(CommonFunctions.CommonKeyClass.Key, auth.privilege_name);
+                        login.user.privilege_name  = AuthenticationServices.EncryptStringAES(Keynew, auth.privilege_name);
                         //login.user.role_name = auth.role_name;
-                        login.user.role_name = AuthenticationServices.EncryptStringAES(CommonFunctions.CommonKeyClass.Key, auth.role_name);
+                        login.user.role_name = AuthenticationServices.EncryptStringAES(Keynew, auth.role_name);
                         login.user.UserName = auth.UserName;
                         // login.user.UserId = auth.user_id;
-                        login.user.UserId = AuthenticationServices.EncryptStringAES(CommonFunctions.CommonKeyClass.Key, auth.user_id.ToString());
+                        login.user.UserId = AuthenticationServices.EncryptStringAES(Keynew, auth.user_id.ToString());
                         login.user.ispasswordchanged = auth.ispasswordchanged;
                         login.user.AntiforgeryKey = AnitiforgeryVerify.RequestKey(auth.user_code);
                         model._token = key;
@@ -157,6 +166,8 @@ namespace DealHubAPI.Controllers
             }
             if (ModelState.IsValid)
             {
+                string usercode = AuthenticationServices.DecryptStringAES(CommonFunctions.CommonKeyClass.Key, model._user_code);
+                model._user_code = usercode;
                 DeleteTokenResponse _DeleteTokenResponse = AuthenticationServices.DeleteToken(model._user_code);
 
                 if (_DeleteTokenResponse != null)

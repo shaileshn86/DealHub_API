@@ -49,7 +49,13 @@ namespace DealHubAPI.Controllers
                     //    result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: commaonerrormessage.datanotfound);
                     //    return Request.CreateResponse(HttpStatusCode.BadRequest, result);
                     //}
-                    return Request.CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(_DashBoardDetailsParameters));
+                    Random rnd = new Random();
+                    int randomnum = rnd.Next(110000, 999999);
+                    string Keynew = "0c24f9de!b";
+                    Keynew = Keynew + randomnum;
+                    var data = AuthenticationServices.EncryptStringAES(Keynew, JsonConvert.SerializeObject(_DashBoardDetailsParameters));
+                    data = data + "*$" + randomnum;
+                    return Request.CreateResponse(HttpStatusCode.OK, data);
 
 
                 }
@@ -158,7 +164,13 @@ namespace DealHubAPI.Controllers
                     }
                     else
                     {
-                        return Request.CreateResponse(HttpStatusCode.OK, json);
+                        Random rnd = new Random();
+                        int randomnum = rnd.Next(110000, 999999);
+                        string Keynew = "0c24f9de!b";
+                        Keynew = Keynew + randomnum;
+                        var data = AuthenticationServices.EncryptStringAES(Keynew, json);
+                        data = data + "*$" + randomnum;
+                        return Request.CreateResponse(HttpStatusCode.OK, data);
                     }
                 }
                 else
@@ -426,6 +438,10 @@ namespace DealHubAPI.Controllers
                     return Request.CreateResponse(HttpStatusCode.BadRequest, result);
                 }
 
+                string usercode = AuthenticationServices.DecryptStringAES(CommonFunctions.CommonKeyClass.Key, model._user_code);
+
+                model._user_code = usercode;
+
                 string json = SystemNotificationService.Get_System_Notification(model._user_code);
 
                 if (json == "")
@@ -537,6 +553,8 @@ namespace DealHubAPI.Controllers
         [AllowAnonymous]
         public HttpResponseMessage ShareOBF(ShareEmailParameters model)
         {
+            string userid = AuthenticationServices.DecryptStringAES(CommonFunctions.CommonKeyClass.Key, model._user_id);
+            model._user_id = userid;
             List<commanmessges> _commanmessges = EmailSendingService.ShareEmail(model);
 
             if (_commanmessges != null)
