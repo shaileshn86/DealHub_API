@@ -26,6 +26,9 @@ namespace DealHub_Domain.Authentication
         {
             CN = "MAHINDRA LOGISTICS LTD";
             CC = "MLL";
+            //CompanyName = "MAHINDRA LOGISTICS LTD";
+            //CompanyCode = "MLL";
+            
 
         }
     }

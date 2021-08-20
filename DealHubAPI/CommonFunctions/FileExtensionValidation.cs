@@ -47,6 +47,15 @@ namespace DealHubAPI.CommonFunctions
     public class CommonKeyClass
     {
         public static string Key = "0c24f9de!b855915";
+
+        //public static string getkeywithrandomnumber()
+        //{
+        //    Random rnd = new Random();
+        //    int randomnum = rnd.Next(110000, 999999);
+        //    string Keynew = "0c24f9de!b";
+        //    Keynew = Keynew + randomnum;
+        //    return Keynew;
+        //}
     }
 
     public interface IFileExtensionValidation
