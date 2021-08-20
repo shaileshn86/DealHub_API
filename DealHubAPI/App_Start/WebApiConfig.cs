@@ -63,15 +63,15 @@ namespace DealHubAPI
         public static void SetThrottleURL(HttpConfiguration config)
         {
 
-           // int persecond = 2;
-            //int permin = 20;
-            int persecond = 5;
-            int permin = 50;
+            int persecond = 2;
+            int permin = 20;
+            //int persecond = 5;
+            //int permin = 50;
             int perhour = 1000;
 
             int persecondupload = 10;
-            int commonpersecond = 5;
-            int perminupload = 200;
+            int commonpersecond = 2;
+            int perminupload = 20;
             int perhourupload = 1000;
 
             config.MessageHandlers.Add(new ThrottlingHandler()
@@ -80,7 +80,7 @@ namespace DealHubAPI
                 Policy = new ThrottlePolicy(perSecond: persecond, perMinute: 200, perHour: 2000)
                 {
 
-                    IpThrottling = false,
+                    IpThrottling = true,
 
                     //IpRules = new Dictionary<string, RateLimits>
                     //        {
@@ -90,7 +90,7 @@ namespace DealHubAPI
                     ////white list the "::1" IP to disable throttling on localhost
                     //IpWhitelist = new List<string> { "127.0.0.1", "192.168.0.0/24" },
 
-                    ClientThrottling = false,
+                    ClientThrottling = true,
                     EndpointThrottling = true,
 
 
@@ -108,6 +108,7 @@ namespace DealHubAPI
                         { "/Api/Auth/ResetPasswordDashboard", new RateLimits { PerSecond = commonpersecond, PerMinute = permin, PerHour = perhour } },
                         { "/Api/Auth/sendemail", new RateLimits { PerSecond = persecond, PerMinute = permin, PerHour = perhour } },
                         { "/Api/Auth/UploadImage", new RateLimits { PerSecond = persecondupload, PerMinute = perminupload, PerHour = perhourupload } },
+                        { "/Api/Auth/UploadObfFile", new RateLimits { PerSecond = persecondupload, PerMinute = perminupload, PerHour = perhourupload } },
                         { "/Api/Auth/GetClientKey", new RateLimits { PerSecond = commonpersecond, PerMinute = 60, PerHour = perhour } },
 
                         //DashBoard
