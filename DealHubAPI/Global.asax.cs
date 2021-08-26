@@ -8,6 +8,7 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using DealHubAPI.CommonFunctions;
 using System.Configuration;
+using DealHub_Service.Implemantations.ErrorLog;
 
 namespace DealHubAPI
 {
@@ -78,6 +79,8 @@ namespace DealHubAPI
                 "\nQUERYSTRING: " + Request.QueryString.ToString() +
                 "\nTARGETSITE: " + ex.TargetSite +
                 "\nSTACKTRACE: " + ex.StackTrace;
+
+                ErrorService.writeloginfile("exception in application:  " +exceptionDetails);
 
 
                 //LogEvent.LogEvent(ConfigurationManager.AppSettings["logfilepath"].ToString(), exceptionDetails, true);

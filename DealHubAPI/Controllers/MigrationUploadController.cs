@@ -195,7 +195,8 @@ namespace DealHubAPI.Controllers
                     {
                         MigrationParameters model = new MigrationParameters();
                         model._batch_no = batchno;
-                        model._user_code = "25006085";
+                        //model._user_code = "25006085"; //user of scm
+                        model._user_code = "23145259"; //user of EM;
 
                         List<commanmessges> validate = new List<commanmessges>();
 

@@ -75,7 +75,8 @@ namespace DealHub_Dal.Masters
                             _Details.status = dr.IsNull<string>("status");
                             _Details.message = dr.IsNull<string>("message");
                             var updatedid = dr["user_id"];
-                           
+                            
+                            
                              
                             _mapped_User_Id = Convert.ToInt32(updatedid);
                             _Details._updateduser_id =(ulong)_mapped_User_Id;
@@ -84,8 +85,12 @@ namespace DealHub_Dal.Masters
                         }
                     }
 
-                    UpdateMapUsersVertical(model);
-                    UpdateMapUsersBranch(model);
+                    if (_mapped_User_Id > 0)// if sp returns -1 dont update mapped vertical and branches
+                    {
+                        UpdateMapUsersVertical(model);
+                        UpdateMapUsersBranch(model);
+                    }
+                    
                 }
 
 
