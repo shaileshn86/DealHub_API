@@ -1218,8 +1218,9 @@ namespace DealHubAPI.Controllers
                 string userid = AuthenticationServices.DecryptStringAES(CommonFunctions.CommonKeyClass.Key, model._user_id);
 
                 model._user_id = userid;
-
-                string password = AuthenticationServices.ReturnMD5Hash(newpassword());
+                string orgpassword = newpassword();
+                string password = AuthenticationServices.ReturnMD5Hash(orgpassword);
+                model._encpassword = orgpassword;
                 model._password = password;
 
                 List<MstUserDetailParameters> _commanmessges = MstUserService.Update_Mst_Users(model);

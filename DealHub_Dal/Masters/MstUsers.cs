@@ -1,4 +1,5 @@
 ﻿using DealHub_Dal.Extensions;
+using DealHub_Dal.OBF;
 using DealHub_Domain.DashBoard;
 using DealHub_Domain.Masters;
 using MySql.Data.MySqlClient;
@@ -50,6 +51,7 @@ namespace DealHub_Dal.Masters
             try
             {
                 int _mapped_User_Id = model._id;
+                bool sendmail = false;
                 using (MySqlConnection conn = new MySqlConnection(connectionString))
                 {
                     MySqlCommand cmd = new MySqlCommand("sp_update_mst_users", conn);
@@ -76,6 +78,10 @@ namespace DealHub_Dal.Masters
                             _Details.message = dr.IsNull<string>("message");
                             var updatedid = dr["user_id"];
                             
+                            if (model._id ==0)
+                            {
+                                sendmail = true;  
+                            }
                             
                              
                             _mapped_User_Id = Convert.ToInt32(updatedid);
@@ -89,6 +95,22 @@ namespace DealHub_Dal.Masters
                     {
                         UpdateMapUsersVertical(model);
                         UpdateMapUsersBranch(model);
+                        try
+                        {
+                            if (sendmail)
+                            {
+                                EmailSendModelUserCreation model1 = new EmailSendModelUserCreation();
+                                model1._user_code = model._user_code;
+                                model1._encpassword = model._encpassword;
+
+                                EmailSender_DAL.UserCreationMail(model1);
+                            }
+                           
+                        }
+                        catch(Exception ex)
+                        {
+
+                        }
                     }
                     
                 }

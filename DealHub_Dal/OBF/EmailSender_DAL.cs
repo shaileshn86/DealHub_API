@@ -295,6 +295,140 @@ namespace DealHub_Dal.OBF
 
         }
 
+        public static List<commanmessges> UserCreationMail(EmailSendModelUserCreation model)
+        {
+            try
+            {
+                List<commanmessges> _commanmessges = new List<commanmessges>();
+
+
+                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                {
+                    MySqlDataAdapter DA = new MySqlDataAdapter();
+                    MySqlCommand cmd = new MySqlCommand("sp_getemaildetails_usercreation", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add("@_encpassword", MySqlDbType.VarChar).Value = model._encpassword;
+                    cmd.Parameters.Add("@_user_id", MySqlDbType.VarChar).Value = model._user_code;
+                    DA.SelectCommand = cmd;
+                    cmd.Connection = new MySqlConnection(connectionString);
+                    DataSet ds = new DataSet();
+                    DA.Fill(ds);
+
+                    DataSet rds = ds.GetTableName();
+
+                    if (rds.Tables["replaceemailcontent"] != null)
+                    {
+                        EmailSendingProperties ep = new EmailSendingProperties();
+                        ep.SendTo = new List<EmailToCCParameters>();
+                        ep.SendCC = new List<EmailToCCParameters>();
+                        ep.Attachment = new List<EmailAttachmentParameters>();
+                        if (rds.Tables["EmailBody"] != null)
+                        {
+                            foreach (DataRow Dr in rds.Tables["EmailBody"].Rows)
+                            {
+                                string email_subject = Dr["email_subject"].ToString();
+                                string email_body = Dr["email_body"].ToString();
+                                foreach (DataRow DrReplace in rds.Tables["replaceemailcontent"].Rows)
+                                {
+                                    foreach (DataColumn DC in rds.Tables["replaceemailcontent"].Columns)
+                                    {
+
+                                        email_subject = email_subject.Replace("#" + DC.ColumnName.ToString(), DrReplace[DC.ColumnName].ToString());
+                                        email_body = email_body.Replace("#" + DC.ColumnName.ToString(), DrReplace[DC.ColumnName].ToString());
+
+
+                                    }
+
+                                }
+
+                                ep.subject = email_subject;
+                                ep.body = email_body;
+
+                            }
+
+                            if (rds.Tables["ToEmail"] != null)
+                            {
+                                foreach (DataRow ToRow in ds.Tables["ToEmail"].Rows)
+                                {
+                                    EmailToCCParameters To = new EmailToCCParameters();
+                                    To.email_id = ToRow["ToEmailId"].ToString();
+                                    ep.SendTo.Add(To);
+                                }
+                            }
+
+                            if (rds.Tables["CCEmail"] != null)
+                            {
+                                foreach (DataRow ToRow in ds.Tables["CCEmail"].Rows)
+                                {
+                                    EmailToCCParameters CC = new EmailToCCParameters();
+                                    CC.email_id = ToRow["CcEmailId"].ToString();
+                                    ep.SendCC.Add(CC);
+                                }
+                            }
+
+                            if (rds.Tables["AttachmentDetails"] != null)
+                            {
+                                //string filepath=  HttpContext.Current.Server.MapPath()
+
+                                foreach (DataRow row in rds.Tables["AttachmentDetails"].Rows)
+                                {
+                                    string filepath = HttpContext.Current.Server.MapPath(row["filepath"].ToString());
+                                    if (File.Exists(filepath))
+                                    {
+                                        EmailAttachmentParameters Attach = new EmailAttachmentParameters();
+                                        Attach.file_path = filepath;
+                                        ep.Attachment.Add(Attach);
+                                    }
+                                }
+
+                            }
+
+                            EmailSender ES1 = new EmailSender();
+                            ES1.sendEmail(ep);
+
+                            commanmessges cm = new commanmessges();
+                            cm.message = "Success in sharing Email";
+                            cm.status = "Success";
+                            _commanmessges.Add(cm);
+
+
+                        }
+                        else
+                        {
+                            commanmessges cm = new commanmessges();
+                            cm.message = "failure in sharing Email";
+                            cm.status = "failure";
+                            _commanmessges.Add(cm);
+                        }
+                    }
+                    else
+                    {
+                        commanmessges cm = new commanmessges();
+                        cm.message = "failure in sharing Email";
+                        cm.status = "failure";
+                        _commanmessges.Add(cm);
+
+                    }
+
+                }
+                return _commanmessges;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+    }
+
+
+
+    public class EmailSendModelUserCreation
+    {
+        public string _user_code { get; set; }
+        public string _encpassword { get; set; }
+
+
     }
 
 
