@@ -778,6 +778,12 @@ namespace DealHubAPI.Controllers
                 {
                     if (_commanmessges.Count != 0)
                     {
+                        if (_commanmessges[0].status != "success")
+                        {
+                            //return Request.CreateResponse(HttpStatusCode.BadRequest, JsonConvert.SerializeObject(_commanmessges));
+                            result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: _commanmessges[0].message);
+                            return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+                        }
 
                         return Request.CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(_commanmessges));
                     }
@@ -1122,6 +1128,12 @@ namespace DealHubAPI.Controllers
                 {
                     if (_commanmessges.Count != 0)
                     {
+                        if (_commanmessges[0].status != "success")
+                        {
+                            //return Request.CreateResponse(HttpStatusCode.BadRequest, JsonConvert.SerializeObject(_commanmessges));
+                            result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: _commanmessges[0].message);
+                            return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+                        }
 
                         return Request.CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(_commanmessges));
                     }

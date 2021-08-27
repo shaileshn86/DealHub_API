@@ -76,7 +76,12 @@ namespace DealHub_Dal.Masters
                         }
                     }
 
-                    UpdateMapPrivilegeRole(model);
+                    if(role_id > 0)
+                    {
+                        UpdateMapPrivilegeRole(model);
+                    }
+
+                    
                 }
 
 
