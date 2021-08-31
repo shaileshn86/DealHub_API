@@ -69,7 +69,7 @@ namespace DealHub_Dal.Masters
                             MstRoleDetailParameters _Details = new MstRoleDetailParameters();
                             _Details.status = dr.IsNull<string>("status");
                             _Details.message = dr.IsNull<string>("message");
-                            _Details._role_id = dr.IsNull<long>("role_id");
+                            _Details._role_id = dr.IsNull<ulong>("role_id");
                             role_id = Convert.ToInt32(_Details._role_id);
                             model._id = role_id;
                             _commanmessges.Add(_Details);
