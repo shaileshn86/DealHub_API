@@ -63,15 +63,18 @@ namespace DealHubAPI
         public static void SetThrottleURL(HttpConfiguration config)
         {
 
-            int persecond = 2;
-            int permin = 20;
-            //int persecond = 5;
-            //int permin = 50;
+          //  int persecond = 2;
+          //  int permin = 20;
+            int persecond = 5;
+            int permin = 50;
             int perhour = 1000;
 
-            int persecondupload = 10;
-            int commonpersecond = 2;
-            int perminupload = 20;
+            //int persecondupload = 10;
+            //int commonpersecond = 2;
+            //int perminupload = 20;
+            int persecondupload = 50;
+            int commonpersecond = 10;
+            int perminupload = 200;
             int perhourupload = 1000;
 
             config.MessageHandlers.Add(new ThrottlingHandler()
@@ -80,7 +83,7 @@ namespace DealHubAPI
                 Policy = new ThrottlePolicy(perSecond: persecond, perMinute: 200, perHour: 2000)
                 {
 
-                    IpThrottling = true,
+                    IpThrottling = false,
 
                     //IpRules = new Dictionary<string, RateLimits>
                     //        {
@@ -90,7 +93,7 @@ namespace DealHubAPI
                     ////white list the "::1" IP to disable throttling on localhost
                     //IpWhitelist = new List<string> { "127.0.0.1", "192.168.0.0/24" },
 
-                    ClientThrottling = true,
+                    ClientThrottling = false,
                     EndpointThrottling = true,
 
 
