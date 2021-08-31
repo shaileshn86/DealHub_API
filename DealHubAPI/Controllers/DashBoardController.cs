@@ -31,8 +31,13 @@ namespace DealHubAPI.Controllers
             if (ModelState.IsValid)
 
             {
+                var getrandom = model._user_code.ToString().Split(new string[] { "*$" }, StringSplitOptions.None);
+                var Resultdata = getrandom[0];
+                var actualrandom = getrandom[1];
+                var actualkey = "0c24f9de!b" + actualrandom;
+               // Resultdata = this.commonService.setDecryption(actualkey, Resultdata);
 
-                string userid = AuthenticationServices.DecryptStringAES(CommonFunctions.CommonKeyClass.Key, model._user_code);
+                string userid = AuthenticationServices.DecryptStringAES(actualkey, Resultdata);
 
                 model._user_code = userid;
 
