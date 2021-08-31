@@ -68,6 +68,7 @@
     <Compile Include="Implemantations\APIServices\AuthenticationServices.cs" />
     <Compile Include="Implemantations\APIServices\DashBoardServices.cs" />
     <Compile Include="Implemantations\APIServices\EmailSender.cs" />
+    <Compile Include="Implemantations\APIServices\MigrationService.cs" />
     <Compile Include="Implemantations\APIServices\MstBranchService.cs" />
     <Compile Include="Implemantations\APIServices\MstCommentTypeService.cs" />
     <Compile Include="Implemantations\APIServices\MstDoaMatrixMessagesService.cs" />

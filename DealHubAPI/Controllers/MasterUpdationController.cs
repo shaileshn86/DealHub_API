@@ -77,6 +77,12 @@ namespace DealHubAPI.Controllers
                 {
                     if (_commanmessges.Count != 0)
                     {
+                        if (_commanmessges[0].status != "success")
+                        {
+                            //return Request.CreateResponse(HttpStatusCode.BadRequest, JsonConvert.SerializeObject(_commanmessges));
+                            result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: _commanmessges[0].message);
+                            return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+                        }
 
                         return Request.CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(_commanmessges));
                     }
@@ -160,7 +166,12 @@ namespace DealHubAPI.Controllers
                 {
                     if (_commanmessges.Count != 0)
                     {
-
+                        if (_commanmessges[0].status != "success")
+                        {
+                            //return Request.CreateResponse(HttpStatusCode.BadRequest, JsonConvert.SerializeObject(_commanmessges));
+                            result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: _commanmessges[0].message);
+                            return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+                        }
                         return Request.CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(_commanmessges));
                     }
                     else
@@ -328,6 +339,12 @@ namespace DealHubAPI.Controllers
                 {
                     if (_commanmessges.Count != 0)
                     {
+                        if (_commanmessges[0].status != "success")
+                        {
+                            //return Request.CreateResponse(HttpStatusCode.BadRequest, JsonConvert.SerializeObject(_commanmessges));
+                            result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: _commanmessges[0].message);
+                            return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+                        }
 
                         return Request.CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(_commanmessges));
                     }
@@ -411,6 +428,12 @@ namespace DealHubAPI.Controllers
                 {
                     if (_commanmessges.Count != 0)
                     {
+                        if (_commanmessges[0].status != "success")
+                        {
+                            //return Request.CreateResponse(HttpStatusCode.BadRequest, JsonConvert.SerializeObject(_commanmessges));
+                            result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: _commanmessges[0].message);
+                            return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+                        }
 
                         return Request.CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(_commanmessges));
                     }
@@ -493,7 +516,12 @@ namespace DealHubAPI.Controllers
                 {
                     if (_commanmessges.Count != 0)
                     {
-
+                        if (_commanmessges[0].status != "success")
+                        {
+                            //return Request.CreateResponse(HttpStatusCode.BadRequest, JsonConvert.SerializeObject(_commanmessges));
+                            result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: _commanmessges[0].message);
+                            return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+                        }
                         return Request.CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(_commanmessges));
                     }
                     else
@@ -575,7 +603,12 @@ namespace DealHubAPI.Controllers
                 {
                     if (_commanmessges.Count != 0)
                     {
-
+                        if (_commanmessges[0].status != "success")
+                        {
+                            //return Request.CreateResponse(HttpStatusCode.BadRequest, JsonConvert.SerializeObject(_commanmessges));
+                            result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: _commanmessges[0].message);
+                            return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+                        }
                         return Request.CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(_commanmessges));
                     }
                     else
@@ -657,7 +690,12 @@ namespace DealHubAPI.Controllers
                 {
                     if (_commanmessges.Count != 0)
                     {
-
+                        if (_commanmessges[0].status != "success")
+                        {
+                            //return Request.CreateResponse(HttpStatusCode.BadRequest, JsonConvert.SerializeObject(_commanmessges));
+                            result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: _commanmessges[0].message);
+                            return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+                        }
                         return Request.CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(_commanmessges));
                     }
                     else
@@ -740,6 +778,12 @@ namespace DealHubAPI.Controllers
                 {
                     if (_commanmessges.Count != 0)
                     {
+                        if (_commanmessges[0].status != "success")
+                        {
+                            //return Request.CreateResponse(HttpStatusCode.BadRequest, JsonConvert.SerializeObject(_commanmessges));
+                            result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: _commanmessges[0].message);
+                            return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+                        }
 
                         return Request.CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(_commanmessges));
                     }
@@ -823,6 +867,12 @@ namespace DealHubAPI.Controllers
                 {
                     if (_commanmessges.Count != 0)
                     {
+                        if (_commanmessges[0].status != "success")
+                        {
+                            //return Request.CreateResponse(HttpStatusCode.BadRequest, JsonConvert.SerializeObject(_commanmessges));
+                            result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: _commanmessges[0].message);
+                            return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+                        }
 
                         return Request.CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(_commanmessges));
                     }
@@ -884,7 +934,7 @@ namespace DealHubAPI.Controllers
 
         [HttpPost]
         [Route("Update_Mst_solution")]
-        public HttpResponseMessage Update_Mst_Subsector(MstSolutionParameter model)
+        public HttpResponseMessage Update_Mst_solution(MstSolutionParameter model)
         {
             if (model == null)// Incase Post Object Is Null or Not Match and Object value is null
             {
@@ -904,7 +954,12 @@ namespace DealHubAPI.Controllers
                 {
                     if (_commanmessges.Count != 0)
                     {
-
+                        if (_commanmessges[0].status != "success")
+                        {
+                            //return Request.CreateResponse(HttpStatusCode.BadRequest, JsonConvert.SerializeObject(_commanmessges));
+                            result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: _commanmessges[0].message);
+                            return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+                        }
                         return Request.CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(_commanmessges));
                     }
                     else
@@ -987,7 +1042,12 @@ namespace DealHubAPI.Controllers
                 {
                     if (_commanmessges.Count != 0)
                     {
-
+                        if (_commanmessges[0].status != "success")
+                        {
+                            //return Request.CreateResponse(HttpStatusCode.BadRequest, JsonConvert.SerializeObject(_commanmessges));
+                            result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: _commanmessges[0].message);
+                            return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+                        }
                         return Request.CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(_commanmessges));
                     }
                     else
@@ -1068,6 +1128,12 @@ namespace DealHubAPI.Controllers
                 {
                     if (_commanmessges.Count != 0)
                     {
+                        if (_commanmessges[0].status != "success")
+                        {
+                            //return Request.CreateResponse(HttpStatusCode.BadRequest, JsonConvert.SerializeObject(_commanmessges));
+                            result = new ReponseMessage(MsgNo: HttpStatusCode.BadRequest.ToCode(), MsgType: MsgTypeEnum.E.ToString(), Message: _commanmessges[0].message);
+                            return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+                        }
 
                         return Request.CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(_commanmessges));
                     }
@@ -1128,6 +1194,14 @@ namespace DealHubAPI.Controllers
 
         }
 
+        [NonAction]
+        public static string newpassword()
+        {
+            Random r = new Random();
+            int num= r.Next(1000, 9999);
+            return "pass@" + num.ToString();
+        }
+
         [HttpPost]
         [Route("Update_Mst_Users")]
         public HttpResponseMessage Update_Mst_Users(MstUsersParameters model)
@@ -1144,6 +1218,11 @@ namespace DealHubAPI.Controllers
                 string userid = AuthenticationServices.DecryptStringAES(CommonFunctions.CommonKeyClass.Key, model._user_id);
 
                 model._user_id = userid;
+                string orgpassword = newpassword();
+                string password = AuthenticationServices.ReturnMD5Hash(orgpassword);
+                model._encpassword = orgpassword;
+                model._password = password;
+
                 List<MstUserDetailParameters> _commanmessges = MstUserService.Update_Mst_Users(model);
 
                 if (_commanmessges != null)

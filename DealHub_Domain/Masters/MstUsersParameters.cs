@@ -33,6 +33,8 @@ namespace DealHub_Domain.Masters
         public string _mappedbranches { get; set; }
 
         public string _password { get; set; }
+
+        public string _encpassword { get; set; }
     }
 
 
