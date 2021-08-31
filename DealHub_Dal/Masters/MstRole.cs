@@ -9,6 +9,8 @@ using DealHub_Domain.Masters;
 using MySql.Data.MySqlClient;
 using Newtonsoft.Json;
 using System.Data;
+using DealHub_Dal.ErrorLog;
+using System.Configuration;
 
 namespace DealHub_Dal.Masters
 {
@@ -39,6 +41,7 @@ namespace DealHub_Dal.Masters
             }
             catch (Exception ex)
             {
+                writelogobfcreation(ex.ToString());
                 return "error";
             }
 
@@ -90,6 +93,7 @@ namespace DealHub_Dal.Masters
             }
             catch (Exception ex)
             {
+                writelogobfcreation(ex.ToString());
                 _commanmessges = new List<MstRoleDetailParameters>();
 
                 MstRoleDetailParameters _Details = new MstRoleDetailParameters();
@@ -142,6 +146,7 @@ namespace DealHub_Dal.Masters
             }
             catch (Exception ex)
             {
+                writelogobfcreation(ex.ToString());
                 _commanmessges = new List<MstRoleDetailParameters>();
 
                 MstRoleDetailParameters _Details = new MstRoleDetailParameters();
@@ -151,6 +156,12 @@ namespace DealHub_Dal.Masters
 
                 return _commanmessges;
             }
+        }
+
+        public static void writelogobfcreation(string errordetails)
+        {
+            WritetoLogFile W = new WritetoLogFile();
+            W.LogEvent(ConfigurationManager.AppSettings["logfilepath"].ToString(), errordetails, true);
         }
 
     }
