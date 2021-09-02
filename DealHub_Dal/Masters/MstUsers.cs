@@ -1,10 +1,13 @@
-﻿using DealHub_Dal.Extensions;
+﻿using DealHub_Dal.ErrorLog;
+using DealHub_Dal.Extensions;
+using DealHub_Dal.OBF;
 using DealHub_Domain.DashBoard;
 using DealHub_Domain.Masters;
 using MySql.Data.MySqlClient;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Linq;
 using System.Text;
@@ -39,6 +42,7 @@ namespace DealHub_Dal.Masters
             }
             catch (Exception ex)
             {
+                writelogobfcreation(ex.ToString());
                 return "error";
             }
 
@@ -50,6 +54,7 @@ namespace DealHub_Dal.Masters
             try
             {
                 int _mapped_User_Id = model._id;
+                bool sendmail = false;
                 using (MySqlConnection conn = new MySqlConnection(connectionString))
                 {
                     MySqlCommand cmd = new MySqlCommand("sp_update_mst_users", conn);
@@ -75,7 +80,12 @@ namespace DealHub_Dal.Masters
                             _Details.status = dr.IsNull<string>("status");
                             _Details.message = dr.IsNull<string>("message");
                             var updatedid = dr["user_id"];
-                           
+                            
+                            if (model._id ==0)
+                            {
+                                sendmail = true;  
+                            }
+                            
                              
                             _mapped_User_Id = Convert.ToInt32(updatedid);
                             _Details._updateduser_id =(ulong)_mapped_User_Id;
@@ -84,8 +94,28 @@ namespace DealHub_Dal.Masters
                         }
                     }
 
-                    UpdateMapUsersVertical(model);
-                    UpdateMapUsersBranch(model);
+                    if (_mapped_User_Id > 0)// if sp returns -1 dont update mapped vertical and branches
+                    {
+                        UpdateMapUsersVertical(model);
+                        UpdateMapUsersBranch(model);
+                        try
+                        {
+                            if (sendmail)
+                            {
+                                EmailSendModelUserCreation model1 = new EmailSendModelUserCreation();
+                                model1._user_code = model._user_code;
+                                model1._encpassword = model._encpassword;
+
+                                EmailSender_DAL.UserCreationMail(model1);
+                            }
+                           
+                        }
+                        catch(Exception ex)
+                        {
+
+                        }
+                    }
+                    
                 }
 
 
@@ -94,6 +124,7 @@ namespace DealHub_Dal.Masters
             }
             catch (Exception ex)
             {
+                writelogobfcreation(ex.ToString());
                 _commanmessges = new List<MstUserDetailParameters>();
 
                 MstUserDetailParameters _Details = new MstUserDetailParameters();
@@ -148,6 +179,7 @@ namespace DealHub_Dal.Masters
             }
             catch (Exception ex)
             {
+                writelogobfcreation(ex.ToString());
                 _commanmessges = new List<MstUserDetailParameters>();
 
                 MstUserDetailParameters _Details = new MstUserDetailParameters();
@@ -199,6 +231,7 @@ namespace DealHub_Dal.Masters
             }
             catch (Exception ex)
             {
+                writelogobfcreation(ex.ToString());
                 _commanmessges = new List<MstUserDetailParameters>();
 
                 MstUserDetailParameters _Details = new MstUserDetailParameters();
@@ -251,15 +284,22 @@ namespace DealHub_Dal.Masters
             }
             catch (Exception ex)
             {
+                writelogobfcreation(ex.ToString());
                 _commanmessges = new List<MstUserDetailParameters>();
 
                 MstUserDetailParameters _Details = new MstUserDetailParameters();
                 _Details.status = "Failed";
                 _Details.message = "Error in saving parameters";
                 _commanmessges.Add(_Details);
-
+               
                 return _commanmessges;
             }
+        }
+
+        public static void writelogobfcreation(string errordetails)
+        {
+            WritetoLogFile W = new WritetoLogFile();
+            W.LogEvent(ConfigurationManager.AppSettings["logfilepath"].ToString(), errordetails, true);
         }
 
 

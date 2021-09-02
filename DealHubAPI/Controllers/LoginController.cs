@@ -410,7 +410,7 @@ namespace DealHubAPI.Controllers
                 To.email_id = ToEmailId;
                 EP.SendTo.Add(To);
                 EP.subject = "Reset Password";
-                EP.body = "Reset Password Link :" + usercodearr[1];
+                EP.body = "Reset Password Link :    " + usercodearr[1];
                 EmailSender ES = new EmailSender();
                 ES.sendEmail(EP);
                 return Request.CreateResponse(HttpStatusCode.OK, "Mail send");
@@ -701,7 +701,7 @@ namespace DealHubAPI.Controllers
                 {
                     throw new Exception("user key not generated");
                 }
-
+                ErrorService.writeloginfile("userkey  " + userkey);
                 return Request.CreateResponse(HttpStatusCode.OK, userkey);
             }
             catch (Exception ex)

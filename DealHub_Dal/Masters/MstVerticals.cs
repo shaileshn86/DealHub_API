@@ -82,7 +82,12 @@ namespace DealHub_Dal.Masters
                         }
                     }
 
-                    UpdateMapVerticalSector(model);
+                    if (verticalid > 0)
+                    {
+                        UpdateMapVerticalSector(model);
+                    }
+
+                    
                 }
 
 
