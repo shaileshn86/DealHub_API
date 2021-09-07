@@ -155,7 +155,7 @@ namespace DealHub_Dal.OBF
                         SSP._created_by = filter._created_by;
                         SaveServices(filter.Services);
                         SaveSectorSubSector(SSP);
-                        SaveCustomer_SAP_IO_Number(filter.sapio, filter._sap_customer_code);
+                        SaveCustomer_SAP_IO_Number(filter.sapio, filter._sap_customer_code,filter._dh_header_id,filter._created_by);
                         if (filter._dh_comment !="")
                         {
                             SaveCommentsParameter _SaveCommentsParameter = new SaveCommentsParameter();
@@ -236,7 +236,7 @@ namespace DealHub_Dal.OBF
                     }
 
                     
-                        SaveCustomer_SAP_IO_Number(filter.sapio, filter._sap_customer_code);
+                        SaveCustomer_SAP_IO_Number(filter.sapio, filter._sap_customer_code,filter._dh_header_id,filter._created_by);
                 }
                 return _editcustomercodeandio;
             }
@@ -285,7 +285,7 @@ namespace DealHub_Dal.OBF
                 _SaveAttachementDetailsParameters = SaveSectorSubSector(filter);
                 if (filter.sapio.Count !=0)
                 {
-                    _SaveAttachementDetailsParameters = SaveCustomer_SAP_IO_Number(filter.sapio, filter._sap_customer_code);
+                    _SaveAttachementDetailsParameters = SaveCustomer_SAP_IO_Number(filter.sapio, filter._sap_customer_code,filter._dh_header_id,filter._created_by);
                 }
 
 
@@ -984,11 +984,20 @@ namespace DealHub_Dal.OBF
 
         }
 
-        public static List<SaveAttachementDetailsParameters> SaveCustomer_SAP_IO_Number(List<Customer_SAP_IO_Parameter> filters,string _sap_customer_code)
+        public static List<SaveAttachementDetailsParameters> SaveCustomer_SAP_IO_Number(List<Customer_SAP_IO_Parameter> filters,string _sap_customer_code,int _dh_header_id,string _created_by)
         {
             List<SaveAttachementDetailsParameters> _SaveAttachementDetailsParameters = new List<SaveAttachementDetailsParameters>();
             try
             {
+                if (_sap_customer_code != "" && filters.Count ==0)
+                {
+                    Customer_SAP_IO_Parameter filter = new Customer_SAP_IO_Parameter();
+                    filter._dh_header_id = _dh_header_id;
+                    filter._Cust_SAP_IO_Number = "";
+                    filter._created_by = _created_by;
+                    filters.Add(filter);
+
+                }
                 foreach (Customer_SAP_IO_Parameter filter in filters)
                 {
 
