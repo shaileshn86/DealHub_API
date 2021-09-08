@@ -439,6 +439,13 @@ namespace DealHubAPI.Controllers
             string filepathdetails = "";
             try
             {
+                string  usercode = AuthenticationServices.DecryptStringAES(CommonFunctions.CommonKeyClass.Key, HttpContext.Current.Request.Params.Get("usercode"));
+                string token = HttpContext.Current.Request.Params.Get("Token");
+                if (!CheckIsAuthorized(token,usercode))
+                {
+                    return Request.CreateResponse(HttpStatusCode.Unauthorized, "Unauthorized acess");
+                }
+
                 foreach (string fileName in httpRequest.Files)
                 {
                    
@@ -529,6 +536,13 @@ namespace DealHubAPI.Controllers
             string filepathdetails = "";
             try
             {
+                string usercode = AuthenticationServices.DecryptStringAES(CommonFunctions.CommonKeyClass.Key, HttpContext.Current.Request.Params.Get("usercode"));
+                string token = HttpContext.Current.Request.Params.Get("Token");
+                if (!CheckIsAuthorized(token, usercode))
+                {
+                    return Request.CreateResponse(HttpStatusCode.Unauthorized, "Unauthorized acess");
+                }
+
                 foreach (string fileName in httpRequest.Files)
                 {
                     var postedFile = httpRequest.Files[fileName];
@@ -596,6 +610,26 @@ namespace DealHubAPI.Controllers
             }
             return msg;
 
+        }
+
+        [NonAction]
+        public static bool CheckIsAuthorized(string _token, string user_code)
+        {
+            AuthenticationParameters _auth = new AuthenticationParameters();
+            _auth._user_code = user_code;
+            _auth._token = _token;
+            string result = AuthenticationServices.GetToken(_auth);
+
+
+
+            if (result != "Authorised")
+            {
+                return false;
+            }
+
+
+
+            return true;
         }
 
         [AuthenticationFilterDealhUb, HttpPost]

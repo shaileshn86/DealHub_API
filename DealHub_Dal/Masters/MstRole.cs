@@ -9,6 +9,8 @@ using DealHub_Domain.Masters;
 using MySql.Data.MySqlClient;
 using Newtonsoft.Json;
 using System.Data;
+using DealHub_Dal.ErrorLog;
+using System.Configuration;
 
 namespace DealHub_Dal.Masters
 {
@@ -39,6 +41,7 @@ namespace DealHub_Dal.Masters
             }
             catch (Exception ex)
             {
+                writelogobfcreation(ex.ToString());
                 return "error";
             }
 
@@ -69,8 +72,17 @@ namespace DealHub_Dal.Masters
                             MstRoleDetailParameters _Details = new MstRoleDetailParameters();
                             _Details.status = dr.IsNull<string>("status");
                             _Details.message = dr.IsNull<string>("message");
-                            _Details._role_id = dr.IsNull<long>("role_id");
-                            role_id = Convert.ToInt32(_Details._role_id);
+
+                            var updatedid = dr["role_id"];
+
+
+                            role_id = Convert.ToInt32(updatedid);
+                            _Details._role_id = (ulong)role_id;
+                            //role_id = Convert.ToInt32(_Details._role_id);
+
+                            //_Details._role_id = dr.IsNull<long>("role_id");
+                            //role_id = Convert.ToInt32(_Details._role_id);
+
                             model._id = role_id;
                             _commanmessges.Add(_Details);
                         }
@@ -90,6 +102,7 @@ namespace DealHub_Dal.Masters
             }
             catch (Exception ex)
             {
+                writelogobfcreation(ex.ToString());
                 _commanmessges = new List<MstRoleDetailParameters>();
 
                 MstRoleDetailParameters _Details = new MstRoleDetailParameters();
@@ -142,6 +155,7 @@ namespace DealHub_Dal.Masters
             }
             catch (Exception ex)
             {
+                writelogobfcreation(ex.ToString());
                 _commanmessges = new List<MstRoleDetailParameters>();
 
                 MstRoleDetailParameters _Details = new MstRoleDetailParameters();
@@ -151,6 +165,12 @@ namespace DealHub_Dal.Masters
 
                 return _commanmessges;
             }
+        }
+
+        public static void writelogobfcreation(string errordetails)
+        {
+            WritetoLogFile W = new WritetoLogFile();
+            W.LogEvent(ConfigurationManager.AppSettings["logfilepath"].ToString(), errordetails, true);
         }
 
     }
