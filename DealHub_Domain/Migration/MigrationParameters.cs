@@ -22,4 +22,11 @@ namespace DealHub_Domain.Migration
         public string _FileName { get; set; }
 
     }
+
+    public class uploadMigrationDataParameter
+    {
+        public string _FileName { get; set; }
+
+        public string _user_code { get; set; }
+    }
 }

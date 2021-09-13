@@ -127,7 +127,7 @@ namespace DealHubAPI.Controllers
             return key;
         }
 
-        public static DataSet ReadExcel(string filepath)
+        public static DataSet ReadExcel(string filepath,string _user_code)
         {
             try
             {
@@ -135,7 +135,7 @@ namespace DealHubAPI.Controllers
                 string batchno = getbatchno();
                 TruncateMigrationDataParameters model = new TruncateMigrationDataParameters();
                 model._batch_no = batchno;
-                model._user_code = "25006085";
+                model._user_code = _user_code;
                 model._FileName = filepath;
                 model._TotalRecords = 0;
 
@@ -181,12 +181,12 @@ namespace DealHubAPI.Controllers
         [HttpPost]
         [AllowAnonymous]
         [Route("TestUploadObfFile")]
-        public HttpResponseMessage TestUploadObfFile()
+        public HttpResponseMessage TestUploadObfFile(uploadMigrationDataParameter model1)
         {
             HttpResponseMessage msg = new HttpResponseMessage();
             try
             {
-              DataSet Rds=  ReadExcel(@"E:\Shailesh\DbRelated\Migration\Shabbarfile.xlsx");
+              DataSet Rds=  ReadExcel(model1._FileName,model1._user_code);
               if (Rds !=null)
                 {
                     string batchno = Rds.Tables[1].Rows[0]["batchno"].ToString();
@@ -196,7 +196,7 @@ namespace DealHubAPI.Controllers
                         MigrationParameters model = new MigrationParameters();
                         model._batch_no = batchno;
                         //model._user_code = "25006085"; //user of scm
-                        model._user_code = "23145259"; //user of EM;
+                        model._user_code = model1._user_code; //user of EM;
 
                         List<commanmessges> validate = new List<commanmessges>();
 
