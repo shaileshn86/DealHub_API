@@ -11,8 +11,10 @@ namespace DealHub_Domain.DashBoard
     {
       
         [Required(ErrorMessage = "project name is mandatory")]
-        
-        [RegularExpression(@"([a-zA-Z0-9@#$&;|,.?-_ \s\n]+)", ErrorMessage = "Special characters are not allowed in Project name")]
+
+        // [RegularExpression(@"([a-zA-Z0-9@#$&;|,.?-_ \s\n]+)", ErrorMessage = "Special characters are not allowed in Project name")]
+       
+       [RegularExpression(@"([\-a-zA-Z0-9@#$&;|,.?_()% \s\n]+)", ErrorMessage = "Special characters are not allowed in Project name")]
         public string _dh_project_name { get; set; }
 
         [Required(ErrorMessage = "opportunity id is mandatory")]
@@ -111,7 +113,7 @@ namespace DealHub_Domain.DashBoard
         
         public string _customer_name { get; set; }
 
-        [RegularExpression(@"([a-zA-Z0-9@#$&;|,.?-_ ()\s\n]+)", ErrorMessage = "Special characters are not allowed in Comments")]
+      //  [RegularExpression(@"([a-zA-Z0-9@#$&;|,.?-_ ()\s\n]+)", ErrorMessage = "Special characters are not allowed in Comments")]
         public string _dh_comment { get; set; }
 
 

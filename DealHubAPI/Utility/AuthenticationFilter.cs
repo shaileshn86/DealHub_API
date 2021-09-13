@@ -15,6 +15,7 @@ using DealHub_Domain.Enum;
 using System.Web.Http;
 using System.Web.Http.ModelBinding;
 using System.Net.Http;
+using DealHub_Service.Implemantations.ErrorLog;
 
 namespace DealHubAPI.Utility
 {
@@ -69,7 +70,7 @@ namespace DealHubAPI.Utility
             _auth._user_code = user_code;
             _auth._token = _token;
             string result = AuthenticationServices.GetToken(_auth);
-
+            ErrorService.writeloginfile("UserCode :"+user_code+" Token :"+_token+" Result:"+result);
             if (result!= "Authorised")
             {
                 return false;
