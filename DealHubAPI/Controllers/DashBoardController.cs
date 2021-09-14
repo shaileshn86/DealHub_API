@@ -348,7 +348,7 @@ namespace DealHubAPI.Controllers
             }
             catch (Exception ex)
             {
-                return Request.CreateResponse(HttpStatusCode.OK, "");
+                return Request.CreateResponse(HttpStatusCode.OK, ex.ToString());
 
             }
 
