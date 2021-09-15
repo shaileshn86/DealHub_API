@@ -25,18 +25,21 @@ namespace DealHubAPI.Utility
         public HttpResponseMessage result = new HttpResponseMessage();
         protected override bool IsAuthorized(HttpActionContext filterContext)
         {
+            string user_code = "";
+            string _passtoken = "";
+            string AntiforgeryKey = "";
            try
             {
                 var _token = filterContext.Request.Headers.SingleOrDefault(x => x.Key == "Authorization").Value;
-                string _passtoken = _token.First();
+                 _passtoken = _token.First();
                 _passtoken = _passtoken.Replace("Bearer ", "").Trim();
 
                 var userloginid = filterContext.Request.Headers.SingleOrDefault(x => x.Key == "_user_login").Value;
-                string user_code = userloginid.First();
+                 user_code = userloginid.First();
                 user_code = AuthenticationServices.DecryptStringAES(CommonFunctions.CommonKeyClass.Key, user_code);
                 //added 
-                var RequestId = filterContext.Request.Headers.SingleOrDefault(x => x.Key == "_RequestId").Value;
-                string AntiforgeryKey = RequestId.First();
+                //var RequestId = filterContext.Request.Headers.SingleOrDefault(x => x.Key == "_RequestId").Value;
+                // AntiforgeryKey = RequestId.First();
 
                 //bool Isverify = DealHubAPI.Utility.AnitiforgeryVerify.VerifyRequestKey(user_code, AntiforgeryKey);
                 //if (Isverify==false)
@@ -48,6 +51,7 @@ namespace DealHubAPI.Utility
             }
             catch(Exception e)
             {
+                ErrorService.writeloginfile("Error in Catch : usercode"+user_code+" token:"+_passtoken+" Exception:"+e.ToString());
                 return false;
             }
            

@@ -9,6 +9,7 @@ using System.Web.Routing;
 using DealHubAPI.CommonFunctions;
 using System.Configuration;
 using DealHub_Service.Implemantations.ErrorLog;
+using System.Net;
 
 namespace DealHubAPI
 {
@@ -16,6 +17,7 @@ namespace DealHubAPI
     {
         protected void Application_Start()
         {
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);

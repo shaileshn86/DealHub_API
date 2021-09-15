@@ -26,6 +26,9 @@ namespace DealHub_Service.Implemantations.APIServices
                 EmailToCCParameters CC = new EmailToCCParameters();
                 CC.email_id = "BHABAL.NIKESH@mahindra.com";
                 EP.SendCC.Add(CC);
+                EmailToCCParameters CC1 = new EmailToCCParameters();
+                CC1.email_id = "SINGH.KIRTIKUMAR@mahindra.com";
+                EP.SendCC.Add(CC1);
                 EP.subject = "test mail from system";
                 EP.body = "Mail send for test do not reply";
                 EmailSender ES = new EmailSender();

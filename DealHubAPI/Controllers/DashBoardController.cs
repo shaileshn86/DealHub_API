@@ -11,6 +11,7 @@ using DealHub_Service.Implemantations.APIServices;
 using DealHub_Domain.Enum;
 using Newtonsoft.Json;
 using DealHub_Service.Implemantations;
+using DealHub_Service.Implemantations.ErrorLog;
 
 namespace DealHubAPI.Controllers
 {
@@ -348,7 +349,8 @@ namespace DealHubAPI.Controllers
             }
             catch (Exception ex)
             {
-                return Request.CreateResponse(HttpStatusCode.OK, "");
+                ErrorService.writeloginfile("Error in Email Catch : "+ ex.ToString());
+                return Request.CreateResponse(HttpStatusCode.OK, ex.ToString());
 
             }
 
