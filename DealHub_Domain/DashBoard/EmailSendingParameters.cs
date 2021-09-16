@@ -30,6 +30,8 @@ namespace DealHub_Domain.DashBoard
 
         private string enablessl = ConfigurationManager.AppSettings["enablessl"].ToString();
 
+        private string IsBodyHtml = ConfigurationManager.AppSettings["IsBodyHtml"].ToString();
+
         public void sendEmail(EmailSendingProperties EP)
         {
             try
@@ -37,6 +39,12 @@ namespace DealHub_Domain.DashBoard
                 using (MailMessage mail = new MailMessage())
                 {
                     mail.From = new MailAddress(FromEmail);
+                    
+                    mail.IsBodyHtml = true;
+                    if (IsBodyHtml == "N")
+                    {
+                        mail.IsBodyHtml = false;
+                    }
                     foreach (EmailToCCParameters To in EP.SendTo)
                     {
                         mail.To.Add(To.email_id);
@@ -70,6 +78,7 @@ namespace DealHub_Domain.DashBoard
                         SmtpServer.DeliveryMethod = SmtpDeliveryMethod.Network;
                         SmtpServer.TargetName = Targetname;
                         SmtpServer.EnableSsl = true;
+                        
                         if (enablessl == "N")
                         {
                             SmtpServer.EnableSsl = false;
