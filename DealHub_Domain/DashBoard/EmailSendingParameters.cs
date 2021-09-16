@@ -15,6 +15,8 @@ namespace DealHub_Domain.DashBoard
 
         private string FromEmail = ConfigurationManager.AppSettings["FromEmail"].ToString();
 
+        private string Targetname = ConfigurationManager.AppSettings["Targetname"].ToString();
+
         private string EmailPassword = ConfigurationManager.AppSettings["EmailPassword"].ToString();
 
         //private bool EnableSsl = bool.Parse(ConfigurationManager.AppSettings["enablessl"].ToString());
@@ -65,6 +67,8 @@ namespace DealHub_Domain.DashBoard
                             SmtpServer.UseDefaultCredentials = false; //Need to overwrite this
                             SmtpServer.Credentials = new System.Net.NetworkCredential(FromEmail, EmailPassword);
                         }
+                        SmtpServer.DeliveryMethod = SmtpDeliveryMethod.Network;
+                        SmtpServer.TargetName = Targetname;
                         SmtpServer.EnableSsl = true;
                         if (enablessl == "N")
                         {
