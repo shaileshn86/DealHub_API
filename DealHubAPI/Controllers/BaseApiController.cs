@@ -8,11 +8,19 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
 using System.ServiceModel.Channels;
+<<<<<<< HEAD
 using System.Threading.Tasks;
 // test123
 using System.Text;
 using DealHub_Domain.Entity.Logs;
 using DealHub_Service.Implemantations.ErrorLog;
+<<<<<<< HEAD
+=======
+
+=======
+// test123
+>>>>>>> 63b1249 (no message)
+>>>>>>> 9595cfa (﻿no message)
 namespace DealHubAPI.Controllers
 {
     public class BaseApiController : ApiController
