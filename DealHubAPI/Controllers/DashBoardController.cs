@@ -349,7 +349,7 @@ namespace DealHubAPI.Controllers
             }
             catch (Exception ex)
             {
-                ErrorService.writeloginfile("Error in Email Catch : "+ ex.ToString());
+                return Request.CreateResponse(HttpStatusCode.OK, ex.ToString());
                 return Request.CreateResponse(HttpStatusCode.OK, ex.ToString());
 
             }
